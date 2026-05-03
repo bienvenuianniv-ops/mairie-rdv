@@ -719,6 +719,63 @@ const confirmer = async () => {
     btn.innerHTML = '✓ <span data-t="confirmBtn">Confirmer le RDV</span>';
   }
 };
+const afficherModification = (reference, serviceId) => {
+  const result = document.getElementById('search-result');
+  const today = new Date().toISOString().split('T')[0];
+
+  result.innerHTML += `
+    <div style="background:white;border:2px solid var(--vert);border-radius:12px;padding:1.2rem;margin-top:1rem">
+      <h4 style="font-family:'Lora',serif;margin-bottom:1rem">✏️ Modifier le rendez-vous</h4>
+      <div class="form-grid">
+        <div class="field">
+          <label>Nouvelle date *</label>
+          <input type="date" id="mod-date" min="${today}">
+        </div>
+        <div class="field">
+          <label>Nouvelle heure *</label>
+          <select id="mod-heure">
+            <option value="">-- Choisir --</option>
+            ${['08:00','08:30','09:00','09:30','10:00','10:30','11:00',
+               '14:00','14:30','15:00','15:30','16:00']
+              .map(h => `<option value="${h}">${h}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div id="mod-error" style="color:var(--rouge);font-size:.82rem;margin-top:.5rem"></div>
+      <div style="display:flex;gap:.75rem;margin-top:1rem;justify-content:flex-end">
+        <button class="btn btn-secondary" onclick="rechercherRdv()">Annuler</button>
+        <button class="btn btn-primary" onclick="confirmerModification('${reference}', ${serviceId})">
+          ✅ Confirmer la modification
+        </button>
+      </div>
+    </div>
+  `;
+};
+
+const confirmerModification = async (reference, serviceId) => {
+  const date  = document.getElementById('mod-date').value;
+  const heure = document.getElementById('mod-heure').value;
+  const errEl = document.getElementById('mod-error');
+
+  if (!date || !heure) {
+    errEl.textContent = '❌ Veuillez choisir une date et une heure !';
+    return;
+  }
+
+  try {
+    await apiCall(`/rdv/${reference}/modifier`, 'PUT', {
+      date_rdv:  date,
+      heure_rdv: heure
+    });
+
+    document.getElementById('search-ref').value = reference;
+    await rechercherRdv();
+    alert('✅ Rendez-vous modifié avec succès !');
+
+  } catch (err) {
+    errEl.textContent = '❌ ' + err.message;
+  }
+};
 const rechercherRdv = async () => {
   const ref = document.getElementById('search-ref').value.trim().toUpperCase();
   const result = document.getElementById('search-result');
@@ -756,6 +813,13 @@ const rechercherRdv = async () => {
         <div class="c-row"><span class="lbl">Citoyen</span><span style="font-weight:700">${rdv.citoyen_prenom} ${rdv.citoyen_nom}</span></div>
         <div class="c-row"><span class="lbl">Téléphone</span><span style="font-weight:700">${rdv.citoyen_tel}</span></div>
         <div class="c-row"><span class="lbl">Paiement</span><span style="font-weight:700">${rdv.paiement === 'guichet' ? '💵 Au guichet' : '📱 Mobile Money'}</span></div>
+        ${rdv.statut !== 'annule' && rdv.statut !== 'termine' ? `
+  <div style="margin-top:1rem;text-align:center">
+    <button class="btn btn-primary" onclick="afficherModification('${rdv.reference}', ${rdv.service_id})">
+      ✏️ Modifier la date/heure
+    </button>
+  </div>
+` : ''}
       </div>
     `;
 
