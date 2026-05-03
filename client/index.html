@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigiMairie — Prise de Rendez-vous</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --vert:#1a6b3c;--vert-mid:#238a4e;--vert-clair:#d6f0e0;
+  --or:#e8a020;--or-clair:#fef3d0;
+  --sable:#f7f2ea;--blanc:#fff;--gris:#6b7280;--gris-clair:#f3f4f6;
+  --rouge:#c0392b;--vert-ok:#16a34a;--texte:#1a2e1e;
+  --radius:14px;--shadow:0 4px 20px rgba(0,0,0,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--sable);color:var(--texte);min-height:100vh}
+
+.lang-bar{background:var(--vert);color:rgba(255,255,255,.7);font-size:.75rem;display:flex;justify-content:flex-end;align-items:center;gap:.75rem;padding:.35rem 1.5rem}
+.lang-btn{background:none;border:none;color:rgba(255,255,255,.7);font-size:.75rem;cursor:pointer;padding:.15rem .5rem;border-radius:4px;font-family:inherit;transition:all .2s}
+.lang-btn.active{background:rgba(255,255,255,.2);color:#fff;font-weight:700}
+
+header{background:linear-gradient(135deg,var(--vert) 0%,var(--vert-mid) 100%);padding:0 1.5rem;height:66px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 16px rgba(0,0,0,.2);position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:42px;height:42px;background:var(--or);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.logo h1{font-family:'Fraunces',serif;font-size:1.2rem;color:#fff;line-height:1.1}
+.logo p{font-size:.68rem;color:rgba(255,255,255,.6);letter-spacing:.06em;text-transform:uppercase}
+.nav-tabs{display:flex;background:rgba(0,0,0,.2);border-radius:8px;overflow:hidden}
+.nav-tab{padding:.42rem 1rem;font-size:.8rem;font-weight:700;color:rgba(255,255,255,.6);cursor:pointer;border:none;background:none;font-family:inherit;transition:all .2s}
+.nav-tab.active{background:var(--or);color:var(--vert)}
+.nav-tab:hover:not(.active){color:#fff;background:rgba(255,255,255,.1)}
+
+.cfg-banner{background:var(--or-clair);border-left:4px solid var(--or);padding:.7rem 1.5rem;font-size:.8rem;color:#7a4a00;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.cfg-toggle{background:var(--or);border:none;padding:.28rem .75rem;border-radius:6px;font-size:.76rem;font-weight:700;cursor:pointer;font-family:inherit;color:var(--vert)}
+.cfg-box{background:#fff;padding:1rem 1.5rem;border-bottom:1px solid #e5e7eb;display:none;flex-wrap:wrap;gap:1rem;align-items:flex-end}
+.cfg-box.open{display:flex}
+.cfg-field{display:flex;flex-direction:column;gap:.3rem;min-width:170px}
+.cfg-field label{font-size:.72rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.05em}
+.cfg-field input,.cfg-field select{padding:.42rem .7rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.84rem;font-family:inherit}
+
+main{max-width:1060px;margin:0 auto;padding:2rem 1rem}
+.view{display:none;animation:fadeUp .3s ease}
+.view.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.hero{background:linear-gradient(135deg,#154f2c 0%,var(--vert-mid) 60%,#1a5e30 100%);border-radius:20px;padding:2.4rem 2rem;margin-bottom:2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-50px;top:-50px;width:240px;height:240px;background:rgba(255,255,255,.04);border-radius:50%}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.28rem .8rem;border-radius:999px;margin-bottom:.9rem}
+.hero h2{font-family:'Fraunces',serif;font-size:clamp(1.5rem,4vw,2.3rem);color:#fff;line-height:1.15;margin-bottom:.65rem;position:relative;z-index:1}
+.hero p{color:rgba(255,255,255,.75);font-size:.92rem;max-width:480px;position:relative;z-index:1;line-height:1.55}
+.hero-deco{position:absolute;right:2rem;bottom:.5rem;font-size:5rem;opacity:.07;line-height:1}
+
+.steps-bar{display:flex;align-items:center;background:#fff;border-radius:var(--radius);padding:.9rem 1.4rem;box-shadow:var(--shadow);margin-bottom:2rem;overflow-x:auto;gap:0}
+.step-col{display:flex;flex-direction:column;align-items:center;flex:1;min-width:65px}
+.step-circle{width:36px;height:36px;border-radius:50%;background:var(--gris-clair);border:2px solid #d1d5db;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:var(--gris);transition:all .3s}
+.step-circle.done{background:var(--vert-ok);border-color:var(--vert-ok);color:#fff}
+.step-circle.active{background:var(--vert);border-color:var(--vert);color:#fff;box-shadow:0 0 0 4px rgba(26,107,60,.15)}
+.step-lbl{font-size:.65rem;color:var(--gris);margin-top:.3rem;text-align:center;font-weight:500;white-space:nowrap}
+.step-lbl.active{color:var(--vert);font-weight:700}
+.step-line{flex:1;height:2px;background:#e5e7eb;margin:0 4px 12px;transition:background .3s;flex-shrink:0}
+.step-line.done{background:var(--vert-ok)}
+
+.section-title{font-family:'Fraunces',serif;font-size:1.15rem;margin-bottom:1rem}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.8rem;margin-bottom:1.3rem}
+.svc-card{background:#fff;border:2px solid transparent;border-radius:var(--radius);padding:1.2rem .85rem;text-align:center;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
+.svc-card:hover{border-color:var(--vert-mid);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.svc-card.sel{border-color:var(--vert);background:#edf7f1}
+.svc-icon{font-size:1.9rem;margin-bottom:.6rem}
+.svc-name{font-size:.83rem;font-weight:700;margin-bottom:.22rem}
+.svc-desc{font-size:.7rem;color:var(--gris);line-height:1.4}
+.svc-local{font-size:.7rem;color:var(--vert-mid);font-style:italic;margin-top:.18rem}
+
+.docs-box{background:var(--or-clair);border:1px solid #f0c060;border-radius:10px;padding:.9rem 1.1rem;margin-bottom:1.3rem;font-size:.81rem}
+.docs-box strong{color:#7a4a00;font-weight:700;display:block;margin-bottom:.45rem}
+.docs-list{display:flex;flex-wrap:wrap;gap:.35rem}
+.doc-tag{background:#fff;border:1px solid #e0c070;border-radius:6px;padding:.18rem .55rem;font-size:.73rem;color:#7a4a00}
+
+.cal-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+@media(max-width:580px){.cal-layout{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:var(--radius);padding:1.3rem;box-shadow:var(--shadow)}
+.card-title{font-family:'Fraunces',serif;font-size:.97rem;margin-bottom:.9rem;display:flex;align-items:center;gap:.45rem}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+.cal-nav{background:none;border:1px solid #d1d5db;border-radius:7px;width:30px;height:30px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.cal-nav:hover{background:var(--vert);color:#fff;border-color:var(--vert)}
+.cal-month{font-weight:700;font-size:.9rem}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-dn{text-align:center;font-size:.62rem;font-weight:700;color:var(--gris);padding:.22rem 0;text-transform:uppercase}
+.cal-d{text-align:center;padding:.38rem .15rem;border-radius:7px;cursor:pointer;font-size:.8rem;transition:all .15s;line-height:1}
+.cal-d:hover:not(.dis):not(.emp){background:var(--vert);color:#fff}
+.cal-d.sel{background:var(--vert);color:#fff;font-weight:700}
+.cal-d.tod{border:2px solid var(--or);font-weight:700}
+.cal-d.dis{color:#d1d5db;cursor:not-allowed}
+.cal-d.emp{cursor:default}
+.slots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem}
+.slot{padding:.5rem .2rem;border:1.5px solid #d1d5db;border-radius:8px;text-align:center;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .15s}
+.slot:hover:not(.taken){border-color:var(--vert);color:var(--vert);background:var(--vert-clair)}
+.slot.sel{background:var(--vert);border-color:var(--vert);color:#fff}
+.slot.taken{background:var(--gris-clair);color:#d1d5db;cursor:not-allowed;text-decoration:line-through}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+@media(max-width:500px){.form-grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:.32rem}
+.field.full{grid-column:1/-1}
+label{font-size:.76rem;font-weight:700;color:var(--texte)}
+.lbl-local{font-size:.67rem;color:var(--vert-mid);font-weight:400;font-style:italic}
+input,select,textarea{padding:.6rem .8rem;border:1.5px solid #d1d5db;border-radius:9px;font-size:.86rem;font-family:inherit;color:var(--texte);transition:border-color .2s;background:#fff}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--vert);box-shadow:0 0 0 3px rgba(26,107,60,.1)}
+textarea{resize:vertical;min-height:75px}
+
+.btn{padding:.65rem 1.5rem;border-radius:9px;border:none;cursor:pointer;font-family:inherit;font-size:.86rem;font-weight:700;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:var(--vert);color:#fff}
+.btn-primary:hover{background:var(--vert-mid);transform:translateY(-1px);box-shadow:0 4px 16px rgba(26,107,60,.3)}
+.btn-primary:disabled{background:#9ca3af;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-secondary{background:#fff;color:var(--texte);border:1.5px solid #d1d5db}
+.btn-secondary:hover{border-color:var(--vert);color:var(--vert)}
+.btn-gold{background:var(--or);color:#fff}
+.btn-gold:hover{background:#c98010}
+.btn-sm{padding:.32rem .85rem;font-size:.76rem}
+.actions{display:flex;justify-content:space-between;align-items:center;margin-top:1.4rem;gap:1rem;flex-wrap:wrap}
+
+.confirm-wrap{text-align:center;padding:2.5rem 1rem}
+.confirm-icon{width:80px;height:80px;border-radius:50%;background:var(--vert-clair);border:3px solid var(--vert-ok);display:flex;align-items:center;justify-content:center;font-size:2.4rem;margin:0 auto 1.4rem}
+.confirm-ref{background:var(--vert);color:#fff;border-radius:10px;padding:.65rem 1.8rem;display:inline-block;margin:.9rem 0;font-weight:900;letter-spacing:.12em;font-size:1.1rem;font-family:'Fraunces',serif}
+.confirm-card{background:#fff;border-radius:var(--radius);padding:1.3rem;margin:1.1rem auto;max-width:400px;text-align:left;box-shadow:var(--shadow)}
+.c-row{display:flex;justify-content:space-between;padding:.45rem 0;font-size:.85rem;gap:1rem}
+.c-row+.c-row{border-top:1px solid var(--gris-clair)}
+.c-row span:first-child{color:var(--gris);flex-shrink:0}
+.c-row span:last-child{font-weight:700;text-align:right}
+.sms-note{background:var(--vert-clair);border-radius:8px;padding:.7rem 1rem;font-size:.78rem;color:var(--vert);margin-top:.9rem;display:inline-flex;align-items:center;gap:.45rem}
+
+.admin-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.4rem;flex-wrap:wrap;gap:1rem}
+.admin-top h2{font-family:'Fraunces',serif;font-size:1.6rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin-bottom:1.4rem}
+@media(max-width:580px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:#fff;border-radius:var(--radius);padding:1.1rem .9rem;box-shadow:var(--shadow);border-left:4px solid transparent}
+.stat-card.blue{border-color:#3b82f6}.stat-card.gold{border-color:var(--or)}.stat-card.green{border-color:var(--vert-ok)}.stat-card.red{border-color:var(--rouge)}
+.stat-v{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:900;line-height:1}
+.stat-l{font-size:.72rem;color:var(--gris);margin-top:.28rem}
+
+.filter-bar{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:.9rem}
+.f-btn{padding:.3rem .82rem;border-radius:999px;border:1.5px solid #d1d5db;background:#fff;font-size:.76rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.f-btn.active{background:var(--vert);border-color:var(--vert);color:#fff}
+
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:.7rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.05em;padding:.65rem 1rem;background:var(--gris-clair);border-bottom:2px solid #e5e7eb}
+th:first-child{border-radius:8px 0 0 0}th:last-child{border-radius:0 8px 0 0}
+td{padding:.8rem 1rem;border-bottom:1px solid #f3f4f6;font-size:.83rem;vertical-align:middle}
+tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
+.badge{display:inline-block;padding:.17rem .6rem;border-radius:999px;font-size:.7rem;font-weight:700}
+.b-green{background:#d1fae5;color:#065f46}.b-yellow{background:#fef3c7;color:#92400e}.b-red{background:#fee2e2;color:#991b1b}
+
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:18px;padding:1.7rem;max-width:430px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.2);animation:fadeUp .2s ease}
+.modal h3{font-family:'Fraunces',serif;font-size:1.15rem;margin-bottom:.9rem}
+.m-actions{display:flex;justify-content:flex-end;gap:.7rem;margin-top:1.3rem;flex-wrap:wrap}
+.empty{text-align:center;padding:2.5rem;color:var(--gris)}
+.empty .ei{font-size:2.8rem;margin-bottom:.65rem}
+
+@media(max-width:460px){
+  header{padding:0 .9rem}
+  .logo p{display:none}
+  .nav-tab{padding:.38rem .7rem;font-size:.74rem}
+  main{padding:1rem .65rem}
+  .hero{padding:1.6rem 1.1rem}
+  .hero-deco{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <span>🌐</span>
+  <button class="lang-btn active" onclick="setLang('fr',this)">Français</button>
+  <button class="lang-btn" id="local-btn" onclick="setLang('local',this)">Langue locale</button>
+</div>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark" id="app-logo">🏛️</div>
+    <div>
+      <h1 id="app-name">DigiMairie</h1>
+      <p id="app-sub">Services numériques aux citoyens</p>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchView('citoyen',this)">👤 Citoyen</button>
+   <button class="nav-tab" onclick="switchView('admin',this)">🔐 Agent</button>
+<button class="nav-tab" onclick="deconnecter()" id="btn-logout" style="display:none;background:#fee2e2;color:#991b1b">⬅️ Déconnexion</button>
+  </div>
+</header>
+
+<div class="cfg-banner">
+  <span>⚙️ <strong>Configuration mairie</strong> — Personnalisez avant déploiement : nom, langue locale, couleur.</span>
+  <button class="cfg-toggle" onclick="document.getElementById('cfg-box').classList.toggle('open')">Configurer ▾</button>
+</div>
+<div class="cfg-box" id="cfg-box">
+  <div class="cfg-field"><label>Nom de la mairie</label><input id="cfg-nom" type="text" value="Mairie de [Votre Ville]" oninput="applyConfig()"></div>
+  <div class="cfg-field"><label>Nom langue locale</label><input id="cfg-lang" type="text" placeholder="Wolof, Bambara, Lingala…" oninput="applyConfig()"></div>
+  <div class="cfg-field"><label>Couleur principale</label><input id="cfg-color" type="color" value="#1a6b3c" oninput="applyConfig()"></div>
+  <div class="cfg-field"><label>Logo (emoji)</label><input id="cfg-logo" type="text" value="🏛️" maxlength="4" oninput="applyConfig()"></div>
+  <button class="btn btn-primary btn-sm" onclick="document.getElementById('cfg-box').classList.remove('open')">✓ Fermer</button>
+</div>
+
+<main>
+
+<!-- ══ CITOYEN ══ -->
+<div class="view active" id="view-citoyen">
+  <div class="hero">
+    <div class="hero-badge">🟢 <span id="h-badge">Service en ligne disponible</span></div>
+    <h2 id="h-title">Prenez votre rendez-vous<br>à la mairie en ligne</h2>
+    <p id="h-sub">Évitez les longues files d'attente. Choisissez votre service, votre créneau, et venez à l'heure exacte.</p>
+    <div class="hero-deco">🌍</div>
+  </div>
+
+  <div class="steps-bar">
+    <div class="step-col"><div class="step-circle active" id="sc1">1</div><div class="step-lbl active" id="sl1">Service</div></div>
+    <div class="step-line" id="ln1"></div>
+    <div class="step-col"><div class="step-circle" id="sc2">2</div><div class="step-lbl" id="sl2">Date & Heure</div></div>
+    <div class="step-line" id="ln2"></div>
+    <div class="step-col"><div class="step-circle" id="sc3">3</div><div class="step-lbl" id="sl3">Vos infos</div></div>
+    <div class="step-line" id="ln3"></div>
+    <div class="step-col"><div class="step-circle" id="sc4">4</div><div class="step-lbl" id="sl4">Confirmation</div></div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div id="step1">
+    <div class="section-title" id="svc-title">Quel service souhaitez-vous ?</div>
+    <div class="svc-grid" id="svc-grid"></div>
+    <div id="docs-zone"></div>
+    <div style="text-align:right">
+      <button class="btn btn-primary" id="btn1" onclick="goStep(2)" disabled>Suivant →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div id="step2" style="display:none">
+    <div class="cal-layout">
+      <div class="card">
+        <div class="card-title">📅 <span id="lbl-date">Choisir une date</span></div>
+        <div class="cal-head">
+          <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
+          <span class="cal-month" id="cal-label"></span>
+          <button class="cal-nav" onclick="changeMonth(1)">›</button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🕐 <span id="lbl-slot">Créneaux disponibles</span></div>
+        <div id="slots-zone"><div class="empty" style="padding:1.5rem"><div class="ei">📅</div><span id="lbl-seldate">Sélectionnez une date</span></div></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="goStep(1)">← <span id="btn-back2">Retour</span></button>
+      <button class="btn btn-primary" id="btn2" onclick="goStep(3)" disabled><span id="btn-next2">Suivant</span> →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="step3" style="display:none">
+    <div class="card">
+      <div class="card-title">👤 <span id="lbl-coords">Vos coordonnées</span></div>
+      <div class="form-grid">
+        <div class="field">
+          <label><span id="lbl-prenom">Prénom</span> * <span class="lbl-local" id="ll-prenom"></span></label>
+          <input id="f-prenom" type="text" oninput="checkForm()">
+        </div>
+        <div class="field">
+          <label><span id="lbl-nom">Nom de famille</span> * <span class="lbl-local" id="ll-nom"></span></label>
+          <input id="f-nom" type="text" oninput="checkForm()">
+        </div>
+        <div class="field">
+          <label>📱 <span id="lbl-tel">Téléphone</span> *</label>
+          <input id="f-tel" type="tel" placeholder="+XXX XX XX XX XX" oninput="checkForm()">
+        </div>
+        <div class="field">
+          <label>📧 <span id="lbl-email">Email (optionnel)</span></label>
+          <input id="f-email" type="email">
+        </div>
+        <div class="field">
+          <label>🎂 <span id="lbl-naiss">Date de naissance</span></label>
+          <input id="f-naiss" type="date">
+        </div>
+        <div class="field">
+          <label>🪪 <span id="lbl-pid">N° pièce d'identité</span></label>
+          <input id="f-pid" type="text" placeholder="CNI / Passeport…">
+        </div>
+        <div class="field full">
+          <label>💬 <span id="lbl-note">Précisions sur votre demande</span></label>
+          <textarea id="f-note" placeholder="Informations complémentaires utiles pour l'agent…"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="goStep(2)">← <span id="btn-back3">Retour</span></button>
+      <button class="btn btn-primary" id="btn3" onclick="confirmer()" disabled>✓ <span id="btn-confirm">Confirmer le rendez-vous</span></button>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div id="step4" style="display:none">
+    <div class="confirm-wrap">
+      <div class="confirm-icon">✅</div>
+      <h2 style="font-family:'Fraunces',serif;font-size:1.85rem" id="c-title">Rendez-vous confirmé !</h2>
+      <p style="color:var(--gris);margin-top:.4rem" id="c-sub">Présentez cette référence à l'accueil de la mairie.</p>
+      <div class="confirm-ref" id="c-ref">RDV-XXXXXX</div>
+      <div class="confirm-card" id="c-summary"></div>
+      <div class="sms-note">📲 <span id="c-sms">Un SMS de rappel vous sera envoyé 24h avant votre rendez-vous.</span></div>
+      <br><br>
+      <button class="btn btn-gold" onclick="nouveauRdv()">+ <span id="btn-nouveau">Nouveau rendez-vous</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN ══ -->
+<div class="view" id="view-admin">
+  <div class="admin-top">
+    <div>
+      <h2>Tableau de bord — Agents</h2>
+      <p style="color:var(--gris);font-size:.8rem" id="admin-date"></p>
+    </div>
+    <button class="btn btn-primary" onclick="openNewModal()">+ Nouveau RDV</button>
+  </div>
+  <div class="stats">
+    <div class="stat-card blue"><div class="stat-v" id="s-total">0</div><div class="stat-l">Total cette semaine</div></div>
+    <div class="stat-card gold"><div class="stat-v" id="s-today">0</div><div class="stat-l">Aujourd'hui</div></div>
+    <div class="stat-card green"><div class="stat-v" id="s-conf">0</div><div class="stat-l">Confirmés</div></div>
+    <div class="stat-card red"><div class="stat-v" id="s-ann">0</div><div class="stat-l">Annulés</div></div>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.7rem;margin-bottom:.9rem">
+      <div class="filter-bar">
+        <button class="f-btn active" onclick="filterRdv('tous',this)">Tous</button>
+        <button class="f-btn" onclick="filterRdv('confirme',this)">✓ Confirmés</button>
+        <button class="f-btn" onclick="filterRdv('en-attente',this)">⏳ En attente</button>
+        <button class="f-btn" onclick="filterRdv('annule',this)">✗ Annulés</button>
+      </div>
+      <input type="search" placeholder="🔍 Rechercher…" style="max-width:175px;font-size:.8rem" oninput="searchRdv(this.value)">
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr>
+          <th>Référence</th><th>Citoyen</th><th>Service</th><th>Date & Heure</th><th>Statut</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="rdv-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div class="overlay" id="overlay" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div id="modal-inner"></div>
+  </div>
+</div>
+
+<script>
+  // ── CONFIGURATION API ──
+const API_URL = 'http://localhost:5000/api';
+let authToken = localStorage.getItem('token') || null;
+
+// ── FONCTION UTILITAIRE ──
+const apiCall = async (endpoint, method = 'GET', body = null, token = null) => {
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  
+  const options = { method, headers };
+  if (body) options.body = JSON.stringify(body);
+  
+  const response = await fetch(`${API_URL}${endpoint}`, options);
+  const data = await response.json();
+  
+  if (!response.ok) throw new Error(data.message || 'Erreur serveur');
+  return data;
+};
+// ── I18N ──
+const T = {
+  fr:{
+    badge:'Service en ligne disponible',
+    heroTitle:'Prenez votre rendez-vous<br>à la mairie en ligne',
+    heroSub:'Évitez les longues files d\'attente. Choisissez votre service, votre créneau, et venez à l\'heure exacte.',
+    svcTitle:'Quel service souhaitez-vous ?',
+    stepLabels:['Service','Date & Heure','Vos infos','Confirmation'],
+    dateLabel:'Choisir une date',slotLabel:'Créneaux disponibles',seldateLabel:'Sélectionnez une date',
+    coordsLabel:'Vos coordonnées',prenomLabel:'Prénom',nomLabel:'Nom de famille',
+    telLabel:'Téléphone',emailLabel:'Email (optionnel)',naissLabel:'Date de naissance',pidLabel:'N° pièce d\'identité',noteLabel:'Précisions sur votre demande',
+    back:'Retour',next:'Suivant',confirmBtn:'Confirmer le rendez-vous',
+    confirmTitle:'Rendez-vous confirmé !',confirmSub:'Présentez cette référence à l\'accueil de la mairie.',
+    smsNote:'Un SMS de rappel vous sera envoyé 24h avant votre rendez-vous.',newBtn:'Nouveau rendez-vous',
+    docsTitle:'📎 Documents à apporter :',
+    svcNames:['État civil','Carte nationale d\'identité','Passeport','Foncier / Urbanisme','Aide sociale','Permis divers'],
+    svcDesc:['Naissance, mariage, décès','Première demande & renouvellement','Demande & renouvellement','Permis de construire, déclarations','CCAS & prestations municipales','Permis d\'exercer, licences'],
+    svcLocal:['','','','','',''],
+    docs:[
+      ['Acte de naissance','Livret de famille','Pièce d\'identité'],
+      ['Photo d\'identité','Justificatif domicile','Ancien titre si renouvellement'],
+      ['Photos d\'identité','Extrait de naissance','Justificatif domicile'],
+      ['Plan de situation','Titre de propriété','Formulaire de demande'],
+      ['Pièce d\'identité','Justificatif de revenus','Attestation de résidence'],
+      ['Pièce d\'identité','Justificatif d\'activité','Formulaire de demande'],
+    ],
+    statLabel:'Service',dateF:'Date',heureF:'Heure',nomF:'Nom',telF:'Téléphone',
+  },
+  local:{
+    badge:'Service an ligne disponible',
+    heroTitle:'Jëf sa rendez-vous<br>ci mairie bi',
+    heroSub:'Bul dem dem ak dëkk. Tann sa sërvice, sa waxtu, dem ci kanam.',
+    svcTitle:'Lu ngi ñëw jëfandikoo?',
+    stepLabels:['Sërvice','Bés & Waxtu','Sa yëgël','Xam-xam'],
+    dateLabel:'Tann bès',slotLabel:'Waxtu yi am',seldateLabel:'Tann bès bi nga bëgg',
+    coordsLabel:'Sa adirès yi',prenomLabel:'Tugël',nomLabel:'Jamono',
+    telLabel:'Téléphone',emailLabel:'Email (dañ ko waral)',naissLabel:'Fan nga jur',pidLabel:'N° yëgël',noteLabel:'Xam-xam ci ci la bëgg',
+    back:'Dellu',next:'Dem kanam',confirmBtn:'Seet sa rendez-vous',
+    confirmTitle:'Rendez-vous bi dafa dóór !',confirmSub:'Yëgle numéro bii ci mairie.',
+    smsNote:'Dinga jëriñ SMS bi ci kanam rendez-vous bi.',newBtn:'Rendez-vous bees',
+    docsTitle:'📎 Papiers yi nga amal :',
+    // ↓ Remplacez par les vrais noms dans la langue locale
+    svcNames:['État civil','CNI','Passeport','Foncier','Aide sociale','Permis'],
+    svcDesc:['Jur, dëkkal, dee','Ci kanam & renouvellement','Jëf & renouvellement','Permis & déclarations','Jëfandikoo municipal yi','Lisans & autorisations'],
+    svcLocal:['[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]'],
+    docs:[
+      ['Extrait naissance','Livret famille','Pièce identité'],
+      ['Photo identité','Justificatif domicile','Ancien titre'],
+      ['Photos','Extrait naissance','Domicile'],
+      ['Plan','Titre propriété','Formulaire'],
+      ['Pièce identité','Justificatif revenus','Attestation'],
+      ['Pièce identité','Justificatif activité','Formulaire'],
+    ],
+    statLabel:'Sërvice',dateF:'Bès',heureF:'Waxtu',nomF:'Jamono',telF:'Tél.',
+  }
+};
+let lang = 'fr', curT = T.fr;
+
+function setLang(l, btn) {
+  lang = l; curT = T[l];
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyLang();
+  renderServices();
+  if (calYear !== undefined) renderCal();
+}
+
+function applyLang() {
+  const t = curT;
+  document.getElementById('h-badge').textContent = t.badge;
+  document.getElementById('h-title').innerHTML = t.heroTitle;
+  document.getElementById('h-sub').textContent = t.heroSub;
+  document.getElementById('svc-title').textContent = t.svcTitle;
+  ['sl1','sl2','sl3','sl4'].forEach((id,i) => document.getElementById(id).textContent = t.stepLabels[i]);
+  document.getElementById('lbl-date').textContent = t.dateLabel;
+  document.getElementById('lbl-slot').textContent = t.slotLabel;
+  document.getElementById('lbl-seldate').textContent = t.seldateLabel;
+  document.getElementById('lbl-coords').textContent = t.coordsLabel;
+  document.getElementById('lbl-prenom').textContent = t.prenomLabel;
+  document.getElementById('lbl-nom').textContent = t.nomLabel;
+  document.getElementById('lbl-tel').textContent = t.telLabel;
+  document.getElementById('lbl-email').textContent = t.emailLabel;
+  document.getElementById('lbl-naiss').textContent = t.naissLabel;
+  document.getElementById('lbl-pid').textContent = t.pidLabel;
+  document.getElementById('lbl-note').textContent = t.noteLabel;
+  document.getElementById('btn-back2').textContent = t.back;
+  document.getElementById('btn-next2').textContent = t.next;
+  document.getElementById('btn-back3').textContent = t.back;
+  document.getElementById('btn-confirm').textContent = t.confirmBtn;
+  document.getElementById('c-title').textContent = t.confirmTitle;
+  document.getElementById('c-sub').textContent = t.confirmSub;
+  document.getElementById('c-sms').textContent = t.smsNote;
+  document.getElementById('btn-nouveau').textContent = t.newBtn;
+}
+
+// ── CONFIG ──
+function applyConfig() {
+  const nom = document.getElementById('cfg-nom').value || 'DigiMairie';
+  const langName = document.getElementById('cfg-lang').value;
+  const color = document.getElementById('cfg-color').value;
+  const logo = document.getElementById('cfg-logo').value || '🏛️';
+  document.getElementById('app-name').textContent = nom;
+  document.getElementById('app-logo').textContent = logo;
+  document.documentElement.style.setProperty('--vert', color);
+  if (langName) document.getElementById('local-btn').textContent = langName;
+}
+
+// ── SERVICES ──
+const ICONS = ['📋','🪪','📘','🏗️','🤝','📝'];
+let selSvc = '', selSvcIdx = -1, selectedService = null, payMode = 'guichet';
+
+const renderServices = async () => {
+  const g = document.getElementById('svc-grid');
+  g.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--gris)">⏳ Chargement des services...</div>';
+
+  try {
+    const services = await apiCall('/services');
+
+    const icons = {
+      'État civil': '📋',
+      'Urbanisme': '🏗️',
+      'Aide sociale': '🤝',
+      'Permis divers': '📄',
+      'Logement': '🏠',
+      'Légalisation': '📜'
+    };
+
+    g.innerHTML = '';
+    services.forEach(s => {
+      const icon = icons[s.nom] || '📋';
+      const d = document.createElement('div');
+      d.className = 'svc-card' + (selectedService?.id === s.id ? ' sel' : '');
+      d.innerHTML = `
+        <div class="svc-icon">${icon}</div>
+        <div class="svc-name">${s.nom}</div>
+        <div class="svc-desc">${s.description}</div>
+        <div class="svc-local">${s.duree_min} min</div>
+      `;
+      d.onclick = () => {
+        selectedService = s;
+        selSvc = s.nom;
+        renderServices();
+        document.getElementById('btn1').disabled = false;
+      };
+      g.appendChild(d);
+    });
+
+  } catch (err) {
+    g.innerHTML = `<div style="text-align:center;padding:2rem;color:red">❌ ${err.message}</div>`;
+  }
+};
+
+function selectSvc(el, idx) {
+  document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('btn1').disabled = false;
+  const docs = curT.docs[idx];
+  document.getElementById('docs-zone').innerHTML = `
+    <div class="docs-box">
+      <strong>${curT.docsTitle}</strong>
+      <div class="docs-list">${docs.map(d=>`<span class="doc-tag">📄 ${d}</span>`).join('')}</div>
+    </div>
+  `;
+}
+
+// ── CALENDAR ──
+const MOIS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const SLOTS = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30'];
+const TAKEN = {};
+let calYear, calMonth, selDate = null, selSlot = '', curStep = 1, adminFilter = 'tous';
+
+function goStep(n) {
+  document.getElementById('step'+curStep).style.display = 'none';
+  curStep = n;
+  document.getElementById('step'+n).style.display = 'block';
+  updateSteps();
+  if (n === 2) initCal();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateSteps() {
+  for (let i = 1; i <= 4; i++) {
+    const c = document.getElementById('sc'+i);
+    const l = document.getElementById('sl'+i);
+    if (i < curStep) { c.className='step-circle done'; c.innerHTML='✓'; }
+    else if (i === curStep) { c.className='step-circle active'; c.textContent=i; }
+    else { c.className='step-circle'; c.textContent=i; }
+    l.className = 'step-lbl' + (i === curStep ? ' active' : '');
+    l.textContent = curT.stepLabels[i-1];
+  }
+  for (let i = 1; i <= 3; i++) {
+    const ln = document.getElementById('ln'+i);
+    if (ln) ln.className = 'step-line' + (i < curStep ? ' done' : '');
+  }
+}
+
+function initCal() {
+  const now = new Date();
+  calYear = now.getFullYear(); calMonth = now.getMonth();
+  renderCal();
+}
+function changeMonth(d) {
+  calMonth += d;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  renderCal();
+}
+function renderCal() {
+  document.getElementById('cal-label').textContent = MOIS[calMonth] + ' ' + calYear;
+  const g = document.getElementById('cal-grid');
+  g.innerHTML = '';
+  ['Lu','Ma','Me','Je','Ve','Sa','Di'].forEach(j => {
+    const el = document.createElement('div'); el.className='cal-dn'; el.textContent=j; g.appendChild(el);
+  });
+  const first = new Date(calYear, calMonth, 1);
+  let sd = first.getDay(); sd = sd===0?6:sd-1;
+  for (let i=0;i<sd;i++){const el=document.createElement('div');el.className='cal-d emp';g.appendChild(el);}
+  const days = new Date(calYear,calMonth+1,0).getDate();
+  const today = new Date();
+  for (let d=1;d<=days;d++) {
+    const el = document.createElement('div');
+    const date = new Date(calYear,calMonth,d);
+    const dow = date.getDay();
+    const isPast = date < new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    const ds = `${String(d).padStart(2,'0')}/${String(calMonth+1).padStart(2,'0')}/${calYear}`;
+    el.textContent = d;
+    if (isPast||dow===0||dow===6) { el.className='cal-d dis'; }
+    else {
+      el.className = 'cal-d' + (selDate===ds?' sel':'');
+      if (d===today.getDate()&&calMonth===today.getMonth()&&calYear===today.getFullYear()) el.classList.add('tod');
+      el.onclick = () => pickDate(ds,el);
+    }
+    g.appendChild(el);
+  }
+}
+const pickDate = async (ds, el) => {
+  document.querySelectorAll('.cal-d').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  selDate = ds; selSlot = '';
+  document.getElementById('btn2').disabled = true;
+
+  const zone = document.getElementById('slots-zone');
+  zone.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--gris)">⏳ Chargement des créneaux...</div>';
+
+  try {
+    // Convertir date DD/MM/YYYY en YYYY-MM-DD
+    const dateFormatee = ds.split('/').reverse().join('-');
+
+    const creneaux = await apiCall(
+      `/rdv/disponibles?service_id=${selectedService.id}&date=${dateFormatee}`
+    );
+
+    zone.innerHTML = '<div class="slots-grid" id="sw"></div>';
+    const sw = document.getElementById('sw');
+
+    creneaux.forEach(c => {
+      const el = document.createElement('div');
+      el.textContent = c.heure;
+      el.className = 'slot' + (!c.disponible ? ' taken' : '');
+      if (c.disponible) {
+        el.onclick = () => pickSlot(c.heure, el);
+      }
+      sw.appendChild(el);
+    });
+
+  } catch (err) {
+    zone.innerHTML = `<div style="text-align:center;padding:1rem;color:red">❌ ${err.message}</div>`;
+  }
+};
+function pickSlot(s,el){
+  document.querySelectorAll('.slot').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel'); selSlot=s;
+  document.getElementById('btn2').disabled=false;
+}
+
+function checkForm(){
+  document.getElementById('btn3').disabled = !['f-prenom','f-nom','f-tel'].every(id=>document.getElementById(id).value.trim());
+}
+
+const confirmer = async () => {
+  const prenom = document.getElementById('f-prenom').value.trim();
+  const nom    = document.getElementById('f-nom').value.trim();
+  const tel    = document.getElementById('f-tel').value.trim();
+  const email  = document.getElementById('f-email').value.trim();
+  const nni = '';
+  const notes  = document.getElementById('f-note').value.trim();
+
+  try {
+    // Bouton en chargement
+    const btn = document.getElementById('btn3');
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Envoi en cours...';
+
+    const data = await apiCall('/rdv', 'POST', {
+      service_id:     selectedService.id,
+      citoyen_nom:    nom,
+      citoyen_prenom: prenom,
+      citoyen_tel:    tel,
+      citoyen_email:  email,
+      citoyen_nni:    nni,
+      date_rdv: selDate.split('/').reverse().join('-'),
+      heure_rdv: selSlot,
+      paiement:       payMode,
+      notes:          notes
+    });
+
+    // Afficher la confirmation
+    document.getElementById('c-ref').textContent = data.rdv.reference;
+    document.getElementById('c-summary').innerHTML = `
+      <div class="c-row"><span class="lbl">Service</span><span class="val">${selectedService.nom}</span></div>
+      <div class="c-row"><span class="lbl">Date</span><span class="val">${selDate}</span></div>
+      <div class="c-row"><span class="lbl">Heure</span><span class="val">${selSlot}</span></div>
+      <div class="c-row"><span class="lbl">Nom</span><span class="val">${prenom} ${nom}</span></div>
+      <div class="c-row"><span class="lbl">Téléphone</span><span class="val">${tel}</span></div>
+      ${email ? `<div class="c-row"><span class="lbl">Email</span><span class="val">${email}</span></div>` : ''}
+      <div class="c-row"><span class="lbl">Paiement</span><span class="val">${payMode === 'guichet' ? '💵 Au guichet' : '📱 Mobile Money'}</span></div>
+    `;
+
+    goStep(4);
+
+  } catch (err) {
+    alert('❌ Erreur : ' + err.message);
+    const btn = document.getElementById('btn3');
+    btn.disabled = false;
+    btn.innerHTML = '✓ <span data-t="confirmBtn">Confirmer le RDV</span>';
+  }
+};
+
+function nouveauRdv(){
+  selSvc='';selDate=null;selSlot='';
+  ['f-prenom','f-nom','f-tel','f-email','f-naiss','f-pid','f-note'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('docs-zone').innerHTML='';
+  document.getElementById('btn3').disabled=true;
+  goStep(1);
+}
+
+// ── ADMIN DATA ──
+let rdvList = [
+  {id:'RDV-AA1B2C',nom:'Koné Aminata',service:'Carte nationale d\'identité',date:'29/04/2026',heure:'08:00',statut:'confirme',tel:'+225 07 01 02 03',email:''},
+  {id:'RDV-BB3C4D',nom:'Diallo Moussa',service:'État civil',date:'29/04/2026',heure:'09:30',statut:'confirme',tel:'+221 77 123 45 67',email:''},
+  {id:'RDV-CC5D6E',nom:'Mbaye Fatou',service:'Passeport',date:'29/04/2026',heure:'11:00',statut:'en-attente',tel:'+221 76 234 56 78',email:'fatou.mbaye@email.sn'},
+  {id:'RDV-DD7E8F',nom:'Touré Ibrahim',service:'Foncier / Urbanisme',date:'29/04/2026',heure:'14:30',statut:'confirme',tel:'+223 70 345 67 89',email:''},
+  {id:'RDV-EE9F0G',nom:'Ndiaye Aïssatou',service:'Aide sociale',date:'30/04/2026',heure:'08:30',statut:'annule',tel:'+221 75 456 78 90',email:''},
+  {id:'RDV-FF1G2H',nom:'Ouédraogo Paul',service:'Permis divers',date:'30/04/2026',heure:'10:00',statut:'confirme',tel:'+226 70 567 89 01',email:''},
+  {id:'RDV-GG3H4I',nom:'Camara Sali',service:'Carte nationale d\'identité',date:'02/05/2026',heure:'09:00',statut:'confirme',tel:'+224 621 23 45 67',email:''},
+  {id:'RDV-HH5I6J',nom:'Bah Mariama',service:'État civil',date:'02/05/2026',heure:'14:00',statut:'en-attente',tel:'+224 622 34 56 78',email:'mariama.bah@mail.gn'},
+  {id:'RDV-II7J8K',nom:'Traoré Seydou',service:'Passeport',date:'05/05/2026',heure:'08:30',statut:'confirme',tel:'+226 65 789 01 23',email:''},
+  {id:'RDV-JJ9K0L',nom:'Coulibaly Rokia',service:'Aide sociale',date:'05/05/2026',heure:'11:30',statut:'confirme',tel:'+223 66 890 12 34',email:''},
+];
+
+function badge(s){
+  if(s==='confirme')return'<span class="badge b-green">✓ Confirmé</span>';
+  if(s==='en-attente')return'<span class="badge b-yellow">⏳ En attente</span>';
+  return'<span class="badge b-red">✗ Annulé</span>';
+}
+
+const renderAdmin = async (filter, search) => {
+  filter = filter || adminFilter;
+
+  const tbody = document.getElementById('rdv-body');
+  if (!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="6"><div style="text-align:center;padding:2rem;color:var(--gris)">⏳ Chargement...</div></td></tr>';
+
+  try {
+    const list = await apiCall('/rdv', 'GET', null, authToken);
+
+    // Filtrer
+    let filtered = [...list];
+    if (filter !== 'tous') filtered = filtered.filter(r => r.statut === filter);
+    if (search) {
+      const q = search.toLowerCase();
+      filtered = filtered.filter(r =>
+        (r.citoyen_nom + ' ' + r.citoyen_prenom).toLowerCase().includes(q) ||
+        r.service_nom.toLowerCase().includes(q) ||
+        r.reference.toLowerCase().includes(q)
+      );
+    }
+
+    tbody.innerHTML = '';
+
+    if (!filtered.length) {
+      tbody.innerHTML = `<tr><td colspan="6"><div class="empty"><div class="ei">📭</div>Aucun rendez-vous trouvé</div></td></tr>`;
+    } else {
+      filtered.forEach(r => {
+        const date = new Date(r.date_rdv).toLocaleDateString('fr-FR');
+        const heure = r.heure_rdv.substr(0, 5);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><code style="background:var(--gris-clair);padding:.13rem .4rem;border-radius:5px;font-size:.76rem">${r.reference}</code></td>
+          <td><div style="font-weight:700">${r.citoyen_prenom} ${r.citoyen_nom}</div><div style="font-size:.72rem;color:var(--gris)">${r.citoyen_tel}</div></td>
+          <td>${r.service_nom}</td>
+          <td><strong>${date}</strong><br><span style="font-size:.78rem;color:var(--gris)">${heure}</span></td>
+          <td>${badge(r.statut)}</td>
+          <td style="display:flex;gap:.35rem;flex-wrap:wrap;padding:.55rem 1rem">
+            <button class="btn btn-sm btn-secondary" onclick="openDetail(${r.id})">Voir</button>
+            ${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler</button>` : ''}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Stats
+    const today = new Date().toLocaleDateString('fr-FR');
+    document.getElementById('s-total').textContent = list.length;
+    document.getElementById('s-today').textContent = list.filter(r =>
+      new Date(r.date_rdv).toLocaleDateString('fr-FR') === today
+    ).length;
+    document.getElementById('s-conf').textContent = list.filter(r => r.statut === 'confirme').length;
+    document.getElementById('s-ann').textContent  = list.filter(r => r.statut === 'annule').length;
+
+  } catch (err) {
+    if (err.message.includes('Token') || err.message.includes('token')) {
+      authToken = null;
+      localStorage.removeItem('token');
+      tbody.innerHTML = '<tr><td colspan="6"><div class="empty">🔐 Session expirée — reconnectez-vous</div></td></tr>';
+    } else {
+      tbody.innerHTML = `<tr><td colspan="6"><div class="empty">❌ ${err.message}</div></td></tr>`;
+    }
+  }
+};
+
+function filterRdv(f,btn){adminFilter=f;document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderAdmin(f);}
+function searchRdv(v){renderAdmin(adminFilter,v);}
+const deconnecter = () => {
+  authToken = null;
+  localStorage.removeItem('token');
+  document.getElementById('btn-logout').style.display = 'none';
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-citoyen').classList.add('active');
+  document.querySelectorAll('.nav-tab')[0].classList.add('active');
+};
+
+const annuler = async (id) => {
+  if (!confirm('Voulez-vous vraiment annuler ce rendez-vous ?')) return;
+  
+  try {
+    await apiCall(`/rdv/${id}/statut`, 'PUT', { statut: 'annule' }, authToken);
+    closeModal();
+    renderAdmin();
+  } catch (err) {
+    alert('❌ Erreur : ' + err.message);
+  }
+};
+
+const openDetail = async (id) => {
+  try {
+    const list = await apiCall('/rdv', 'GET', null, authToken);
+    const r = list.find(x => x.id === id);
+    if (!r) return;
+
+    const date = new Date(r.date_rdv).toLocaleDateString('fr-FR');
+    const heure = r.heure_rdv.substr(0, 5);
+
+    document.getElementById('modal-inner').innerHTML = `
+      <h3>📋 Détail du rendez-vous</h3>
+      <div style="display:flex;flex-direction:column;gap:.45rem;margin:.7rem 0">
+        <div class="c-row" style="border:none"><span style="color:var(--gris)">Référence</span><span style="font-weight:900;color:var(--vert)">${r.reference}</span></div>
+        <div class="c-row"><span style="color:var(--gris)">Citoyen</span><span>${r.citoyen_prenom} ${r.citoyen_nom}</span></div>
+        <div class="c-row"><span style="color:var(--gris)">Téléphone</span><span>${r.citoyen_tel}</span></div>
+        ${r.citoyen_email ? `<div class="c-row"><span style="color:var(--gris)">Email</span><span>${r.citoyen_email}</span></div>` : ''}
+        <div class="c-row"><span style="color:var(--gris)">Service</span><span>${r.service_nom}</span></div>
+        <div class="c-row"><span style="color:var(--gris)">Date & Heure</span><span>${date} à ${heure}</span></div>
+        <div class="c-row"><span style="color:var(--gris)">Paiement</span><span>${r.paiement === 'guichet' ? '💵 Au guichet' : '📱 Mobile Money'}</span></div>
+        <div class="c-row"><span style="color:var(--gris)">Statut</span><span>${badge(r.statut)}</span></div>
+        ${r.notes ? `<div class="c-row"><span style="color:var(--gris)">Notes</span><span>${r.notes}</span></div>` : ''}
+      </div>
+      <div class="m-actions">
+        ${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler ce RDV</button>` : ''}
+        <button class="btn btn-primary btn-sm" onclick="closeModal()">Fermer</button>
+      </div>
+    `;
+    document.getElementById('overlay').classList.add('open');
+
+  } catch (err) {
+    alert('❌ Erreur : ' + err.message);
+  }
+};
+
+function openNewModal(){
+  const svcs=T.fr.svcNames;
+  document.getElementById('modal-inner').innerHTML=`
+    <h3>+ Créer un rendez-vous</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:.7rem 0">
+      <div class="field"><label>Nom complet *</label><input id="m-nom" type="text"></div>
+      <div class="field"><label>Téléphone *</label><input id="m-tel" type="tel" placeholder="+XXX XX XX XX"></div>
+      <div class="field"><label>Service *</label><select id="m-svc">${svcs.map(s=>`<option>${s}</option>`).join('')}</select></div>
+      <div class="field"><label>Heure *</label><select id="m-h">${SLOTS.map(s=>`<option>${s}</option>`).join('')}</select></div>
+      <div class="field" style="grid-column:1/-1"><label>Date *</label><input id="m-date" type="date" min="${new Date().toISOString().split('T')[0]}"></div>
+    </div>
+    <div class="m-actions">
+      <button class="btn btn-secondary btn-sm" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-primary btn-sm" onclick="saveNew()">✓ Créer</button>
+    </div>
+  `;
+  document.getElementById('overlay').classList.add('open');
+}
+
+function saveNew(){
+  const nom=document.getElementById('m-nom').value;
+  const tel=document.getElementById('m-tel').value;
+  const svc=document.getElementById('m-svc').value;
+  const h=document.getElementById('m-h').value;
+  const dr=document.getElementById('m-date').value;
+  if(!nom||!tel||!dr)return alert('Veuillez remplir tous les champs obligatoires.');
+  const [y,m,d]=dr.split('-');
+  const ref='RDV-'+Math.random().toString(36).substr(2,6).toUpperCase();
+  rdvList.unshift({id:ref,nom,tel,service:svc,date:`${d}/${m}/${y}`,heure:h,statut:'confirme',email:''});
+  closeModal();renderAdmin();
+}
+
+function closeModal(){document.getElementById('overlay').classList.remove('open');}
+
+const switchView = async (v, btn) => {
+  // Si l'agent veut accéder au tableau de bord
+  if (v === 'admin') {
+    // Vérifier si déjà connecté
+    if (!authToken) {
+      afficherLoginModal();
+      return;
+    }
+  }
+
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (v === 'admin') renderAdmin();
+};
+
+// ── MODAL DE CONNEXION AGENT ──
+const afficherLoginModal = () => {
+ document.getElementById('modal-inner').innerHTML = `
+    <h3>🔐 Connexion Agent</h3>
+    <p style="font-size:.82rem;color:var(--gris);margin-bottom:1rem">
+      Réservé aux agents et administrateurs de la mairie.
+    </p>
+    <div style="display:flex;flex-direction:column;gap:.75rem">
+      <div class="field">
+        <label>Email *</label>
+        <input type="email" id="login-email" placeholder="votre@mairie.sn">
+      </div>
+      <div class="field">
+        <label>Mot de passe *</label>
+        <input type="password" id="login-pwd" placeholder="••••••••">
+      </div>
+      <div id="login-error" style="display:none;color:var(--rouge);font-size:.82rem"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-primary" onclick="connecterAgent()">Se connecter</button>
+    </div>
+  `;
+ document.getElementById('overlay').classList.add('open');
+};
+
+// ── CONNEXION AGENT ──
+const connecterAgent = async () => {
+  const email = document.getElementById('login-email').value.trim();
+  const pwd   = document.getElementById('login-pwd').value.trim();
+  const errEl = document.getElementById('login-error');
+
+  if (!email || !pwd) {
+    errEl.style.display = 'block';
+    errEl.textContent = '❌ Veuillez remplir tous les champs !';
+    return;
+  }
+
+  try {
+    const btn = document.querySelector('.modal .btn-primary');
+    btn.disabled = true;
+    btn.textContent = '⏳ Connexion...';
+
+    const data = await apiCall('/auth/connecter', 'POST', {
+      email, mot_de_passe: pwd
+    });
+
+    // Sauvegarder le token
+    authToken = data.token;
+    localStorage.setItem('token', data.token);
+
+    closeModal();
+
+    // Aller au tableau de bord
+    document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById('view-admin').classList.add('active');
+    document.querySelectorAll('.nav-tab')[1].classList.add('active');
+    renderAdmin();
+    document.getElementById('btn-logout').style.display = 'block';
+
+  } catch (err) {
+    errEl.style.display = 'block';
+    errEl.textContent = '❌ ' + err.message;
+    const btn = document.querySelector('.modal .btn-primary');
+    btn.disabled = false;
+    btn.textContent = 'Se connecter';
+  }
+};
+
+// ── INIT ──
+const now=new Date();
+document.getElementById('admin-date').textContent='Semaine du '+now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+renderServices();
+renderAdmin();
+</script>
+</body>
+</html>
