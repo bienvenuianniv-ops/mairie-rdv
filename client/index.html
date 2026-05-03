@@ -942,6 +942,9 @@ function badge(s){
   if(s==='en-attente')return'<span class="badge b-yellow">⏳ En attente</span>';
   return'<span class="badge b-red">✗ Annulé</span>';
 }
+// ── PAGINATION ──
+let currentPage = 1;
+const RDV_PAR_PAGE = 10;
 
 const renderAdmin = async (filter, search) => {
   filter = filter || adminFilter;
@@ -966,6 +969,11 @@ const renderAdmin = async (filter, search) => {
     }
 
     tbody.innerHTML = '';
+    // ── Pagination ──
+const totalPages = Math.ceil(filtered.length / RDV_PAR_PAGE);
+const debut = (currentPage - 1) * RDV_PAR_PAGE;
+const fin = debut + RDV_PAR_PAGE;
+filtered = filtered.slice(debut, fin);
 
     if (!filtered.length) {
       tbody.innerHTML = `<tr><td colspan="6"><div class="empty"><div class="ei">📭</div>Aucun rendez-vous trouvé</div></td></tr>`;
@@ -989,6 +997,44 @@ const renderAdmin = async (filter, search) => {
       });
     }
 
+    // ── Pagination ──
+    if (totalPages > 1) {
+      const paginationDiv = document.createElement('div');
+      paginationDiv.style.cssText = 'display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:1rem;flex-wrap:wrap';
+      
+      const btnPrev = document.createElement('button');
+      btnPrev.className = 'btn btn-secondary btn-sm';
+      btnPrev.textContent = '← Précédent';
+      btnPrev.disabled = currentPage === 1;
+      btnPrev.onclick = () => { currentPage--; renderAdmin(); };
+      paginationDiv.appendChild(btnPrev);
+
+      for (let i = 1; i <= totalPages; i++) {
+        const btnPage = document.createElement('button');
+        btnPage.className = 'btn btn-sm ' + (i === currentPage ? 'btn-primary' : 'btn-secondary');
+        btnPage.textContent = i;
+        btnPage.onclick = () => { currentPage = i; renderAdmin(); };
+        paginationDiv.appendChild(btnPage);
+      }
+
+      const btnNext = document.createElement('button');
+      btnNext.className = 'btn btn-secondary btn-sm';
+      btnNext.textContent = 'Suivant →';
+      btnNext.disabled = currentPage === totalPages;
+      btnNext.onclick = () => { currentPage++; renderAdmin(); };
+      paginationDiv.appendChild(btnNext);
+
+      const info = document.createElement('span');
+      info.style.cssText = 'font-size:.8rem;color:var(--gris);width:100%;text-align:center;margin-top:.3rem';
+      info.textContent = `Page ${currentPage} sur ${totalPages}`;
+      paginationDiv.appendChild(info);
+
+      tbody.appendChild(paginationDiv);
+    }
+
+    // Stats
+    const today = new Date().toLocaleDateString('fr-FR');
+    document.getElementById('s-total').textContent = list.length;
     // Stats
     const today = new Date().toLocaleDateString('fr-FR');
     document.getElementById('s-total').textContent = list.length;
@@ -1009,7 +1055,13 @@ const renderAdmin = async (filter, search) => {
   }
 };
 
-function filterRdv(f,btn){adminFilter=f;document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderAdmin(f);}
+function filterRdv(f,btn){
+  adminFilter=f;
+  currentPage=1;
+  document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAdmin(f);
+}
 function searchRdv(v){renderAdmin(adminFilter,v);}
 const deconnecter = () => {
   authToken = null;
