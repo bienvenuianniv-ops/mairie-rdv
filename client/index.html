@@ -204,7 +204,6 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
 </div>
 
 <main>
-
 <!-- ══ CITOYEN ══ -->
 <div class="view active" id="view-citoyen">
   <div class="hero">
@@ -212,6 +211,22 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
     <h2 id="h-title">Prenez votre rendez-vous<br>à la mairie en ligne</h2>
     <p id="h-sub">Évitez les longues files d'attente. Choisissez votre service, votre créneau, et venez à l'heure exacte.</p>
     <div class="hero-deco">🌍</div>
+  </div>
+
+  <!-- ── RECHERCHE RDV ── -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">🔍 Retrouver mon rendez-vous</div>
+    <p style="font-size:.85rem;color:var(--gris);margin-bottom:1rem">
+      Vous avez déjà un rendez-vous ? Entrez votre référence pour consulter les détails.
+    </p>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+      <input type="text" id="search-ref" placeholder="Ex: RDV-F1T594C" 
+             style="flex:1;min-width:200px;text-transform:uppercase">
+      <button class="btn btn-primary" onclick="rechercherRdv()">
+        🔍 Rechercher
+      </button>
+    </div>
+    <div id="search-result" style="margin-top:1rem"></div>
   </div>
 
   <div class="steps-bar">
@@ -702,6 +717,50 @@ const confirmer = async () => {
     const btn = document.getElementById('btn3');
     btn.disabled = false;
     btn.innerHTML = '✓ <span data-t="confirmBtn">Confirmer le RDV</span>';
+  }
+};
+const rechercherRdv = async () => {
+  const ref = document.getElementById('search-ref').value.trim().toUpperCase();
+  const result = document.getElementById('search-result');
+
+  if (!ref) {
+    result.innerHTML = '<p style="color:var(--rouge)">❌ Veuillez entrer une référence !</p>';
+    return;
+  }
+
+  result.innerHTML = '<p style="color:var(--gris)">⏳ Recherche en cours...</p>';
+
+  try {
+    const rdv = await apiCall(`/rdv/${ref}`);
+    const date = new Date(rdv.date_rdv).toLocaleDateString('fr-FR');
+    const heure = rdv.heure_rdv.substr(0, 5);
+
+    const statutColors = {
+      'confirme': '#d1fae5', 'en-attente': '#fef3c7', 'annule': '#fee2e2', 'termine': '#dbeafe'
+    };
+    const statutLabels = {
+      'confirme': '✓ Confirmé', 'en-attente': '⏳ En attente', 
+      'annule': '✗ Annulé', 'termine': '✅ Terminé'
+    };
+
+    result.innerHTML = `
+      <div style="background:var(--vert-pale);border:2px solid var(--vert);border-radius:12px;padding:1.2rem;margin-top:.5rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+          <span style="font-weight:900;color:var(--vert);font-size:1rem">${rdv.reference}</span>
+          <span style="background:${statutColors[rdv.statut]};padding:.2rem .7rem;border-radius:999px;font-size:.75rem;font-weight:800">
+            ${statutLabels[rdv.statut]}
+          </span>
+        </div>
+        <div class="c-row"><span class="lbl">Service</span><span style="font-weight:700">${rdv.service_nom}</span></div>
+        <div class="c-row"><span class="lbl">Date & Heure</span><span style="font-weight:700">${date} à ${heure}</span></div>
+        <div class="c-row"><span class="lbl">Citoyen</span><span style="font-weight:700">${rdv.citoyen_prenom} ${rdv.citoyen_nom}</span></div>
+        <div class="c-row"><span class="lbl">Téléphone</span><span style="font-weight:700">${rdv.citoyen_tel}</span></div>
+        <div class="c-row"><span class="lbl">Paiement</span><span style="font-weight:700">${rdv.paiement === 'guichet' ? '💵 Au guichet' : '📱 Mobile Money'}</span></div>
+      </div>
+    `;
+
+  } catch (err) {
+    result.innerHTML = `<p style="color:var(--rouge)">❌ Aucun rendez-vous trouvé avec la référence <strong>${ref}</strong></p>`;
   }
 };
 const imprimerReçu = () => {
