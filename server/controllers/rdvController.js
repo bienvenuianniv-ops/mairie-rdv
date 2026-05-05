@@ -1,4 +1,7 @@
+
 const pool = require('../config/db');
+const { envoyerConfirmation, envoyerAnnulation } = require('../config/email');
+
 
 // ── CRÉER UN RENDEZ-VOUS ──
 const creerRdv = async (req, res) => {
@@ -39,10 +42,24 @@ const creerRdv = async (req, res) => {
        date_rdv, heure_rdv, paiement || 'guichet', notes]
     );
 
-    res.status(201).json({
-      message: '✅ Rendez-vous créé avec succès !',
-      rdv: result.rows[0]
-    });
+    const nouveauRdv = result.rows[0];
+
+// Envoyer email si le citoyen a fourni un email
+if (nouveauRdv.citoyen_email) {
+  try {
+    // Récupérer le nom du service
+    const service = await pool.query('SELECT nom FROM services WHERE id=$1', [service_id]);
+    nouveauRdv.service_nom = service.rows[0]?.nom || '';
+    await envoyerConfirmation(nouveauRdv);
+  } catch (emailErr) {
+    console.error('❌ Erreur envoi email :', emailErr.message);
+  }
+}
+
+res.status(201).json({
+  message: '✅ Rendez-vous créé avec succès !',
+  rdv: nouveauRdv
+});
 
   } catch (err) {
     res.status(500).json({ message: '❌ Erreur serveur', erreur: err.message });
@@ -102,10 +119,23 @@ const changerStatut = async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ message: '❌ Rendez-vous non trouvé !' });
     }
-    res.json({
-      message: '✅ Statut mis à jour avec succès !',
-      rdv: result.rows[0]
-    });
+    const rdvMaj = result.rows[0];
+
+// Envoyer email d'annulation si statut = annule
+if (statut === 'annule' && rdvMaj.citoyen_email) {
+  try {
+    const service = await pool.query('SELECT nom FROM services WHERE id=$1', [rdvMaj.service_id]);
+    rdvMaj.service_nom = service.rows[0]?.nom || '';
+    await envoyerAnnulation(rdvMaj);
+  } catch (emailErr) {
+    console.error('❌ Erreur envoi email annulation :', emailErr.message);
+  }
+}
+
+res.json({
+  message: '✅ Statut mis à jour avec succès !',
+  rdv: rdvMaj
+});
   } catch (err) {
     res.status(500).json({ message: '❌ Erreur serveur', erreur: err.message });
   }
