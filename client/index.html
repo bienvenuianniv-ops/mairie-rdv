@@ -1035,8 +1035,6 @@ filtered = filtered.slice(debut, fin);
     // Stats
     const today = new Date().toLocaleDateString('fr-FR');
     document.getElementById('s-total').textContent = list.length;
-    // Stats
-    const today = new Date().toLocaleDateString('fr-FR');
     document.getElementById('s-total').textContent = list.length;
     document.getElementById('s-today').textContent = list.filter(r =>
       new Date(r.date_rdv).toLocaleDateString('fr-FR') === today
