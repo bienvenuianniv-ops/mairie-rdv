@@ -1,18 +1,11 @@
-const nodemailer = require('nodemailer');
-require('dotenv').config();
+const { Resend } = require('resend');
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ── EMAIL DE CONFIRMATION ──
 const envoyerConfirmation = async (rdv) => {
-  const mailOptions = {
-    from: process.env.EMAIL_FROM,
+  await resend.emails.send({
+    from: 'MairieConnect <onboarding@resend.dev>',
     to: rdv.citoyen_email,
     subject: `✅ Confirmation RDV — ${rdv.reference}`,
     html: `
@@ -40,16 +33,14 @@ const envoyerConfirmation = async (rdv) => {
         </div>
       </div>
     `
-  };
-
-  await transporter.sendMail(mailOptions);
+  });
   console.log(`✅ Email envoyé à ${rdv.citoyen_email}`);
 };
 
 // ── EMAIL D'ANNULATION ──
 const envoyerAnnulation = async (rdv) => {
-  const mailOptions = {
-    from: process.env.EMAIL_FROM,
+  await resend.emails.send({
+    from: 'MairieConnect <onboarding@resend.dev>',
     to: rdv.citoyen_email,
     subject: `❌ Annulation RDV — ${rdv.reference}`,
     html: `
@@ -72,9 +63,8 @@ const envoyerAnnulation = async (rdv) => {
         </div>
       </div>
     `
-  };
-
-  await transporter.sendMail(mailOptions);
+  });
   console.log(`✅ Email annulation envoyé à ${rdv.citoyen_email}`);
 };
+
 module.exports = { envoyerConfirmation, envoyerAnnulation };
