@@ -989,9 +989,9 @@ filtered = filtered.slice(debut, fin);
           <td><strong>${date}</strong><br><span style="font-size:.78rem;color:var(--gris)">${heure}</span></td>
           <td>${badge(r.statut)}</td>
           <td style="display:flex;gap:.35rem;flex-wrap:wrap;padding:.55rem 1rem">
-            <button class="btn btn-sm btn-secondary" onclick="openDetail(${r.id})">Voir</button>
-            ${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler</button>` : ''}
-          </td>
+           <button class="btn btn-sm btn-secondary" onclick="openDetail(${r.id})">Voir</button>
+${r.statut === 'en_attente' ? `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;border:none" onclick="confirmer(${r.id})">✓ Confirmer</button>` : ''}
+${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler</button>` : ''}
         `;
         tbody.appendChild(tr);
       });
@@ -1070,7 +1070,17 @@ const deconnecter = () => {
   document.getElementById('view-citoyen').classList.add('active');
   document.querySelectorAll('.nav-tab')[0].classList.add('active');
 };
-
+const confirmer = async (id) => {
+  if (!confirm('Voulez-vous confirmer ce rendez-vous ?')) return;
+  
+  try {
+    await apiCall(`/rdv/${id}/statut`, 'PUT', { statut: 'confirme' }, authToken);
+    closeModal();
+    renderAdmin();
+  } catch (err) {
+    alert('❌ Erreur : ' + err.message);
+  }
+};
 const annuler = async (id) => {
   if (!confirm('Voulez-vous vraiment annuler ce rendez-vous ?')) return;
   
