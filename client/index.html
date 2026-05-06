@@ -990,7 +990,7 @@ filtered = filtered.slice(debut, fin);
           <td>${badge(r.statut)}</td>
           <td style="display:flex;gap:.35rem;flex-wrap:wrap;padding:.55rem 1rem">
            <button class="btn btn-sm btn-secondary" onclick="openDetail(${r.id})">Voir</button>
-${r.statut === 'en_attente' ? `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;border:none" onclick="confirmer(${r.id})">✓ Confirmer</button>` : ''}
+${r.statut === 'en_attente' ? `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;border:none" onclick="confirmerRdv(${r.id})">✓ Confirmer</button>` : ''}
 ${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler</button>` : ''}
         `;
         tbody.appendChild(tr);
@@ -1070,7 +1070,7 @@ const deconnecter = () => {
   document.getElementById('view-citoyen').classList.add('active');
   document.querySelectorAll('.nav-tab')[0].classList.add('active');
 };
-const confirmer = async (id) => {
+const confirmerRdv = async (id) => {
   if (!confirm('Voulez-vous confirmer ce rendez-vous ?')) return;
   
   try {
