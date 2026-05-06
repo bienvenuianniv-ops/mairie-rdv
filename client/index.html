@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -186,8 +187,8 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchView('citoyen',this)">👤 Citoyen</button>
-   <button class="nav-tab" onclick="switchView('admin',this)">🔐 Agent</button>
-<button class="nav-tab" onclick="deconnecter()" id="btn-logout" style="display:none;background:#fee2e2;color:#991b1b">⬅️ Déconnexion</button>
+    <button class="nav-tab" onclick="switchView('admin',this)">🔐 Agent</button>
+    <button class="nav-tab" onclick="deconnecter()" id="btn-logout" style="display:none;background:#fee2e2;color:#991b1b">⬅️ Déconnexion</button>
   </div>
 </header>
 
@@ -309,7 +310,7 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
     </div>
     <div class="actions">
       <button class="btn btn-secondary" onclick="goStep(2)">← <span id="btn-back3">Retour</span></button>
-      <button class="btn btn-primary" id="btn3" onclick="confirmer()" disabled>✓ <span id="btn-confirm">Confirmer le rendez-vous</span></button>
+      <button class="btn btn-primary" id="btn3" onclick="soumettreRdv()" disabled>✓ <span id="btn-confirm">Confirmer le rendez-vous</span></button>
     </div>
   </div>
 
@@ -324,7 +325,7 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
       <div class="sms-note">📲 <span id="c-sms">Un SMS de rappel vous sera envoyé 24h avant votre rendez-vous.</span></div>
       <br><br>
       <button class="btn btn-primary" onclick="imprimerReçu()" style="margin-right:.5rem">🖨️ Imprimer le récépissé</button>
-<button class="btn btn-gold" onclick="nouveauRdv()">+ <span id="btn-nouveau">Nouveau rendez-vous</span></button>
+      <button class="btn btn-gold" onclick="nouveauRdv()">+ <span id="btn-nouveau">Nouveau rendez-vous</span></button>
     </div>
   </div>
 </div>
@@ -374,7 +375,7 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
 </div>
 
 <script>
-  // ── CONFIGURATION API ──
+// ── CONFIGURATION API ──
 const API_URL = 'https://mairie-rdv-backend.onrender.com/api';
 let authToken = localStorage.getItem('token') || null;
 
@@ -382,16 +383,14 @@ let authToken = localStorage.getItem('token') || null;
 const apiCall = async (endpoint, method = 'GET', body = null, token = null) => {
   const headers = { 'Content-Type': 'application/json' };
   if (token) headers['Authorization'] = `Bearer ${token}`;
-  
   const options = { method, headers };
   if (body) options.body = JSON.stringify(body);
-  
   const response = await fetch(`${API_URL}${endpoint}`, options);
   const data = await response.json();
-  
   if (!response.ok) throw new Error(data.message || 'Erreur serveur');
   return data;
 };
+
 // ── I18N ──
 const T = {
   fr:{
@@ -433,7 +432,6 @@ const T = {
     confirmTitle:'Rendez-vous bi dafa dóór !',confirmSub:'Yëgle numéro bii ci mairie.',
     smsNote:'Dinga jëriñ SMS bi ci kanam rendez-vous bi.',newBtn:'Rendez-vous bees',
     docsTitle:'📎 Papiers yi nga amal :',
-    // ↓ Remplacez par les vrais noms dans la langue locale
     svcNames:['État civil','CNI','Passeport','Foncier','Aide sociale','Permis'],
     svcDesc:['Jur, dëkkal, dee','Ci kanam & renouvellement','Jëf & renouvellement','Permis & déclarations','Jëfandikoo municipal yi','Lisans & autorisations'],
     svcLocal:['[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]'],
@@ -506,19 +504,12 @@ let selSvc = '', selSvcIdx = -1, selectedService = null, payMode = 'guichet';
 const renderServices = async () => {
   const g = document.getElementById('svc-grid');
   g.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--gris)">⏳ Chargement des services...</div>';
-
   try {
     const services = await apiCall('/services');
-
     const icons = {
-      'État civil': '📋',
-      'Urbanisme': '🏗️',
-      'Aide sociale': '🤝',
-      'Permis divers': '📄',
-      'Logement': '🏠',
-      'Légalisation': '📜'
+      'État civil': '📋','Urbanisme': '🏗️','Aide sociale': '🤝',
+      'Permis divers': '📄','Logement': '🏠','Légalisation': '📜'
     };
-
     g.innerHTML = '';
     services.forEach(s => {
       const icon = icons[s.nom] || '📋';
@@ -538,29 +529,14 @@ const renderServices = async () => {
       };
       g.appendChild(d);
     });
-
   } catch (err) {
     g.innerHTML = `<div style="text-align:center;padding:2rem;color:red">❌ ${err.message}</div>`;
   }
 };
 
-function selectSvc(el, idx) {
-  document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
-  document.getElementById('btn1').disabled = false;
-  const docs = curT.docs[idx];
-  document.getElementById('docs-zone').innerHTML = `
-    <div class="docs-box">
-      <strong>${curT.docsTitle}</strong>
-      <div class="docs-list">${docs.map(d=>`<span class="doc-tag">📄 ${d}</span>`).join('')}</div>
-    </div>
-  `;
-}
-
 // ── CALENDAR ──
 const MOIS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 const SLOTS = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30'];
-const TAKEN = {};
 let calYear, calMonth, selDate = null, selSlot = '', curStep = 1, adminFilter = 'tous';
 
 function goStep(n) {
@@ -627,40 +603,31 @@ function renderCal() {
     g.appendChild(el);
   }
 }
+
 const pickDate = async (ds, el) => {
   document.querySelectorAll('.cal-d').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
   selDate = ds; selSlot = '';
   document.getElementById('btn2').disabled = true;
-
   const zone = document.getElementById('slots-zone');
   zone.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--gris)">⏳ Chargement des créneaux...</div>';
-
   try {
-    // Convertir date DD/MM/YYYY en YYYY-MM-DD
     const dateFormatee = ds.split('/').reverse().join('-');
-
-    const creneaux = await apiCall(
-      `/rdv/disponibles?service_id=${selectedService.id}&date=${dateFormatee}`
-    );
-
+    const creneaux = await apiCall(`/rdv/disponibles?service_id=${selectedService.id}&date=${dateFormatee}`);
     zone.innerHTML = '<div class="slots-grid" id="sw"></div>';
     const sw = document.getElementById('sw');
-
     creneaux.forEach(c => {
       const el = document.createElement('div');
       el.textContent = c.heure;
       el.className = 'slot' + (!c.disponible ? ' taken' : '');
-      if (c.disponible) {
-        el.onclick = () => pickSlot(c.heure, el);
-      }
+      if (c.disponible) { el.onclick = () => pickSlot(c.heure, el); }
       sw.appendChild(el);
     });
-
   } catch (err) {
     zone.innerHTML = `<div style="text-align:center;padding:1rem;color:red">❌ ${err.message}</div>`;
   }
 };
+
 function pickSlot(s,el){
   document.querySelectorAll('.slot').forEach(x=>x.classList.remove('sel'));
   el.classList.add('sel'); selSlot=s;
@@ -671,20 +638,18 @@ function checkForm(){
   document.getElementById('btn3').disabled = !['f-prenom','f-nom','f-tel'].every(id=>document.getElementById(id).value.trim());
 }
 
-const confirmer = async () => {
+// ── SOUMETTRE RDV CITOYEN (anciennement confirmer) ──
+const soumettreRdv = async () => {
   const prenom = document.getElementById('f-prenom').value.trim();
   const nom    = document.getElementById('f-nom').value.trim();
   const tel    = document.getElementById('f-tel').value.trim();
   const email  = document.getElementById('f-email').value.trim();
-  const nni = '';
+  const nni    = '';
   const notes  = document.getElementById('f-note').value.trim();
-
   try {
-    // Bouton en chargement
     const btn = document.getElementById('btn3');
     btn.disabled = true;
     btn.innerHTML = '⏳ Envoi en cours...';
-
     const data = await apiCall('/rdv', 'POST', {
       service_id:     selectedService.id,
       citoyen_nom:    nom,
@@ -697,8 +662,6 @@ const confirmer = async () => {
       paiement:       payMode,
       notes:          notes
     });
-
-    // Afficher la confirmation
     document.getElementById('c-ref').textContent = data.rdv.reference;
     document.getElementById('c-summary').innerHTML = `
       <div class="c-row"><span class="lbl">Service</span><span class="val">${selectedService.nom}</span></div>
@@ -709,9 +672,7 @@ const confirmer = async () => {
       ${email ? `<div class="c-row"><span class="lbl">Email</span><span class="val">${email}</span></div>` : ''}
       <div class="c-row"><span class="lbl">Paiement</span><span class="val">${payMode === 'guichet' ? '💵 Au guichet' : '📱 Mobile Money'}</span></div>
     `;
-
     goStep(4);
-
   } catch (err) {
     alert('❌ Erreur : ' + err.message);
     const btn = document.getElementById('btn3');
@@ -719,24 +680,19 @@ const confirmer = async () => {
     btn.innerHTML = '✓ <span data-t="confirmBtn">Confirmer le RDV</span>';
   }
 };
+
 const afficherModification = (reference, serviceId) => {
   const result = document.getElementById('search-result');
   const today = new Date().toISOString().split('T')[0];
-
   result.innerHTML += `
     <div style="background:white;border:2px solid var(--vert);border-radius:12px;padding:1.2rem;margin-top:1rem">
-      <h4 style="font-family:'Lora',serif;margin-bottom:1rem">✏️ Modifier le rendez-vous</h4>
+      <h4 style="margin-bottom:1rem">✏️ Modifier le rendez-vous</h4>
       <div class="form-grid">
-        <div class="field">
-          <label>Nouvelle date *</label>
-          <input type="date" id="mod-date" min="${today}">
-        </div>
-        <div class="field">
-          <label>Nouvelle heure *</label>
+        <div class="field"><label>Nouvelle date *</label><input type="date" id="mod-date" min="${today}"></div>
+        <div class="field"><label>Nouvelle heure *</label>
           <select id="mod-heure">
             <option value="">-- Choisir --</option>
-            ${['08:00','08:30','09:00','09:30','10:00','10:30','11:00',
-               '14:00','14:30','15:00','15:30','16:00']
+            ${['08:00','08:30','09:00','09:30','10:00','10:30','11:00','14:00','14:30','15:00','15:30','16:00']
               .map(h => `<option value="${h}">${h}</option>`).join('')}
           </select>
         </div>
@@ -744,9 +700,7 @@ const afficherModification = (reference, serviceId) => {
       <div id="mod-error" style="color:var(--rouge);font-size:.82rem;margin-top:.5rem"></div>
       <div style="display:flex;gap:.75rem;margin-top:1rem;justify-content:flex-end">
         <button class="btn btn-secondary" onclick="rechercherRdv()">Annuler</button>
-        <button class="btn btn-primary" onclick="confirmerModification('${reference}', ${serviceId})">
-          ✅ Confirmer la modification
-        </button>
+        <button class="btn btn-primary" onclick="confirmerModification('${reference}', ${serviceId})">✅ Confirmer la modification</button>
       </div>
     </div>
   `;
@@ -756,57 +710,33 @@ const confirmerModification = async (reference, serviceId) => {
   const date  = document.getElementById('mod-date').value;
   const heure = document.getElementById('mod-heure').value;
   const errEl = document.getElementById('mod-error');
-
-  if (!date || !heure) {
-    errEl.textContent = '❌ Veuillez choisir une date et une heure !';
-    return;
-  }
-
+  if (!date || !heure) { errEl.textContent = '❌ Veuillez choisir une date et une heure !'; return; }
   try {
-    await apiCall(`/rdv/${reference}/modifier`, 'PUT', {
-      date_rdv:  date,
-      heure_rdv: heure
-    });
-
+    await apiCall(`/rdv/${reference}/modifier`, 'PUT', { date_rdv: date, heure_rdv: heure });
     document.getElementById('search-ref').value = reference;
     await rechercherRdv();
     alert('✅ Rendez-vous modifié avec succès !');
-
   } catch (err) {
     errEl.textContent = '❌ ' + err.message;
   }
 };
+
 const rechercherRdv = async () => {
   const ref = document.getElementById('search-ref').value.trim().toUpperCase();
   const result = document.getElementById('search-result');
-
-  if (!ref) {
-    result.innerHTML = '<p style="color:var(--rouge)">❌ Veuillez entrer une référence !</p>';
-    return;
-  }
-
+  if (!ref) { result.innerHTML = '<p style="color:var(--rouge)">❌ Veuillez entrer une référence !</p>'; return; }
   result.innerHTML = '<p style="color:var(--gris)">⏳ Recherche en cours...</p>';
-
   try {
     const rdv = await apiCall(`/rdv/${ref}`);
     const date = new Date(rdv.date_rdv).toLocaleDateString('fr-FR');
     const heure = rdv.heure_rdv.substr(0, 5);
-
-    const statutColors = {
-      'confirme': '#d1fae5', 'en-attente': '#fef3c7', 'annule': '#fee2e2', 'termine': '#dbeafe'
-    };
-    const statutLabels = {
-      'confirme': '✓ Confirmé', 'en-attente': '⏳ En attente', 
-      'annule': '✗ Annulé', 'termine': '✅ Terminé'
-    };
-
+    const statutColors = { 'confirme':'#d1fae5','en-attente':'#fef3c7','annule':'#fee2e2','termine':'#dbeafe' };
+    const statutLabels = { 'confirme':'✓ Confirmé','en-attente':'⏳ En attente','annule':'✗ Annulé','termine':'✅ Terminé' };
     result.innerHTML = `
       <div style="background:var(--vert-pale);border:2px solid var(--vert);border-radius:12px;padding:1.2rem;margin-top:.5rem">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
           <span style="font-weight:900;color:var(--vert);font-size:1rem">${rdv.reference}</span>
-          <span style="background:${statutColors[rdv.statut]};padding:.2rem .7rem;border-radius:999px;font-size:.75rem;font-weight:800">
-            ${statutLabels[rdv.statut]}
-          </span>
+          <span style="background:${statutColors[rdv.statut]};padding:.2rem .7rem;border-radius:999px;font-size:.75rem;font-weight:800">${statutLabels[rdv.statut]}</span>
         </div>
         <div class="c-row"><span class="lbl">Service</span><span style="font-weight:700">${rdv.service_nom}</span></div>
         <div class="c-row"><span class="lbl">Date & Heure</span><span style="font-weight:700">${date} à ${heure}</span></div>
@@ -814,149 +744,88 @@ const rechercherRdv = async () => {
         <div class="c-row"><span class="lbl">Téléphone</span><span style="font-weight:700">${rdv.citoyen_tel}</span></div>
         <div class="c-row"><span class="lbl">Paiement</span><span style="font-weight:700">${rdv.paiement === 'guichet' ? '💵 Au guichet' : '📱 Mobile Money'}</span></div>
         ${rdv.statut !== 'annule' && rdv.statut !== 'termine' ? `
-  <div style="margin-top:1rem;text-align:center">
-    <button class="btn btn-primary" onclick="afficherModification('${rdv.reference}', ${rdv.service_id})">
-      ✏️ Modifier la date/heure
-    </button>
-  </div>
-` : ''}
+          <div style="margin-top:1rem;text-align:center">
+            <button class="btn btn-primary" onclick="afficherModification('${rdv.reference}', ${rdv.service_id})">✏️ Modifier la date/heure</button>
+          </div>` : ''}
       </div>
     `;
-
   } catch (err) {
     result.innerHTML = `<p style="color:var(--rouge)">❌ Aucun rendez-vous trouvé avec la référence <strong>${ref}</strong></p>`;
   }
 };
+
 const imprimerReçu = () => {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-
-  // ── Couleurs ──
-  const vert = [26, 107, 60];
-  const or   = [224, 160, 32];
-  const gris = [107, 114, 128];
-
-  // ── En-tête ──
+  const vert = [26, 107, 60], or = [224, 160, 32], gris = [107, 114, 128];
   doc.setFillColor(...vert);
   doc.rect(0, 0, 210, 35, 'F');
-
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(22);
-  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(22); doc.setFont('helvetica', 'bold');
   doc.text('MairieConnect', 105, 15, { align: 'center' });
-
-  doc.setFontSize(11);
-  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11); doc.setFont('helvetica', 'normal');
   doc.text('Services numériques aux citoyens', 105, 23, { align: 'center' });
-
   doc.setFontSize(10);
   doc.text('RÉCÉPISSÉ DE RENDEZ-VOUS', 105, 31, { align: 'center' });
-
-  // ── Référence ──
   doc.setFillColor(...or);
   doc.rect(55, 42, 100, 14, 'F');
   doc.setTextColor(26, 46, 26);
-  doc.setFontSize(14);
-  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(14); doc.setFont('helvetica', 'bold');
   const ref = document.getElementById('c-ref').textContent;
   doc.text(ref, 105, 52, { align: 'center' });
-
-  // ── Détails ──
   const rows = document.querySelectorAll('#c-summary .c-row');
   let y = 75;
-
   doc.setFontSize(11);
   rows.forEach((row, i) => {
     const lbl = row.querySelector('.lbl')?.textContent || '';
     let val = row.querySelector('.val')?.textContent || '';
-    // Supprimer les emojis
     val = val.replace(/[\u{1F300}-\u{1FFFF}]/gu, '').trim();
     val = val.replace(/[^\x00-\x7F\xC0-\xFF]/g, '').trim();
-
-    // Alternance de couleur
-    if (i % 2 === 0) {
-      doc.setFillColor(240, 247, 240);
-      doc.rect(20, y - 6, 170, 10, 'F');
-    }
-
-    doc.setTextColor(...gris);
-    doc.setFont('helvetica', 'normal');
-    doc.text(lbl, 25, y);
-
-    doc.setTextColor(26, 46, 26);
-    doc.setFont('helvetica', 'bold');
-    doc.text(val, 120, y);
-
+    if (i % 2 === 0) { doc.setFillColor(240, 247, 240); doc.rect(20, y - 6, 170, 10, 'F'); }
+    doc.setTextColor(...gris); doc.setFont('helvetica', 'normal'); doc.text(lbl, 25, y);
+    doc.setTextColor(26, 46, 26); doc.setFont('helvetica', 'bold'); doc.text(val, 120, y);
     y += 12;
   });
-
-  // ── Message important ──
   y += 5;
-  doc.setFillColor(254, 243, 208);
-  doc.rect(20, y, 170, 20, 'F');
-  doc.setDrawColor(...or);
-  doc.rect(20, y, 170, 20, 'S');
-  doc.setTextColor(122, 85, 0);
-  doc.setFontSize(10);
-  doc.setFont('helvetica', 'bold');
-  doc.text('! Important', 25, y + 7);
-  doc.setFont('helvetica', 'normal');
+  doc.setFillColor(254, 243, 208); doc.rect(20, y, 170, 20, 'F');
+  doc.setDrawColor(...or); doc.rect(20, y, 170, 20, 'S');
+  doc.setTextColor(122, 85, 0); doc.setFontSize(10); doc.setFont('helvetica', 'bold');
+  doc.text('! Important', 25, y + 7); doc.setFont('helvetica', 'normal');
   doc.text('Présentez ce document à l\'accueil de la mairie le jour de votre rendez-vous.', 25, y + 14);
-
-  // ── Pied de page ──
-  doc.setFillColor(...vert);
-  doc.rect(0, 275, 210, 22, 'F');
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
+  doc.setFillColor(...vert); doc.rect(0, 275, 210, 22, 'F');
+  doc.setTextColor(255, 255, 255); doc.setFontSize(9); doc.setFont('helvetica', 'normal');
   doc.text('Document généré automatiquement — MairieConnect', 105, 283, { align: 'center' });
   doc.text(new Date().toLocaleDateString('fr-FR', { weekday:'long', year:'numeric', month:'long', day:'numeric' }), 105, 290, { align: 'center' });
-
-  // ── Télécharger ──
   doc.save(`Reçu-${ref}.pdf`);
 };
+
 function nouveauRdv(){
-  selSvc='';selDate=null;selSlot='';
+  selSvc=''; selDate=null; selSlot='';
   ['f-prenom','f-nom','f-tel','f-email','f-naiss','f-pid','f-note'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('docs-zone').innerHTML='';
   document.getElementById('btn3').disabled=true;
   goStep(1);
 }
 
-// ── ADMIN DATA ──
-let rdvList = [
-  {id:'RDV-AA1B2C',nom:'Koné Aminata',service:'Carte nationale d\'identité',date:'29/04/2026',heure:'08:00',statut:'confirme',tel:'+225 07 01 02 03',email:''},
-  {id:'RDV-BB3C4D',nom:'Diallo Moussa',service:'État civil',date:'29/04/2026',heure:'09:30',statut:'confirme',tel:'+221 77 123 45 67',email:''},
-  {id:'RDV-CC5D6E',nom:'Mbaye Fatou',service:'Passeport',date:'29/04/2026',heure:'11:00',statut:'en-attente',tel:'+221 76 234 56 78',email:'fatou.mbaye@email.sn'},
-  {id:'RDV-DD7E8F',nom:'Touré Ibrahim',service:'Foncier / Urbanisme',date:'29/04/2026',heure:'14:30',statut:'confirme',tel:'+223 70 345 67 89',email:''},
-  {id:'RDV-EE9F0G',nom:'Ndiaye Aïssatou',service:'Aide sociale',date:'30/04/2026',heure:'08:30',statut:'annule',tel:'+221 75 456 78 90',email:''},
-  {id:'RDV-FF1G2H',nom:'Ouédraogo Paul',service:'Permis divers',date:'30/04/2026',heure:'10:00',statut:'confirme',tel:'+226 70 567 89 01',email:''},
-  {id:'RDV-GG3H4I',nom:'Camara Sali',service:'Carte nationale d\'identité',date:'02/05/2026',heure:'09:00',statut:'confirme',tel:'+224 621 23 45 67',email:''},
-  {id:'RDV-HH5I6J',nom:'Bah Mariama',service:'État civil',date:'02/05/2026',heure:'14:00',statut:'en-attente',tel:'+224 622 34 56 78',email:'mariama.bah@mail.gn'},
-  {id:'RDV-II7J8K',nom:'Traoré Seydou',service:'Passeport',date:'05/05/2026',heure:'08:30',statut:'confirme',tel:'+226 65 789 01 23',email:''},
-  {id:'RDV-JJ9K0L',nom:'Coulibaly Rokia',service:'Aide sociale',date:'05/05/2026',heure:'11:30',statut:'confirme',tel:'+223 66 890 12 34',email:''},
-];
-
+// ── BADGE STATUT ──
+// CORRECTION : utilise 'en-attente' (avec tiret) comme dans la base de données
 function badge(s){
-  if(s==='confirme')return'<span class="badge b-green">✓ Confirmé</span>';
-  if(s==='en-attente')return'<span class="badge b-yellow">⏳ En attente</span>';
-  return'<span class="badge b-red">✗ Annulé</span>';
+  if(s==='confirme') return '<span class="badge b-green">✓ Confirmé</span>';
+  if(s==='en-attente') return '<span class="badge b-yellow">⏳ En attente</span>';
+  return '<span class="badge b-red">✗ Annulé</span>';
 }
+
 // ── PAGINATION ──
 let currentPage = 1;
 const RDV_PAR_PAGE = 10;
 
 const renderAdmin = async (filter, search) => {
   filter = filter || adminFilter;
-
   const tbody = document.getElementById('rdv-body');
   if (!tbody) return;
   tbody.innerHTML = '<tr><td colspan="6"><div style="text-align:center;padding:2rem;color:var(--gris)">⏳ Chargement...</div></td></tr>';
-
   try {
     const list = await apiCall('/rdv', 'GET', null, authToken);
-
-    // Filtrer
     let filtered = [...list];
     if (filter !== 'tous') filtered = filtered.filter(r => r.statut === filter);
     if (search) {
@@ -967,18 +836,16 @@ const renderAdmin = async (filter, search) => {
         r.reference.toLowerCase().includes(q)
       );
     }
-
     tbody.innerHTML = '';
-    // ── Pagination ──
-const totalPages = Math.ceil(filtered.length / RDV_PAR_PAGE);
-const debut = (currentPage - 1) * RDV_PAR_PAGE;
-const fin = debut + RDV_PAR_PAGE;
-filtered = filtered.slice(debut, fin);
+    const totalPages = Math.ceil(filtered.length / RDV_PAR_PAGE);
+    const debut = (currentPage - 1) * RDV_PAR_PAGE;
+    const fin = debut + RDV_PAR_PAGE;
+    const paginated = filtered.slice(debut, fin);
 
-    if (!filtered.length) {
+    if (!paginated.length) {
       tbody.innerHTML = `<tr><td colspan="6"><div class="empty"><div class="ei">📭</div>Aucun rendez-vous trouvé</div></td></tr>`;
     } else {
-      filtered.forEach(r => {
+      paginated.forEach(r => {
         const date = new Date(r.date_rdv).toLocaleDateString('fr-FR');
         const heure = r.heure_rdv.substr(0, 5);
         const tr = document.createElement('tr');
@@ -989,26 +856,25 @@ filtered = filtered.slice(debut, fin);
           <td><strong>${date}</strong><br><span style="font-size:.78rem;color:var(--gris)">${heure}</span></td>
           <td>${badge(r.statut)}</td>
           <td style="display:flex;gap:.35rem;flex-wrap:wrap;padding:.55rem 1rem">
-           <button class="btn btn-sm btn-secondary" onclick="openDetail(${r.id})">Voir</button>
-${r.statut === 'en_attente' ? `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;border:none" onclick="confirmerRdv(${r.id})">✓ Confirmer</button>` : ''}
-${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler</button>` : ''}
+            <button class="btn btn-sm btn-secondary" onclick="openDetail(${r.id})">Voir</button>
+            ${r.statut === 'en-attente' ? `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;border:none" onclick="confirmerRdv(${r.id})">✓ Confirmer</button>` : ''}
+            ${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler</button>` : ''}
+          </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    // ── Pagination ──
+    // Pagination
     if (totalPages > 1) {
       const paginationDiv = document.createElement('div');
       paginationDiv.style.cssText = 'display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:1rem;flex-wrap:wrap';
-      
       const btnPrev = document.createElement('button');
       btnPrev.className = 'btn btn-secondary btn-sm';
       btnPrev.textContent = '← Précédent';
       btnPrev.disabled = currentPage === 1;
       btnPrev.onclick = () => { currentPage--; renderAdmin(); };
       paginationDiv.appendChild(btnPrev);
-
       for (let i = 1; i <= totalPages; i++) {
         const btnPage = document.createElement('button');
         btnPage.className = 'btn btn-sm ' + (i === currentPage ? 'btn-primary' : 'btn-secondary');
@@ -1016,29 +882,23 @@ ${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;
         btnPage.onclick = () => { currentPage = i; renderAdmin(); };
         paginationDiv.appendChild(btnPage);
       }
-
       const btnNext = document.createElement('button');
       btnNext.className = 'btn btn-secondary btn-sm';
       btnNext.textContent = 'Suivant →';
       btnNext.disabled = currentPage === totalPages;
       btnNext.onclick = () => { currentPage++; renderAdmin(); };
       paginationDiv.appendChild(btnNext);
-
       const info = document.createElement('span');
       info.style.cssText = 'font-size:.8rem;color:var(--gris);width:100%;text-align:center;margin-top:.3rem';
       info.textContent = `Page ${currentPage} sur ${totalPages}`;
       paginationDiv.appendChild(info);
-
       tbody.appendChild(paginationDiv);
     }
 
     // Stats
     const today = new Date().toLocaleDateString('fr-FR');
     document.getElementById('s-total').textContent = list.length;
-    document.getElementById('s-total').textContent = list.length;
-    document.getElementById('s-today').textContent = list.filter(r =>
-      new Date(r.date_rdv).toLocaleDateString('fr-FR') === today
-    ).length;
+    document.getElementById('s-today').textContent = list.filter(r => new Date(r.date_rdv).toLocaleDateString('fr-FR') === today).length;
     document.getElementById('s-conf').textContent = list.filter(r => r.statut === 'confirme').length;
     document.getElementById('s-ann').textContent  = list.filter(r => r.statut === 'annule').length;
 
@@ -1054,13 +914,13 @@ ${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;
 };
 
 function filterRdv(f,btn){
-  adminFilter=f;
-  currentPage=1;
+  adminFilter=f; currentPage=1;
   document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderAdmin(f);
 }
-function searchRdv(v){renderAdmin(adminFilter,v);}
+function searchRdv(v){ renderAdmin(adminFilter,v); }
+
 const deconnecter = () => {
   authToken = null;
   localStorage.removeItem('token');
@@ -1070,9 +930,10 @@ const deconnecter = () => {
   document.getElementById('view-citoyen').classList.add('active');
   document.querySelectorAll('.nav-tab')[0].classList.add('active');
 };
+
+// ── CONFIRMER RDV (agent) ──
 const confirmerRdv = async (id) => {
   if (!confirm('Voulez-vous confirmer ce rendez-vous ?')) return;
-  
   try {
     await apiCall(`/rdv/${id}/statut`, 'PUT', { statut: 'confirme' }, authToken);
     closeModal();
@@ -1081,9 +942,10 @@ const confirmerRdv = async (id) => {
     alert('❌ Erreur : ' + err.message);
   }
 };
+
+// ── ANNULER RDV (agent) ──
 const annuler = async (id) => {
   if (!confirm('Voulez-vous vraiment annuler ce rendez-vous ?')) return;
-  
   try {
     await apiCall(`/rdv/${id}/statut`, 'PUT', { statut: 'annule' }, authToken);
     closeModal();
@@ -1098,10 +960,8 @@ const openDetail = async (id) => {
     const list = await apiCall('/rdv', 'GET', null, authToken);
     const r = list.find(x => x.id === id);
     if (!r) return;
-
     const date = new Date(r.date_rdv).toLocaleDateString('fr-FR');
     const heure = r.heure_rdv.substr(0, 5);
-
     document.getElementById('modal-inner').innerHTML = `
       <h3>📋 Détail du rendez-vous</h3>
       <div style="display:flex;flex-direction:column;gap:.45rem;margin:.7rem 0">
@@ -1116,12 +976,12 @@ const openDetail = async (id) => {
         ${r.notes ? `<div class="c-row"><span style="color:var(--gris)">Notes</span><span>${r.notes}</span></div>` : ''}
       </div>
       <div class="m-actions">
+        ${r.statut === 'en-attente' ? `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;border:none" onclick="confirmerRdv(${r.id})">✓ Confirmer</button>` : ''}
         ${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler ce RDV</button>` : ''}
         <button class="btn btn-primary btn-sm" onclick="closeModal()">Fermer</button>
       </div>
     `;
     document.getElementById('overlay').classList.add('open');
-
   } catch (err) {
     alert('❌ Erreur : ' + err.message);
   }
@@ -1149,28 +1009,15 @@ function openNewModal(){
 function saveNew(){
   const nom=document.getElementById('m-nom').value;
   const tel=document.getElementById('m-tel').value;
-  const svc=document.getElementById('m-svc').value;
-  const h=document.getElementById('m-h').value;
   const dr=document.getElementById('m-date').value;
-  if(!nom||!tel||!dr)return alert('Veuillez remplir tous les champs obligatoires.');
-  const [y,m,d]=dr.split('-');
-  const ref='RDV-'+Math.random().toString(36).substr(2,6).toUpperCase();
-  rdvList.unshift({id:ref,nom,tel,service:svc,date:`${d}/${m}/${y}`,heure:h,statut:'confirme',email:''});
-  closeModal();renderAdmin();
+  if(!nom||!tel||!dr) return alert('Veuillez remplir tous les champs obligatoires.');
+  closeModal(); renderAdmin();
 }
 
-function closeModal(){document.getElementById('overlay').classList.remove('open');}
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
 
 const switchView = async (v, btn) => {
-  // Si l'agent veut accéder au tableau de bord
-  if (v === 'admin') {
-    // Vérifier si déjà connecté
-    if (!authToken) {
-      afficherLoginModal();
-      return;
-    }
-  }
-
+  if (v === 'admin' && !authToken) { afficherLoginModal(); return; }
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
   document.getElementById('view-' + v).classList.add('active');
@@ -1178,79 +1025,52 @@ const switchView = async (v, btn) => {
   if (v === 'admin') renderAdmin();
 };
 
-// ── MODAL DE CONNEXION AGENT ──
 const afficherLoginModal = () => {
- document.getElementById('modal-inner').innerHTML = `
+  document.getElementById('modal-inner').innerHTML = `
     <h3>🔐 Connexion Agent</h3>
-    <p style="font-size:.82rem;color:var(--gris);margin-bottom:1rem">
-      Réservé aux agents et administrateurs de la mairie.
-    </p>
+    <p style="font-size:.82rem;color:var(--gris);margin-bottom:1rem">Réservé aux agents et administrateurs de la mairie.</p>
     <div style="display:flex;flex-direction:column;gap:.75rem">
-      <div class="field">
-        <label>Email *</label>
-        <input type="email" id="login-email" placeholder="votre@mairie.sn">
-      </div>
-      <div class="field">
-        <label>Mot de passe *</label>
-        <input type="password" id="login-pwd" placeholder="••••••••">
-      </div>
+      <div class="field"><label>Email *</label><input type="email" id="login-email" placeholder="votre@mairie.sn"></div>
+      <div class="field"><label>Mot de passe *</label><input type="password" id="login-pwd" placeholder="••••••••"></div>
       <div id="login-error" style="display:none;color:var(--rouge);font-size:.82rem"></div>
     </div>
-    <div class="modal-actions">
+    <div class="m-actions">
       <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
       <button class="btn btn-primary" onclick="connecterAgent()">Se connecter</button>
     </div>
   `;
- document.getElementById('overlay').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
 };
 
-// ── CONNEXION AGENT ──
 const connecterAgent = async () => {
   const email = document.getElementById('login-email').value.trim();
   const pwd   = document.getElementById('login-pwd').value.trim();
   const errEl = document.getElementById('login-error');
-
-  if (!email || !pwd) {
-    errEl.style.display = 'block';
-    errEl.textContent = '❌ Veuillez remplir tous les champs !';
-    return;
-  }
-
+  if (!email || !pwd) { errEl.style.display='block'; errEl.textContent='❌ Veuillez remplir tous les champs !'; return; }
   try {
     const btn = document.querySelector('.modal .btn-primary');
-    btn.disabled = true;
-    btn.textContent = '⏳ Connexion...';
-
-    const data = await apiCall('/auth/connecter', 'POST', {
-      email, mot_de_passe: pwd
-    });
-
-    // Sauvegarder le token
+    btn.disabled = true; btn.textContent = '⏳ Connexion...';
+    const data = await apiCall('/auth/connecter', 'POST', { email, mot_de_passe: pwd });
     authToken = data.token;
     localStorage.setItem('token', data.token);
-
     closeModal();
-
-    // Aller au tableau de bord
     document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
     document.getElementById('view-admin').classList.add('active');
     document.querySelectorAll('.nav-tab')[1].classList.add('active');
     renderAdmin();
     document.getElementById('btn-logout').style.display = 'block';
-
   } catch (err) {
     errEl.style.display = 'block';
     errEl.textContent = '❌ ' + err.message;
     const btn = document.querySelector('.modal .btn-primary');
-    btn.disabled = false;
-    btn.textContent = 'Se connecter';
+    btn.disabled = false; btn.textContent = 'Se connecter';
   }
 };
 
 // ── INIT ──
-const now=new Date();
-document.getElementById('admin-date').textContent='Semaine du '+now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+const now = new Date();
+document.getElementById('admin-date').textContent = 'Semaine du ' + now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 renderServices();
 renderAdmin();
 </script>
