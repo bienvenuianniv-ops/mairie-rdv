@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 
 // ── TÂCHE PLANIFIÉE : Rappels 24h avant ──
 // S'exécute chaque jour à 8h00 du matin
-cron.schedule('0 8 * * *', async () => {
+cron.schedule('* * * * *', async () => {
   console.log('⏰ Vérification des rappels RDV...');
   try {
     const demain = new Date();
