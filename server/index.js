@@ -1,9 +1,13 @@
 const express = require('express');
 const cors    = require('cors');
+const cron    = require('node-cron');
 require('dotenv').config();
 
 // Initialiser la connexion DB et créer les tables
 require('./config/db');
+
+const { envoyerRappel } = require('./config/email');
+const pool = require('./config/db');
 
 const app = express();
 
@@ -22,6 +26,38 @@ app.get('/', (req, res) => {
     message: '✅ Serveur Mairie-RDV opérationnel !',
     version: '1.0.0'
   });
+});
+
+// ── TÂCHE PLANIFIÉE : Rappels 24h avant ──
+// S'exécute chaque jour à 8h00 du matin
+cron.schedule('0 8 * * *', async () => {
+  console.log('⏰ Vérification des rappels RDV...');
+  try {
+    const demain = new Date();
+    demain.setDate(demain.getDate() + 1);
+    const dateDemain = demain.toISOString().split('T')[0];
+
+    const result = await pool.query(
+      `SELECT r.*, s.nom as service_nom 
+       FROM rdv r 
+       JOIN services s ON r.service_id = s.id
+       WHERE r.date_rdv::date = $1 
+       AND r.statut = 'confirme'
+       AND r.citoyen_email IS NOT NULL 
+       AND r.citoyen_email != ''`,
+      [dateDemain]
+    );
+
+    console.log(`📋 ${result.rows.length} rappel(s) à envoyer`);
+
+    for (const rdv of result.rows) {
+      await envoyerRappel(rdv);
+      console.log(`✅ Rappel envoyé à ${rdv.citoyen_email}`);
+    }
+
+  } catch (err) {
+    console.error('❌ Erreur rappels :', err.message);
+  }
 });
 
 // ── Démarrage ──
