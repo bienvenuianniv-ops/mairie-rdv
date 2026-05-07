@@ -1,5 +1,6 @@
 
 const pool = require('../config/db');
+const crypto = require('crypto');
 const { envoyerConfirmation, envoyerAnnulation } = require('../config/email');
 
 
@@ -26,20 +27,20 @@ const creerRdv = async (req, res) => {
     }
 
     // Générer la référence unique
-    const reference = 'RDV-' + Math.random().toString(36)
-                      .substr(2, 7).toUpperCase();
-
+   const reference = 'RDV-' + Math.random().toString(36)
+                  .substr(2, 7).toUpperCase();
+const token_annulation = crypto.randomBytes(32).toString('hex');
     // Insérer le rendez-vous
     const result = await pool.query(
       `INSERT INTO rendez_vous 
         (reference, service_id, citoyen_nom, citoyen_prenom,
          citoyen_tel, citoyen_email, citoyen_nni,
-         date_rdv, heure_rdv, paiement, notes)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+         date_rdv, heure_rdv, paiement, notes, token_annulation)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
        RETURNING *`,
       [reference, service_id, citoyen_nom, citoyen_prenom,
        citoyen_tel, citoyen_email, citoyen_nni,
-       date_rdv, heure_rdv, paiement || 'guichet', notes]
+       date_rdv, heure_rdv, paiement || 'guichet', notes, token_annulation]
     );
 
     const nouveauRdv = result.rows[0];
@@ -226,6 +227,8 @@ const modifierRdv = async (req, res) => {
 // ── ANNULATION PAR LE CITOYEN (via lien email) ──
 const annulerCitoyen = async (req, res) => {
   const { reference } = req.params;
+  const { token } = req.query;
+
   try {
     const rdv = await pool.query(
       `SELECT r.*, s.nom as service_nom
@@ -245,6 +248,16 @@ const annulerCitoyen = async (req, res) => {
     }
 
     const r = rdv.rows[0];
+
+    // ── Vérifier le token ──
+    if (!token || token !== r.token_annulation) {
+      return res.status(403).send(`
+        <div style="font-family:Arial,sans-serif;text-align:center;padding:3rem">
+          <h2 style="color:#c0392b">🔒 Accès refusé</h2>
+          <p>Lien d'annulation invalide ou expiré.</p>
+        </div>
+      `);
+    }
 
     if (r.statut === 'annule') {
       return res.send(`

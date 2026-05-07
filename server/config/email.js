@@ -4,7 +4,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ── EMAIL DE CONFIRMATION ──
 const envoyerConfirmation = async (rdv) => {
-  const lienAnnulation = `https://mairie-rdv-backend.onrender.com/api/rdv/${rdv.reference}/annuler-citoyen`;
+  const lienAnnulation = `https://mairie-rdv-backend.onrender.com/api/rdv/${rdv.reference}/annuler-citoyen?token=${rdv.token_annulation}`;
   await resend.emails.send({
     from: 'MairieConnect <onboarding@resend.dev>',
     to: rdv.citoyen_email,
