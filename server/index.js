@@ -37,16 +37,16 @@ cron.schedule('* * * * *', async () => {
     demain.setDate(demain.getDate() + 1);
     const dateDemain = demain.toISOString().split('T')[0];
 
-    const result = await pool.query(
-      `SELECT r.*, s.nom as service_nom 
-       FROM rdv r 
-       JOIN services s ON r.service_id = s.id
-       WHERE r.date_rdv::date = $1 
-       AND r.statut = 'confirme'
-       AND r.citoyen_email IS NOT NULL 
-       AND r.citoyen_email != ''`,
-      [dateDemain]
-    );
+   const result = await pool.query(
+  `SELECT r.*, s.nom as service_nom 
+   FROM rendez_vous r 
+   JOIN services s ON r.service_id = s.id
+   WHERE r.date_rdv::date = $1 
+   AND r.statut = 'confirme'
+   AND r.citoyen_email IS NOT NULL 
+   AND r.citoyen_email != ''`,
+  [dateDemain]
+);
 
     console.log(`📋 ${result.rows.length} rappel(s) à envoyer`);
 
