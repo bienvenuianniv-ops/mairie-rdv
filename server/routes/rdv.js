@@ -23,5 +23,6 @@ router.put('/:id/statut', verifierToken, changerStatut);
 
 // GET /api/rdv/:reference — public (citoyen vérifie son rdv)
 router.get('/:reference', obtenirRdv);
-
+// GET /api/rdv/:reference/annuler-citoyen — public (citoyen annule son rdv)
+router.get('/:reference/annuler-citoyen', require('../controllers/rdvController').annulerCitoyen);
 module.exports = router;

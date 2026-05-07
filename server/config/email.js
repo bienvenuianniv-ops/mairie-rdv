@@ -4,6 +4,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ── EMAIL DE CONFIRMATION ──
 const envoyerConfirmation = async (rdv) => {
+  const lienAnnulation = `https://mairie-rdv-backend.onrender.com/api/rdv/${rdv.reference}/annuler-citoyen`;
   await resend.emails.send({
     from: 'MairieConnect <onboarding@resend.dev>',
     to: rdv.citoyen_email,
@@ -27,6 +28,11 @@ const envoyerConfirmation = async (rdv) => {
           <div style="background:#fef3d0;border:2px solid #e0a020;border-radius:8px;padding:1rem;margin-top:1rem">
             <p style="margin:0;color:#7a5500">⚠️ <strong>Important :</strong> Présentez cette référence à l'accueil de la mairie le jour de votre rendez-vous.</p>
           </div>
+          <div style="text-align:center;margin-top:1.5rem">
+            <a href="${lienAnnulation}" style="background:#fee2e2;color:#991b1b;padding:.7rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:700;font-size:.85rem">
+              ❌ Annuler mon rendez-vous
+            </a>
+          </div>
         </div>
         <div style="background:#1a6b3c;padding:1rem;text-align:center">
           <p style="color:#e8f5ee;font-size:.85rem;margin:0">MairieConnect — Services numériques aux citoyens</p>
@@ -36,7 +42,6 @@ const envoyerConfirmation = async (rdv) => {
   });
   console.log(`✅ Email envoyé à ${rdv.citoyen_email}`);
 };
-
 // ── EMAIL D'ANNULATION ──
 const envoyerAnnulation = async (rdv) => {
   await resend.emails.send({

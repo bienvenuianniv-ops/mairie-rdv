@@ -223,7 +223,75 @@ const modifierRdv = async (req, res) => {
     res.status(500).json({ message: '❌ Erreur serveur', erreur: err.message });
   }
 };
+// ── ANNULATION PAR LE CITOYEN (via lien email) ──
+const annulerCitoyen = async (req, res) => {
+  const { reference } = req.params;
+  try {
+    const rdv = await pool.query(
+      `SELECT r.*, s.nom as service_nom
+       FROM rendez_vous r
+       LEFT JOIN services s ON r.service_id = s.id
+       WHERE r.reference = $1`,
+      [reference]
+    );
+
+    if (rdv.rows.length === 0) {
+      return res.send(`
+        <div style="font-family:Arial,sans-serif;text-align:center;padding:3rem">
+          <h2 style="color:#c0392b">❌ Rendez-vous introuvable</h2>
+          <p>La référence <strong>${reference}</strong> n'existe pas.</p>
+        </div>
+      `);
+    }
+
+    const r = rdv.rows[0];
+
+    if (r.statut === 'annule') {
+      return res.send(`
+        <div style="font-family:Arial,sans-serif;text-align:center;padding:3rem">
+          <h2 style="color:#e8a020">⚠️ Déjà annulé</h2>
+          <p>Ce rendez-vous <strong>${reference}</strong> est déjà annulé.</p>
+        </div>
+      `);
+    }
+
+    // Annuler le RDV
+    await pool.query(
+      `UPDATE rendez_vous SET statut='annule' WHERE reference=$1`,
+      [reference]
+    );
+
+    // Envoyer email de confirmation d'annulation
+    if (r.citoyen_email) {
+      try {
+        await envoyerAnnulation(r);
+      } catch (emailErr) {
+        console.error('❌ Erreur email annulation :', emailErr.message);
+      }
+    }
+
+    res.send(`
+      <div style="font-family:Arial,sans-serif;max-width:500px;margin:3rem auto;text-align:center;padding:2rem;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.1)">
+        <div style="font-size:4rem">✅</div>
+        <h2 style="color:#1a6b3c;margin:1rem 0">Rendez-vous annulé</h2>
+        <p>Votre rendez-vous <strong style="color:#1a6b3c">${reference}</strong> a été annulé avec succès.</p>
+        <p style="color:#6b7280;font-size:.85rem;margin-top:1rem">
+          Service : ${r.service_nom}<br>
+          Date : ${new Date(r.date_rdv).toLocaleDateString('fr-FR')}<br>
+          Heure : ${r.heure_rdv.substr(0,5)}
+        </p>
+        <a href="https://mairie-rdv-frontend.onrender.com" 
+           style="display:inline-block;margin-top:1.5rem;background:#1a6b3c;color:white;padding:.7rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:700">
+          🏛️ Reprendre un rendez-vous
+        </a>
+      </div>
+    `);
+
+  } catch (err) {
+    res.status(500).send(`<p>❌ Erreur serveur : ${err.message}</p>`);
+  }
+};
 module.exports = { 
   creerRdv, listerRdv, obtenirRdv, 
-  changerStatut, creneauxDisponibles, modifierRdv 
+  changerStatut, creneauxDisponibles, modifierRdv, annulerCitoyen
 };
