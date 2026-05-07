@@ -896,11 +896,11 @@ const renderAdmin = async (filter, search) => {
     }
 
     // Stats
-    const today = new Date().toLocaleDateString('fr-FR');
-    document.getElementById('s-total').textContent = list.length;
-    document.getElementById('s-today').textContent = list.filter(r => new Date(r.date_rdv).toLocaleDateString('fr-FR') === today).length;
-    document.getElementById('s-conf').textContent = list.filter(r => r.statut === 'confirme').length;
-    document.getElementById('s-ann').textContent  = list.filter(r => r.statut === 'annule').length;
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('s-total').textContent = list.length;
+document.getElementById('s-today').textContent = list.filter(r => r.date_rdv.split('T')[0] === today).length;
+document.getElementById('s-conf').textContent = list.filter(r => r.statut === 'confirme').length;
+document.getElementById('s-ann').textContent  = list.filter(r => r.statut === 'annule').length;
 
   } catch (err) {
     if (err.message.includes('Token') || err.message.includes('token')) {
