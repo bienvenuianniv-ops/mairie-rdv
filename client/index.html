@@ -168,6 +168,7 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -345,7 +346,13 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
     <div class="stat-card green"><div class="stat-v" id="s-conf">0</div><div class="stat-l">Confirmés</div></div>
     <div class="stat-card red"><div class="stat-v" id="s-ann">0</div><div class="stat-l">Annulés</div></div>
   </div>
-  <div class="card">
+ <!-- ── GRAPHIQUE ── -->
+<div class="card" style="margin-bottom:1rem">
+  <div class="card-title">📊 RDV par service</div>
+  <canvas id="chart-services" height="100"></canvas>
+</div>
+
+<div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.7rem;margin-bottom:.9rem">
       <div class="filter-bar">
         <button class="f-btn active" onclick="filterRdv('tous',this)">Tous</button>
@@ -901,7 +908,7 @@ document.getElementById('s-total').textContent = list.length;
 document.getElementById('s-today').textContent = list.filter(r => r.date_rdv.split('T')[0] === today).length;
 document.getElementById('s-conf').textContent = list.filter(r => r.statut === 'confirme').length;
 document.getElementById('s-ann').textContent  = list.filter(r => r.statut === 'annule').length;
-
+        renderChart(list);
   } catch (err) {
     if (err.message.includes('Token') || err.message.includes('token')) {
       authToken = null;
@@ -1067,7 +1074,52 @@ const connecterAgent = async () => {
     btn.disabled = false; btn.textContent = 'Se connecter';
   }
 };
+// ── GRAPHIQUE RDV PAR SERVICE ──
+let chartInstance = null;
 
+const renderChart = (list) => {
+  const canvas = document.getElementById('chart-services');
+  if (!canvas) return;
+
+  // Compter les RDV par service
+  const compteur = {};
+  list.forEach(r => {
+    compteur[r.service_nom] = (compteur[r.service_nom] || 0) + 1;
+  });
+
+  const labels = Object.keys(compteur);
+  const data   = Object.values(compteur);
+  const colors = ['#1a6b3c','#e8a020','#3b82f6','#c0392b','#16a34a','#8b5cf6'];
+
+  // Détruire l'ancien graphique si existant
+  if (chartInstance) chartInstance.destroy();
+
+  chartInstance = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Nombre de RDV',
+        data,
+        backgroundColor: colors.slice(0, labels.length),
+        borderRadius: 8,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { stepSize: 1 }
+        }
+      }
+    }
+  });
+};
 // ── INIT ──
 const now = new Date();
 document.getElementById('admin-date').textContent = 'Semaine du ' + now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
