@@ -189,6 +189,9 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchView('citoyen',this)">👤 Citoyen</button>
     <button class="nav-tab" onclick="switchView('admin',this)">🔐 Agent</button>
+    <button class="nav-tab" onclick="switchView('agents',this)" id="btn-agents" style="display:none">👥 Agents</button>
+<button class="nav-tab" onclick="deconnecter()" id="btn-logout" style="display:none;background:#fee2e2;color:#991b1b">⬅️ Déconnexion</button>
+  </div>
     <button class="nav-tab" onclick="deconnecter()" id="btn-logout" style="display:none;background:#fee2e2;color:#991b1b">⬅️ Déconnexion</button>
   </div>
 </header>
@@ -372,7 +375,24 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
     </div>
   </div>
 </div>
-
+<!-- ══ AGENTS ══ -->
+<div class="view" id="view-agents">
+  <div class="admin-top">
+    <div>
+      <h2>Gestion des agents</h2>
+      <p style="color:var(--gris);font-size:.8rem">Créez et gérez les accès des agents de la mairie.</p>
+    </div>
+    <button class="btn btn-primary" onclick="openNouvelAgent()">+ Nouvel agent</button>
+  </div>
+  <div class="card">
+    <table>
+      <thead><tr>
+        <th>Nom</th><th>Email</th><th>Rôle</th><th>Statut</th><th>Actions</th>
+      </tr></thead>
+      <tbody id="agents-body"></tbody>
+    </table>
+  </div>
+</div>
 </main>
 
 <div class="overlay" id="overlay" onclick="closeModal()">
@@ -932,6 +952,7 @@ const deconnecter = () => {
   authToken = null;
   localStorage.removeItem('token');
   document.getElementById('btn-logout').style.display = 'none';
+  document.getElementById('btn-agents').style.display = 'none';
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
   document.getElementById('view-citoyen').classList.add('active');
@@ -1030,6 +1051,7 @@ const switchView = async (v, btn) => {
   document.getElementById('view-' + v).classList.add('active');
   if (btn) btn.classList.add('active');
   if (v === 'admin') renderAdmin();
+  if (v === 'agents') renderAgents();
 };
 
 const afficherLoginModal = () => {
@@ -1067,6 +1089,7 @@ const connecterAgent = async () => {
     document.querySelectorAll('.nav-tab')[1].classList.add('active');
     renderAdmin();
     document.getElementById('btn-logout').style.display = 'block';
+    document.getElementById('btn-agents').style.display = 'block';
   } catch (err) {
     errEl.style.display = 'block';
     errEl.textContent = '❌ ' + err.message;
@@ -1119,6 +1142,97 @@ const renderChart = (list) => {
       }
     }
   });
+};
+// ── GESTION DES AGENTS ──
+const renderAgents = async () => {
+  const tbody = document.getElementById('agents-body');
+  if (!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="5"><div style="text-align:center;padding:2rem;color:var(--gris)">⏳ Chargement...</div></td></tr>';
+  try {
+    const agents = await apiCall('/auth/agents', 'GET', null, authToken);
+    tbody.innerHTML = '';
+    agents.forEach(a => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><div style="font-weight:700">${a.prenom} ${a.nom}</div><div style="font-size:.72rem;color:var(--gris)">${a.email}</div></td>
+        <td>${a.email}</td>
+        <td><span class="badge ${a.role === 'admin' ? 'b-green' : 'b-yellow'}">${a.role}</span></td>
+        <td><span class="badge ${a.actif ? 'b-green' : 'b-red'}">${a.actif ? '✓ Actif' : '✗ Inactif'}</span></td>
+        <td>
+          ${a.role !== 'admin' ? `
+            <button class="btn btn-sm" 
+              style="background:${a.actif ? '#fee2e2' : '#dcfce7'};color:${a.actif ? '#991b1b' : '#166534'};border:none" 
+              onclick="toggleAgent(${a.id})">
+              ${a.actif ? '🔒 Désactiver' : '✅ Activer'}
+            </button>` : '<span style="color:var(--gris);font-size:.75rem">Admin principal</span>'}
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty">❌ ${err.message}</div></td></tr>`;
+  }
+};
+
+const toggleAgent = async (id) => {
+  if (!confirm('Voulez-vous modifier le statut de cet agent ?')) return;
+  try {
+    await apiCall(`/auth/agents/${id}/toggle`, 'PUT', null, authToken);
+    renderAgents();
+  } catch (err) {
+    alert('❌ Erreur : ' + err.message);
+  }
+};
+
+const openNouvelAgent = () => {
+  document.getElementById('modal-inner').innerHTML = `
+    <h3>👥 Nouvel agent</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:.7rem 0">
+      <div class="field"><label>Prénom *</label><input id="a-prenom" type="text"></div>
+      <div class="field"><label>Nom *</label><input id="a-nom" type="text"></div>
+      <div class="field" style="grid-column:1/-1"><label>Email *</label><input id="a-email" type="email" placeholder="agent@mairie.sn"></div>
+      <div class="field" style="grid-column:1/-1"><label>Mot de passe *</label><input id="a-pwd" type="password" placeholder="••••••••"></div>
+      <div class="field" style="grid-column:1/-1"><label>Rôle</label>
+        <select id="a-role">
+          <option value="agent">Agent</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+    </div>
+    <div id="a-error" style="display:none;color:var(--rouge);font-size:.82rem"></div>
+    <div class="m-actions">
+      <button class="btn btn-secondary btn-sm" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-primary btn-sm" onclick="sauvegarderAgent()">✓ Créer</button>
+    </div>
+  `;
+  document.getElementById('overlay').classList.add('open');
+};
+
+const sauvegarderAgent = async () => {
+  const prenom = document.getElementById('a-prenom').value.trim();
+  const nom    = document.getElementById('a-nom').value.trim();
+  const email  = document.getElementById('a-email').value.trim();
+  const pwd    = document.getElementById('a-pwd').value.trim();
+  const role   = document.getElementById('a-role').value;
+  const errEl  = document.getElementById('a-error');
+
+  if (!prenom || !nom || !email || !pwd) {
+    errEl.style.display = 'block';
+    errEl.textContent = '❌ Veuillez remplir tous les champs !';
+    return;
+  }
+
+  try {
+    await apiCall('/auth/agents', 'POST', {
+      prenom, nom, email, mot_de_passe: pwd, role
+    }, authToken);
+    closeModal();
+    renderAgents();
+    alert('✅ Agent créé avec succès !');
+  } catch (err) {
+    errEl.style.display = 'block';
+    errEl.textContent = '❌ ' + err.message;
+  }
 };
 // ── INIT ──
 const now = new Date();
