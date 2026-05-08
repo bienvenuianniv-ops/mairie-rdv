@@ -16,5 +16,14 @@ router.get('/profil', verifierToken, (req, res) => {
     agent: req.agent 
   });
 });
+const { listerAgents, creerAgent, toggleActif } = require('../controllers/authController');
 
+// GET /api/auth/agents — liste tous les agents (admin seulement)
+router.get('/agents', verifierToken, listerAgents);
+
+// POST /api/auth/agents — créer un nouvel agent (admin seulement)
+router.post('/agents', verifierToken, creerAgent);
+
+// PUT /api/auth/agents/:id/toggle — activer/désactiver (admin seulement)
+router.put('/agents/:id/toggle', verifierToken, toggleActif);
 module.exports = router;

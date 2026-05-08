@@ -79,5 +79,97 @@ const connecter = async (req, res) => {
     res.status(500).json({ message: '❌ Erreur serveur', erreur: err.message });
   }
 };
+// ── LISTER TOUS LES AGENTS ──
+const listerAgents = async (req, res) => {
+  try {
+    // Vérifier que c'est un admin
+    if (req.agent.role !== 'admin') {
+      return res.status(403).json({ message: '❌ Accès réservé à l\'admin !' });
+    }
 
-module.exports = { inscrire, connecter };
+    const result = await pool.query(
+      `SELECT id, nom, prenom, email, role, actif, created_at 
+       FROM agents 
+       ORDER BY created_at ASC`
+    );
+
+    res.json(result.rows);
+
+  } catch (err) {
+    res.status(500).json({ message: '❌ Erreur serveur', erreur: err.message });
+  }
+};
+
+// ── CRÉER UN NOUVEL AGENT ──
+const creerAgent = async (req, res) => {
+  try {
+    // Vérifier que c'est un admin
+    if (req.agent.role !== 'admin') {
+      return res.status(403).json({ message: '❌ Accès réservé à l\'admin !' });
+    }
+
+    const { nom, prenom, email, mot_de_passe, role } = req.body;
+
+    // Vérifier si l'email existe déjà
+    const existe = await pool.query(
+      'SELECT id FROM agents WHERE email = $1', [email]
+    );
+    if (existe.rows.length > 0) {
+      return res.status(400).json({ message: '❌ Cet email est déjà utilisé !' });
+    }
+
+    // Chiffrer le mot de passe
+    const hash = await bcrypt.hash(mot_de_passe, 10);
+
+    const result = await pool.query(
+      `INSERT INTO agents (nom, prenom, email, mot_de_passe, role)
+       VALUES ($1, $2, $3, $4, $5) 
+       RETURNING id, nom, prenom, email, role, actif`,
+      [nom, prenom, email, hash, role || 'agent']
+    );
+
+    res.status(201).json({
+      message: '✅ Agent créé avec succès !',
+      agent: result.rows[0]
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: '❌ Erreur serveur', erreur: err.message });
+  }
+};
+
+// ── ACTIVER / DÉSACTIVER UN AGENT ──
+const toggleActif = async (req, res) => {
+  try {
+    // Vérifier que c'est un admin
+    if (req.agent.role !== 'admin') {
+      return res.status(403).json({ message: '❌ Accès réservé à l\'admin !' });
+    }
+
+    const { id } = req.params;
+
+    // Empêcher l'admin de se désactiver lui-même
+    if (parseInt(id) === req.agent.id) {
+      return res.status(400).json({ message: '❌ Vous ne pouvez pas vous désactiver vous-même !' });
+    }
+
+    const result = await pool.query(
+      `UPDATE agents SET actif = NOT actif WHERE id = $1 
+       RETURNING id, nom, prenom, email, role, actif`,
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: '❌ Agent non trouvé !' });
+    }
+
+    res.json({
+      message: `✅ Agent ${result.rows[0].actif ? 'activé' : 'désactivé'} avec succès !`,
+      agent: result.rows[0]
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: '❌ Erreur serveur', erreur: err.message });
+  }
+};
+module.exports = { inscrire, connecter, listerAgents, creerAgent, toggleActif };
