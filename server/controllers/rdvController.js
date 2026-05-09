@@ -2,6 +2,7 @@
 const pool = require('../config/db');
 const crypto = require('crypto');
 const { envoyerConfirmation, envoyerAnnulation } = require('../config/email');
+const { envoyerSmsConfirmation, envoyerSmsAnnulation } = require('../config/sms');
 
 
 // ── CRÉER UN RENDEZ-VOUS ──
@@ -52,6 +53,7 @@ if (nouveauRdv.citoyen_email) {
     const service = await pool.query('SELECT nom FROM services WHERE id=$1', [service_id]);
     nouveauRdv.service_nom = service.rows[0]?.nom || '';
     await envoyerConfirmation(nouveauRdv);
+    await envoyerSmsConfirmation(nouveauRdv);
   } catch (emailErr) {
     console.error('❌ Erreur envoi email :', emailErr.message);
   }
@@ -128,6 +130,7 @@ if (statut === 'annule' && rdvMaj.citoyen_email) {
     const service = await pool.query('SELECT nom FROM services WHERE id=$1', [rdvMaj.service_id]);
     rdvMaj.service_nom = service.rows[0]?.nom || '';
     await envoyerAnnulation(rdvMaj);
+    await envoyerSmsAnnulation(rdvMaj);
   } catch (emailErr) {
     console.error('❌ Erreur envoi email annulation :', emailErr.message);
   }

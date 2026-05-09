@@ -7,6 +7,7 @@ require('dotenv').config();
 require('./config/db');
 
 const { envoyerRappel } = require('./config/email');
+const { envoyerSmsRappel } = require('./config/sms');
 const pool = require('./config/db');
 
 const app = express();
@@ -52,6 +53,7 @@ cron.schedule('0 8 * * *', async () => {
 
     for (const rdv of result.rows) {
       await envoyerRappel(rdv);
+      await envoyerSmsRappel(rdv);
       console.log(`✅ Rappel envoyé à ${rdv.citoyen_email}`);
     }
 
