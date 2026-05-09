@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigiMairie — La mairie numérique africaine</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --vert:#1a6b3c;--vert-mid:#238a4e;--vert-clair:#d6f0e0;--vert-pale:#edf7f1;
+  --or:#e8a020;--or-clair:#fef3d0;
+  --noir:#0d1f14;--blanc:#fff;--gris:#6b7280;--gris-clair:#f3f4f6;
+  --texte:#1a2e1e;--sable:#f7f2ea;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--blanc);color:var(--texte);overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;transition:all .3s}
+nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(0,0,0,.08)}
+.nav-logo{display:flex;align-items:center;gap:.75rem}
+.nav-logo-mark{width:38px;height:38px;background:var(--or);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.nav-logo-text{font-family:'Fraunces',serif;font-size:1.2rem;color:var(--blanc);font-weight:700;transition:color .3s}
+nav.scrolled .nav-logo-text{color:var(--vert)}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .2s}
+nav.scrolled .nav-links a{color:var(--gris)}
+.nav-links a:hover{color:var(--or)}
+nav.scrolled .nav-links a:hover{color:var(--vert)}
+.nav-cta{background:var(--or);color:var(--vert) !important;padding:.5rem 1.2rem;border-radius:8px;font-weight:700 !important}
+nav.scrolled .nav-cta{background:var(--vert);color:var(--blanc) !important}
+
+/* ── HERO ── */
+.hero{min-height:100vh;background:linear-gradient(160deg,var(--noir) 0%,#1a3d24 50%,#0d2e1a 100%);display:flex;align-items:center;position:relative;overflow:hidden;padding:6rem 2rem 4rem}
+.hero-bg{position:absolute;inset:0;overflow:hidden}
+.hero-circle{position:absolute;border-radius:50%;opacity:.06}
+.hero-circle:nth-child(1){width:600px;height:600px;background:var(--or);right:-150px;top:-150px}
+.hero-circle:nth-child(2){width:400px;height:400px;background:var(--vert-mid);left:-100px;bottom:-100px}
+.hero-circle:nth-child(3){width:200px;height:200px;background:var(--or);left:40%;top:20%}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px}
+
+.hero-content{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(232,160,32,.15);border:1px solid rgba(232,160,32,.3);color:var(--or);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem 1rem;border-radius:999px;margin-bottom:1.5rem;animation:fadeUp .6s ease}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2.5rem,5vw,4rem);color:var(--blanc);line-height:1.1;margin-bottom:1.5rem;animation:fadeUp .6s ease .1s both}
+.hero h1 em{color:var(--or);font-style:italic}
+.hero p{color:rgba(255,255,255,.65);font-size:1.05rem;line-height:1.7;margin-bottom:2rem;animation:fadeUp .6s ease .2s both}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .6s ease .3s both}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.8rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:700;text-decoration:none;cursor:pointer;border:none;transition:all .25s}
+.btn-primary{background:var(--or);color:var(--vert)}
+.btn-primary:hover{background:#f0b030;transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,160,32,.35)}
+.btn-outline{background:transparent;color:var(--blanc);border:1.5px solid rgba(255,255,255,.3)}
+.btn-outline:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.6)}
+
+.hero-visual{position:relative;animation:fadeUp .6s ease .4s both}
+.hero-card{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:1.5rem;margin-bottom:1rem}
+.hero-card-title{font-size:.72rem;font-weight:700;color:var(--or);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
+.hero-stat-row{display:flex;gap:1rem}
+.hero-stat{flex:1;background:rgba(255,255,255,.05);border-radius:12px;padding:1rem;text-align:center}
+.hero-stat-v{font-family:'Fraunces',serif;font-size:2rem;font-weight:900;color:var(--blanc)}
+.hero-stat-l{font-size:.68rem;color:rgba(255,255,255,.5);margin-top:.2rem}
+.hero-rdv{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:1.2rem;display:flex;align-items:center;gap:1rem}
+.hero-rdv-icon{width:44px;height:44px;background:var(--vert-clair);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.hero-rdv-info{flex:1}
+.hero-rdv-name{font-weight:700;color:var(--blanc);font-size:.88rem}
+.hero-rdv-detail{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:.15rem}
+.hero-rdv-badge{background:var(--vert-clair);color:var(--vert);font-size:.68rem;font-weight:700;padding:.18rem .55rem;border-radius:999px}
+
+/* ── STATS ── */
+.stats-band{background:var(--vert);padding:3rem 2rem}
+.stats-band-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
+.stat-item-v{font-family:'Fraunces',serif;font-size:2.8rem;font-weight:900;color:var(--or)}
+.stat-item-l{font-size:.85rem;color:rgba(255,255,255,.7);margin-top:.3rem}
+
+/* ── SECTION ── */
+section{padding:5rem 2rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-label{display:inline-block;background:var(--vert-clair);color:var(--vert);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .9rem;border-radius:999px;margin-bottom:1rem}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3vw,2.8rem);line-height:1.15;margin-bottom:1rem}
+.section-sub{color:var(--gris);font-size:1rem;line-height:1.7;max-width:540px}
+
+/* ── PROBLÈME ── */
+.probleme{background:var(--sable)}
+.probleme-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
+.probleme-items{display:flex;flex-direction:column;gap:1.2rem}
+.probleme-item{display:flex;align-items:flex-start;gap:1rem;background:var(--blanc);border-radius:14px;padding:1.2rem;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.probleme-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.p-rouge{background:#fee2e2}
+.p-or{background:var(--or-clair)}
+.p-bleu{background:#dbeafe}
+.probleme-text strong{display:block;font-weight:700;margin-bottom:.2rem;font-size:.9rem}
+.probleme-text span{font-size:.82rem;color:var(--gris)}
+.solution-box{background:linear-gradient(135deg,var(--vert) 0%,var(--vert-mid) 100%);border-radius:20px;padding:2rem;color:var(--blanc)}
+.solution-box h3{font-family:'Fraunces',serif;font-size:1.5rem;margin-bottom:1rem}
+.solution-list{list-style:none;display:flex;flex-direction:column;gap:.8rem}
+.solution-list li{display:flex;align-items:center;gap:.7rem;font-size:.9rem;color:rgba(255,255,255,.85)}
+.solution-list li::before{content:'✓';width:22px;height:22px;background:var(--or);color:var(--vert);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;flex-shrink:0}
+
+/* ── FONCTIONNALITÉS ── */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.feature-card{background:var(--blanc);border:1.5px solid #e5e7eb;border-radius:18px;padding:1.8rem;transition:all .25s}
+.feature-card:hover{border-color:var(--vert);box-shadow:0 8px 32px rgba(26,107,60,.12);transform:translateY(-4px)}
+.feature-icon{width:52px;height:52px;border-radius:14px;background:var(--vert-pale);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.2rem}
+.feature-title{font-family:'Fraunces',serif;font-size:1.1rem;margin-bottom:.5rem}
+.feature-desc{font-size:.85rem;color:var(--gris);line-height:1.6}
+
+/* ── COMMENT ÇA MARCHE ── */
+.comment{background:var(--sable)}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem;position:relative}
+.steps-grid::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--vert-clair),var(--vert),var(--vert-clair));z-index:0}
+.step-card{text-align:center;position:relative;z-index:1}
+.step-num{width:56px;height:56px;border-radius:50%;background:var(--vert);color:var(--blanc);font-family:'Fraunces',serif;font-size:1.3rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 4px 16px rgba(26,107,60,.3)}
+.step-title{font-weight:700;font-size:.9rem;margin-bottom:.4rem}
+.step-desc{font-size:.78rem;color:var(--gris);line-height:1.5}
+
+/* ── TÉMOIGNAGES ── */
+.temoignages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.temoignage-card{background:var(--blanc);border-radius:18px;padding:1.8rem;box-shadow:0 4px 20px rgba(0,0,0,.07)}
+.temoignage-text{font-size:.9rem;color:var(--texte);line-height:1.7;font-style:italic;margin-bottom:1.2rem}
+.temoignage-author{display:flex;align-items:center;gap:.75rem}
+.temoignage-avatar{width:42px;height:42px;border-radius:50%;background:var(--vert);color:var(--blanc);font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.temoignage-name{font-weight:700;font-size:.85rem}
+.temoignage-role{font-size:.75rem;color:var(--gris)}
+.stars{color:var(--or);font-size:.85rem;margin-bottom:.75rem}
+
+/* ── CTA ── */
+.cta-section{background:linear-gradient(135deg,var(--noir) 0%,#1a3d24 100%);text-align:center;padding:6rem 2rem;position:relative;overflow:hidden}
+.cta-section::before{content:'🌍';position:absolute;font-size:20rem;opacity:.04;left:50%;top:50%;transform:translate(-50%,-50%)}
+.cta-section h2{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3rem);color:var(--blanc);margin-bottom:1rem;position:relative}
+.cta-section p{color:rgba(255,255,255,.65);font-size:1.05rem;margin-bottom:2.5rem;position:relative}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}
+
+/* ── FOOTER ── */
+footer{background:var(--noir);padding:3rem 2rem;text-align:center}
+.footer-logo{font-family:'Fraunces',serif;font-size:1.5rem;color:var(--blanc);margin-bottom:.5rem}
+.footer-sub{font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:1.5rem}
+.footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.82rem;transition:color .2s}
+.footer-links a:hover{color:var(--or)}
+.footer-copy{margin-top:2rem;font-size:.75rem;color:rgba(255,255,255,.2)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:768px){
+  .hero-content{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .stats-band-inner{grid-template-columns:repeat(2,1fr)}
+  .probleme-grid{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr}
+  .steps-grid{grid-template-columns:repeat(2,1fr)}
+  .steps-grid::before{display:none}
+  .temoignages-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <div class="nav-logo-mark">🏛️</div>
+    <span class="nav-logo-text">DigiMairie</span>
+  </div>
+  <div class="nav-links">
+    <a href="#fonctionnalites">Fonctionnalités</a>
+    <a href="#comment">Comment ça marche</a>
+    <a href="#temoignages">Témoignages</a>
+    <a href="index.html" class="nav-cta">Prendre un RDV</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-circle"></div>
+    <div class="hero-circle"></div>
+    <div class="hero-circle"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-badge">🌍 Solution numérique africaine</div>
+      <h1>La mairie <em>numérique</em> pour l'Afrique moderne</h1>
+      <p>DigiMairie transforme vos services administratifs. Les citoyens prennent rendez-vous en ligne, les agents gèrent tout depuis un tableau de bord simple et efficace.</p>
+      <div class="hero-btns">
+        <a href="index.html" class="btn btn-primary">🗓️ Prendre un RDV</a>
+        <a href="#fonctionnalites" class="btn btn-outline">Découvrir →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-title">📊 Tableau de bord — Cette semaine</div>
+        <div class="hero-stat-row">
+          <div class="hero-stat">
+            <div class="hero-stat-v">47</div>
+            <div class="hero-stat-l">RDV total</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-v">38</div>
+            <div class="hero-stat-l">Confirmés</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-v">12</div>
+            <div class="hero-stat-l">Aujourd'hui</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-rdv">
+        <div class="hero-rdv-icon">📋</div>
+        <div class="hero-rdv-info">
+          <div class="hero-rdv-name">Aminata Diallo — État civil</div>
+          <div class="hero-rdv-detail">Aujourd'hui à 10h30 · RDV-A8F2K</div>
+        </div>
+        <div class="hero-rdv-badge">✓ Confirmé</div>
+      </div>
+      <div class="hero-rdv" style="margin-top:.75rem">
+        <div class="hero-rdv-icon">🏗️</div>
+        <div class="hero-rdv-info">
+          <div class="hero-rdv-name">Moussa Koné — Urbanisme</div>
+          <div class="hero-rdv-detail">Aujourd'hui à 14h00 · RDV-B3G7L</div>
+        </div>
+        <div class="hero-rdv-badge" style="background:#fef3c7;color:#92400e">⏳ En attente</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats-band">
+  <div class="stats-band-inner">
+    <div>
+      <div class="stat-item-v">80%</div>
+      <div class="stat-item-l">Réduction des files d'attente</div>
+    </div>
+    <div>
+      <div class="stat-item-v">3min</div>
+      <div class="stat-item-l">Pour prendre un RDV en ligne</div>
+    </div>
+    <div>
+      <div class="stat-item-v">24/7</div>
+      <div class="stat-item-l">Disponible nuit et jour</div>
+    </div>
+    <div>
+      <div class="stat-item-v">100%</div>
+      <div class="stat-item-l">Gratuit pour les citoyens</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PROBLÈME / SOLUTION ── -->
+<section class="probleme" id="probleme">
+  <div class="section-inner">
+    <div class="section-label">Le problème</div>
+    <h2 class="section-title">Les mairies africaines méritent mieux</h2>
+    <p class="section-sub">Des millions de citoyens perdent chaque jour des heures précieuses à cause d'un système administratif non numérisé.</p>
+    <div class="probleme-grid">
+      <div class="probleme-items">
+        <div class="probleme-item">
+          <div class="probleme-icon p-rouge">😤</div>
+          <div class="probleme-text">
+            <strong>Files d'attente interminables</strong>
+            <span>Les citoyens attendent des heures sans savoir quand ils seront reçus.</span>
+          </div>
+        </div>
+        <div class="probleme-item">
+          <div class="probleme-icon p-or">📋</div>
+          <div class="probleme-text">
+            <strong>Gestion manuelle désorganisée</strong>
+            <span>Les registres papier sont perdus, illisibles ou incomplets.</span>
+          </div>
+        </div>
+        <div class="probleme-item">
+          <div class="probleme-icon p-bleu">📵</div>
+          <div class="probleme-text">
+            <strong>Aucune communication</strong>
+            <span>Les citoyens ne savent pas quels documents apporter ni les horaires d'ouverture.</span>
+          </div>
+        </div>
+      </div>
+      <div class="solution-box">
+        <h3>DigiMairie résout tout ça</h3>
+        <ul class="solution-list">
+          <li>Prise de RDV en ligne 24h/24, 7j/7</li>
+          <li>Email de confirmation automatique</li>
+          <li>Rappel 24h avant le rendez-vous</li>
+          <li>Tableau de bord agent en temps réel</li>
+          <li>Annulation simple par le citoyen</li>
+          <li>Statistiques et rapports automatiques</li>
+          <li>Compatible mobile et ordinateur</li>
+          <li>Multilingue — Français + langues locales</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FONCTIONNALITÉS ── -->
+<section id="fonctionnalites">
+  <div class="section-inner">
+    <div class="section-label">Fonctionnalités</div>
+    <h2 class="section-title">Tout ce dont votre mairie a besoin</h2>
+    <p class="section-sub">Une solution complète, simple à utiliser pour les citoyens comme pour les agents.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🗓️</div>
+        <div class="feature-title">Prise de RDV en ligne</div>
+        <div class="feature-desc">Les citoyens choisissent leur service, leur date et leur créneau en quelques clics depuis leur téléphone.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📧</div>
+        <div class="feature-title">Emails automatiques</div>
+        <div class="feature-desc">Confirmation, rappel 24h avant et notification d'annulation — tout est automatique.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Tableau de bord agent</div>
+        <div class="feature-desc">Les agents voient tous les RDV, confirment, annulent et gèrent les citoyens en temps réel.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <div class="feature-title">Statistiques avancées</div>
+        <div class="feature-desc">Graphiques des RDV par service, par semaine et par statut pour mieux organiser l'équipe.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <div class="feature-title">Gestion des agents</div>
+        <div class="feature-desc">L'administrateur crée, active ou désactive les comptes agents en quelques secondes.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <div class="feature-title">Multilingue</div>
+        <div class="feature-desc">Interface disponible en français et en langue locale — adaptable à chaque pays africain.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Sécurisé</div>
+        <div class="feature-desc">Authentification JWT, mots de passe chiffrés, tokens d'annulation sécurisés.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">100% Mobile</div>
+        <div class="feature-desc">Conçu pour fonctionner parfaitement sur tous les téléphones, même avec une connexion lente.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🖨️</div>
+        <div class="feature-title">Récépissé PDF</div>
+        <div class="feature-desc">Le citoyen peut imprimer son récépissé de RDV directement depuis l'application.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMMENT ÇA MARCHE ── -->
+<section class="comment" id="comment">
+  <div class="section-inner">
+    <div class="section-label">Comment ça marche</div>
+    <h2 class="section-title">Simple comme bonjour</h2>
+    <p class="section-sub">En 4 étapes, le citoyen obtient son rendez-vous sans se déplacer.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Choisir le service</div>
+        <div class="step-desc">État civil, urbanisme, aide sociale… Le citoyen sélectionne ce dont il a besoin.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Choisir la date</div>
+        <div class="step-desc">Il choisit un jour et un créneau horaire disponible dans le calendrier.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Remplir ses infos</div>
+        <div class="step-desc">Nom, téléphone et email — c'est tout ce dont on a besoin.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-title">Recevoir la confirmation</div>
+        <div class="step-desc">Un email avec la référence et un rappel 24h avant arrive automatiquement.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TÉMOIGNAGES ── -->
+<section id="temoignages">
+  <div class="section-inner">
+    <div class="section-label">Témoignages</div>
+    <h2 class="section-title">Ce qu'ils en pensent</h2>
+    <p class="section-sub">Des agents et citoyens qui utilisent DigiMairie au quotidien.</p>
+    <div class="temoignages-grid">
+      <div class="temoignage-card">
+        <div class="stars">★★★★★</div>
+        <div class="temoignage-text">"Avant, les citoyens faisaient la queue dès 6h du matin. Maintenant tout est organisé, on sait exactement qui vient et à quelle heure."</div>
+        <div class="temoignage-author">
+          <div class="temoignage-avatar">A</div>
+          <div>
+            <div class="temoignage-name">Aminata Sow</div>
+            <div class="temoignage-role">Responsable État civil, Mairie de Dakar</div>
+          </div>
+        </div>
+      </div>
+      <div class="temoignage-card">
+        <div class="stars">★★★★★</div>
+        <div class="temoignage-text">"J'ai pris mon rendez-vous depuis mon téléphone en moins de 3 minutes. J'ai reçu un email et un rappel. Vraiment pratique !"</div>
+        <div class="temoignage-author">
+          <div class="temoignage-avatar">M</div>
+          <div>
+            <div class="temoignage-name">Moussa Konaté</div>
+            <div class="temoignage-role">Citoyen, Abidjan</div>
+          </div>
+        </div>
+      </div>
+      <div class="temoignage-card">
+        <div class="stars">★★★★★</div>
+        <div class="temoignage-text">"Le tableau de bord est très simple. Même les agents qui ne sont pas habitués aux ordinateurs s'en sortent très bien."</div>
+        <div class="temoignage-author">
+          <div class="temoignage-avatar">F</div>
+          <div>
+            <div class="temoignage-name">Fatou Diallo</div>
+            <div class="temoignage-role">Agent administratif, Mairie de Bamako</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA FINAL ── -->
+<section class="cta-section">
+  <h2>Prêt à numériser votre mairie ?</h2>
+  <p>Rejoignez les mairies africaines qui font confiance à DigiMairie.</p>
+  <div class="cta-btns">
+    <a href="index.html" class="btn btn-primary">🗓️ Essayer maintenant</a>
+    <a href="mailto:contact@digimairie.africa" class="btn btn-outline">📧 Nous contacter</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">🏛️ DigiMairie</div>
+  <div class="footer-sub">La mairie numérique pour l'Afrique moderne</div>
+  <div class="footer-links">
+    <a href="index.html">Prendre un RDV</a>
+    <a href="#fonctionnalites">Fonctionnalités</a>
+    <a href="#comment">Comment ça marche</a>
+    <a href="mailto:contact@digimairie.africa">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 DigiMairie — Tous droits réservés · Ngalikoua & Co</div>
+</footer>
+
+<script>
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Animation au scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.feature-card, .step-card, .temoignage-card, .probleme-item').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity .5s ease, transform .5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
