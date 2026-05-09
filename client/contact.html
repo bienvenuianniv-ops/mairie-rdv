@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — DigiMairie</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --vert:#1a6b3c;--vert-mid:#238a4e;--vert-clair:#d6f0e0;--vert-pale:#edf7f1;
+  --or:#e8a020;--or-clair:#fef3d0;
+  --noir:#0d1f14;--blanc:#fff;--gris:#6b7280;--gris-clair:#f3f4f6;
+  --texte:#1a2e1e;--sable:#f7f2ea;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--blanc);color:var(--texte)}
+
+/* ── NAV ── */
+nav{background:var(--vert);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+.nav-logo-mark{width:38px;height:38px;background:var(--or);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.nav-logo-text{font-family:'Fraunces',serif;font-size:1.2rem;color:var(--blanc);font-weight:700}
+.nav-links{display:flex;align-items:center;gap:1.5rem}
+.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--or)}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--noir) 0%,#1a3d24 100%);padding:4rem 2rem;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(232,160,32,.15);border:1px solid rgba(232,160,32,.3);color:var(--or);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem 1rem;border-radius:999px;margin-bottom:1.2rem}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3rem);color:var(--blanc);margin-bottom:1rem}
+.hero p{color:rgba(255,255,255,.65);font-size:1rem;max-width:500px;margin:0 auto;line-height:1.7}
+
+/* ── MAIN ── */
+.main{max-width:1100px;margin:0 auto;padding:4rem 2rem;display:grid;grid-template-columns:1fr 1.5fr;gap:3rem;align-items:start}
+@media(max-width:768px){.main{grid-template-columns:1fr;padding:2rem 1rem}}
+
+/* ── INFO ── */
+.info-title{font-family:'Fraunces',serif;font-size:1.5rem;margin-bottom:1rem}
+.info-sub{color:var(--gris);font-size:.9rem;line-height:1.7;margin-bottom:2rem}
+.info-items{display:flex;flex-direction:column;gap:1.2rem}
+.info-item{display:flex;align-items:flex-start;gap:1rem;background:var(--sable);border-radius:14px;padding:1.2rem}
+.info-icon{width:44px;height:44px;background:var(--vert-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.info-text strong{display:block;font-weight:700;font-size:.9rem;margin-bottom:.2rem}
+.info-text span{font-size:.82rem;color:var(--gris)}
+.info-text a{color:var(--vert);text-decoration:none;font-size:.82rem}
+
+/* ── FORMULAIRE ── */
+.form-card{background:var(--blanc);border:1.5px solid #e5e7eb;border-radius:20px;padding:2rem;box-shadow:0 8px 32px rgba(0,0,0,.08)}
+.form-title{font-family:'Fraunces',serif;font-size:1.3rem;margin-bottom:.4rem}
+.form-sub{font-size:.83rem;color:var(--gris);margin-bottom:1.5rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:500px){.form-grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:.35rem}
+.field.full{grid-column:1/-1}
+label{font-size:.76rem;font-weight:700;color:var(--texte);text-transform:uppercase;letter-spacing:.04em}
+input,select,textarea{padding:.65rem .9rem;border:1.5px solid #d1d5db;border-radius:9px;font-size:.86rem;font-family:'DM Sans',sans-serif;color:var(--texte);transition:border-color .2s;background:#fff}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--vert);box-shadow:0 0 0 3px rgba(26,107,60,.1)}
+textarea{resize:vertical;min-height:120px}
+.btn-submit{width:100%;padding:.85rem;background:var(--vert);color:var(--blanc);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .25s;margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.btn-submit:hover{background:var(--vert-mid);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,60,.3)}
+
+/* ── SUCCÈS ── */
+.success-msg{display:none;background:var(--vert-pale);border:2px solid var(--vert-clair);border-radius:14px;padding:1.5rem;text-align:center;margin-top:1rem}
+.success-msg .si{font-size:2.5rem;margin-bottom:.5rem}
+.success-msg h3{font-family:'Fraunces',serif;color:var(--vert);margin-bottom:.4rem}
+.success-msg p{font-size:.85rem;color:var(--gris)}
+
+/* ── PAYS ── */
+.pays-grid{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:3rem;justify-content:center;padding:2rem;background:var(--sable)}
+.pays-tag{background:var(--blanc);border:1px solid #e5e7eb;border-radius:999px;padding:.3rem .9rem;font-size:.78rem;color:var(--gris)}
+
+/* ── FOOTER ── */
+footer{background:var(--noir);padding:2rem;text-align:center}
+.footer-logo{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--blanc);margin-bottom:.4rem}
+.footer-sub{font-size:.78rem;color:rgba(255,255,255,.4);margin-bottom:1rem}
+.footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.78rem;transition:color .2s}
+.footer-links a:hover{color:var(--or)}
+.footer-copy{margin-top:1.5rem;font-size:.72rem;color:rgba(255,255,255,.2)}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="accueil.html" class="nav-logo">
+    <div class="nav-logo-mark">🏛️</div>
+    <span class="nav-logo-text">DigiMairie</span>
+  </a>
+  <div class="nav-links">
+    <a href="accueil.html">Accueil</a>
+    <a href="index.html">Prendre un RDV</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">📧 Contactez-nous</div>
+  <h1>Intéressé par DigiMairie ?</h1>
+  <p>Vous gérez une mairie ou une collectivité locale ? Contactez-nous pour une démonstration gratuite et personnalisée.</p>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+  <!-- Infos -->
+  <div>
+    <div class="info-title">On vous répond sous 24h</div>
+    <div class="info-sub">Notre équipe est disponible pour répondre à toutes vos questions et organiser une démonstration en ligne ou sur place.</div>
+    <div class="info-items">
+      <div class="info-item">
+        <div class="info-icon">📧</div>
+        <div class="info-text">
+          <strong>Email</strong>
+          <a href="mailto:contact@digimairie.africa">contact@digimairie.africa</a>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📱</div>
+        <div class="info-text">
+          <strong>WhatsApp</strong>
+          <a href="https://wa.me/221775150113">+221 77 515 01 13</a>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🌍</div>
+        <div class="info-text">
+          <strong>Zone de couverture</strong>
+          <span>Afrique de l'Ouest, Centrale et de l'Est</span>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🎯</div>
+        <div class="info-text">
+          <strong>Démonstration gratuite</strong>
+          <span>Nous venons chez vous ou organisons une visioconférence.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulaire -->
+  <div class="form-card">
+    <div class="form-title">Demande de démonstration</div>
+    <div class="form-sub">Remplissez ce formulaire et nous vous contacterons rapidement.</div>
+
+    <form name="contact-digimairie" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
+      <input type="hidden" name="form-name" value="contact-digimairie">
+      <input type="hidden" name="bot-field" style="display:none">
+
+      <div class="form-grid">
+        <div class="field">
+          <label>Prénom *</label>
+          <input type="text" name="prenom" placeholder="Votre prénom" required>
+        </div>
+        <div class="field">
+          <label>Nom *</label>
+          <input type="text" name="nom" placeholder="Votre nom" required>
+        </div>
+        <div class="field full">
+          <label>Nom de la mairie / collectivité *</label>
+          <input type="text" name="mairie" placeholder="Ex: Mairie de Dakar" required>
+        </div>
+        <div class="field">
+          <label>Pays *</label>
+          <select name="pays" required>
+            <option value="">-- Choisir --</option>
+            <option>Sénégal</option>
+            <option>Côte d'Ivoire</option>
+            <option>Mali</option>
+            <option>Burkina Faso</option>
+            <option>Guinée</option>
+            <option>Cameroun</option>
+            <option>Congo</option>
+            <option>RD Congo</option>
+            <option>Gabon</option>
+            <option>Togo</option>
+            <option>Bénin</option>
+            <option>Niger</option>
+            <option>Mauritanie</option>
+            <option>Madagascar</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Téléphone *</label>
+          <input type="tel" name="telephone" placeholder="+XXX XX XX XX XX" required>
+        </div>
+        <div class="field full">
+          <label>Email *</label>
+          <input type="email" name="email" placeholder="votre@mairie.com" required>
+        </div>
+        <div class="field full">
+          <label>Taille de la mairie</label>
+          <select name="taille">
+            <option value="">-- Choisir --</option>
+            <option>Moins de 10 000 habitants</option>
+            <option>10 000 — 50 000 habitants</option>
+            <option>50 000 — 200 000 habitants</option>
+            <option>Plus de 200 000 habitants</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label>Message</label>
+          <textarea name="message" placeholder="Parlez-nous de votre mairie et de vos besoins…"></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">
+        🚀 Envoyer ma demande
+      </button>
+    </form>
+
+    <div class="success-msg" id="success-msg">
+      <div class="si">✅</div>
+      <h3>Demande envoyée !</h3>
+      <p>Merci ! Nous vous contacterons dans les 24 heures pour organiser votre démonstration gratuite.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAYS ── -->
+<div class="pays-grid">
+  <span style="font-size:.8rem;font-weight:700;color:var(--vert);width:100%;text-align:center;margin-bottom:.5rem">🌍 Nous intervenons dans ces pays</span>
+  <span class="pays-tag">🇸🇳 Sénégal</span>
+  <span class="pays-tag">🇨🇮 Côte d'Ivoire</span>
+  <span class="pays-tag">🇲🇱 Mali</span>
+  <span class="pays-tag">🇧🇫 Burkina Faso</span>
+  <span class="pays-tag">🇬🇳 Guinée</span>
+  <span class="pays-tag">🇨🇲 Cameroun</span>
+  <span class="pays-tag">🇨🇬 Congo</span>
+  <span class="pays-tag">🇨🇩 RD Congo</span>
+  <span class="pays-tag">🇬🇦 Gabon</span>
+  <span class="pays-tag">🇹🇬 Togo</span>
+  <span class="pays-tag">🇧🇯 Bénin</span>
+  <span class="pays-tag">🇳🇪 Niger</span>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">🏛️ DigiMairie</div>
+  <div class="footer-sub">La mairie numérique pour l'Afrique moderne</div>
+  <div class="footer-links">
+    <a href="accueil.html">Accueil</a>
+    <a href="index.html">Prendre un RDV</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 DigiMairie — Tous droits réservés</div>
+</footer>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+
+  try {
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    });
+
+    if (response.ok) {
+      form.style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    } else {
+      alert('❌ Erreur lors de l\'envoi. Veuillez réessayer.');
+    }
+  } catch (err) {
+    alert('❌ Erreur : ' + err.message);
+  }
+});
+</script>
+</body>
+</html>
