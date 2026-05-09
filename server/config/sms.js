@@ -1,8 +1,8 @@
 const AfricasTalking = require('africastalking');
 
 const at = AfricasTalking({
-  apiKey: process.env.AT_API_KEY,
-  username: process.env.AT_USERNAME
+  apiKey: process.env.AT_API_KEY || '',
+  username: process.env.AT_USERNAME || 'sandbox'
 });
 
 const sms = at.SMS;
