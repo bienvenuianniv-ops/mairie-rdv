@@ -53,9 +53,14 @@ if (nouveauRdv.citoyen_email) {
     const service = await pool.query('SELECT nom FROM services WHERE id=$1', [service_id]);
     nouveauRdv.service_nom = service.rows[0]?.nom || '';
     await envoyerConfirmation(nouveauRdv);
-    await envoyerSmsConfirmation(nouveauRdv);
-  } catch (emailErr) {
+ } catch (emailErr) {
     console.error('❌ Erreur envoi email :', emailErr.message);
+  }
+
+  try {
+    await envoyerSmsConfirmation(nouveauRdv);
+  } catch (smsErr) {
+    console.error('❌ Erreur SMS confirmation :', smsErr.message);
   }
 }
 
