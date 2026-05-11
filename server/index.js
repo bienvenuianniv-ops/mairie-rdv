@@ -20,6 +20,7 @@ app.use(express.json());
 app.use('/api/auth',     require('./routes/auth'));
 app.use('/api/rdv',      require('./routes/rdv'));
 app.use('/api/services', require('./routes/services'));
+app.use('/api/mairies', require('./routes/mairies'));
 
 // ── Route de test ──
 app.get('/', (req, res) => {
