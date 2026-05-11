@@ -169,6 +169,7 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -342,6 +343,7 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
       <p style="color:var(--gris);font-size:.8rem" id="admin-date"></p>
     </div>
     <button class="btn btn-primary" onclick="openNewModal()">+ Nouveau RDV</button>
+    <button class="btn btn-secondary" onclick="exporterExcel()">📥 Exporter Excel</button>
   </div>
   <div class="stats">
     <div class="stat-card blue"><div class="stat-v" id="s-total">0</div><div class="stat-l">Total cette semaine</div></div>
@@ -1232,6 +1234,46 @@ const sauvegarderAgent = async () => {
   } catch (err) {
     errEl.style.display = 'block';
     errEl.textContent = '❌ ' + err.message;
+  }
+};
+// ── EXPORT EXCEL ──
+const exporterExcel = async () => {
+  try {
+    const list = await apiCall('/rdv', 'GET', null, authToken);
+
+    // Préparer les données
+    const data = list.map(r => ({
+      'Référence':     r.reference,
+      'Prénom':        r.citoyen_prenom,
+      'Nom':           r.citoyen_nom,
+      'Téléphone':     r.citoyen_tel,
+      'Email':         r.citoyen_email || '',
+      'Service':       r.service_nom,
+      'Date':          new Date(r.date_rdv).toLocaleDateString('fr-FR'),
+      'Heure':         r.heure_rdv.substr(0, 5),
+      'Statut':        r.statut,
+      'Paiement':      r.paiement === 'guichet' ? 'Au guichet' : 'Mobile Money',
+      'Notes':         r.notes || ''
+    }));
+
+    // Créer le fichier Excel
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Rendez-vous');
+
+    // Largeur des colonnes
+    ws['!cols'] = [
+      {wch:14},{wch:15},{wch:15},{wch:18},{wch:25},
+      {wch:20},{wch:12},{wch:8},{wch:12},{wch:15},{wch:25}
+    ];
+
+    // Télécharger
+    const date = new Date().toLocaleDateString('fr-FR').replace(/\//g, '-');
+    XLSX.writeFile(wb, `DigiMairie-RDV-${date}.xlsx`);
+
+    console.log('✅ Export Excel réussi !');
+  } catch (err) {
+    alert('❌ Erreur export : ' + err.message);
   }
 };
 // ── INIT ──
