@@ -1321,8 +1321,39 @@ if (localStorage.getItem('darkMode') === 'true') {
   document.getElementById('btn-dark').textContent = '☀️';
 }
 // ── INIT ──
+// ── INIT ──
 const now = new Date();
 document.getElementById('admin-date').textContent = 'Semaine du ' + now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+// ── CHARGEMENT MAIRIE PAR SLUG ──
+const chargerMairie = async () => {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('mairie');
+  if (!slug) return;
+
+  try {
+    const mairie = await apiCall(`/mairies/${slug}`);
+
+    // Appliquer la configuration de la mairie
+    document.getElementById('app-name').textContent = mairie.nom;
+    document.getElementById('app-logo').textContent = mairie.logo || '🏛️';
+    document.documentElement.style.setProperty('--vert', mairie.couleur || '#1a6b3c');
+    document.getElementById('cfg-nom').value = mairie.nom;
+    document.getElementById('cfg-color').value = mairie.couleur || '#1a6b3c';
+    document.getElementById('cfg-logo').value = mairie.logo || '🏛️';
+
+    if (mairie.langue_locale) {
+      document.getElementById('local-btn').textContent = mairie.langue_locale;
+      document.getElementById('cfg-lang').value = mairie.langue_locale;
+    }
+
+    console.log(`✅ Mairie chargée : ${mairie.nom}`);
+  } catch (err) {
+    console.log('ℹ️ Aucune mairie spécifiée ou introuvable');
+  }
+};
+
+chargerMairie();
 renderServices();
 renderAdmin();
 </script>
