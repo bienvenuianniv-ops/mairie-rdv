@@ -1,14 +1,16 @@
 const AfricasTalking = require('africastalking');
 
-const at = AfricasTalking({
-  apiKey: process.env.AT_API_KEY || '',
-  username: process.env.AT_USERNAME || 'sandbox'
-});
-
-const sms = at.SMS;
+const getSms = () => {
+  const at = AfricasTalking({
+    apiKey: process.env.AT_API_KEY,
+    username: process.env.AT_USERNAME || 'sandbox'
+  });
+  return at.SMS;
+};
 
 // ── SMS DE CONFIRMATION ──
 const envoyerSmsConfirmation = async (rdv) => {
+const sms = getSms();
   const message = `✅ DigiMairie - RDV confirmé !
 Réf: ${rdv.reference}
 Service: ${rdv.service_nom}
