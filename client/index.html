@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,11 +15,9 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--sable);color:var(--texte);min-height:100vh}
-
 .lang-bar{background:var(--vert);color:rgba(255,255,255,.7);font-size:.75rem;display:flex;justify-content:flex-end;align-items:center;gap:.75rem;padding:.35rem 1.5rem}
 .lang-btn{background:none;border:none;color:rgba(255,255,255,.7);font-size:.75rem;cursor:pointer;padding:.15rem .5rem;border-radius:4px;font-family:inherit;transition:all .2s}
 .lang-btn.active{background:rgba(255,255,255,.2);color:#fff;font-weight:700}
-
 header{background:linear-gradient(135deg,var(--vert) 0%,var(--vert-mid) 100%);padding:0 1.5rem;height:66px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 16px rgba(0,0,0,.2);position:sticky;top:0;z-index:100}
 .logo{display:flex;align-items:center;gap:12px}
 .logo-mark{width:42px;height:42px;background:var(--or);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
@@ -30,7 +27,6 @@ header{background:linear-gradient(135deg,var(--vert) 0%,var(--vert-mid) 100%);pa
 .nav-tab{padding:.42rem 1rem;font-size:.8rem;font-weight:700;color:rgba(255,255,255,.6);cursor:pointer;border:none;background:none;font-family:inherit;transition:all .2s}
 .nav-tab.active{background:var(--or);color:var(--vert)}
 .nav-tab:hover:not(.active){color:#fff;background:rgba(255,255,255,.1)}
-
 .cfg-banner{background:var(--or-clair);border-left:4px solid var(--or);padding:.7rem 1.5rem;font-size:.8rem;color:#7a4a00;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .cfg-toggle{background:var(--or);border:none;padding:.28rem .75rem;border-radius:6px;font-size:.76rem;font-weight:700;cursor:pointer;font-family:inherit;color:var(--vert)}
 .cfg-box{background:#fff;padding:1rem 1.5rem;border-bottom:1px solid #e5e7eb;display:none;flex-wrap:wrap;gap:1rem;align-items:flex-end}
@@ -38,19 +34,16 @@ header{background:linear-gradient(135deg,var(--vert) 0%,var(--vert-mid) 100%);pa
 .cfg-field{display:flex;flex-direction:column;gap:.3rem;min-width:170px}
 .cfg-field label{font-size:.72rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.05em}
 .cfg-field input,.cfg-field select{padding:.42rem .7rem;border:1.5px solid #d1d5db;border-radius:8px;font-size:.84rem;font-family:inherit}
-
 main{max-width:1060px;margin:0 auto;padding:2rem 1rem}
 .view{display:none;animation:fadeUp .3s ease}
 .view.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
 .hero{background:linear-gradient(135deg,#154f2c 0%,var(--vert-mid) 60%,#1a5e30 100%);border-radius:20px;padding:2.4rem 2rem;margin-bottom:2rem;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;right:-50px;top:-50px;width:240px;height:240px;background:rgba(255,255,255,.04);border-radius:50%}
 .hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.28rem .8rem;border-radius:999px;margin-bottom:.9rem}
 .hero h2{font-family:'Fraunces',serif;font-size:clamp(1.5rem,4vw,2.3rem);color:#fff;line-height:1.15;margin-bottom:.65rem;position:relative;z-index:1}
 .hero p{color:rgba(255,255,255,.75);font-size:.92rem;max-width:480px;position:relative;z-index:1;line-height:1.55}
 .hero-deco{position:absolute;right:2rem;bottom:.5rem;font-size:5rem;opacity:.07;line-height:1}
-
 .steps-bar{display:flex;align-items:center;background:#fff;border-radius:var(--radius);padding:.9rem 1.4rem;box-shadow:var(--shadow);margin-bottom:2rem;overflow-x:auto;gap:0}
 .step-col{display:flex;flex-direction:column;align-items:center;flex:1;min-width:65px}
 .step-circle{width:36px;height:36px;border-radius:50%;background:var(--gris-clair);border:2px solid #d1d5db;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:var(--gris);transition:all .3s}
@@ -60,7 +53,6 @@ main{max-width:1060px;margin:0 auto;padding:2rem 1rem}
 .step-lbl.active{color:var(--vert);font-weight:700}
 .step-line{flex:1;height:2px;background:#e5e7eb;margin:0 4px 12px;transition:background .3s;flex-shrink:0}
 .step-line.done{background:var(--vert-ok)}
-
 .section-title{font-family:'Fraunces',serif;font-size:1.15rem;margin-bottom:1rem}
 .svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.8rem;margin-bottom:1.3rem}
 .svc-card{background:#fff;border:2px solid transparent;border-radius:var(--radius);padding:1.2rem .85rem;text-align:center;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
@@ -70,12 +62,6 @@ main{max-width:1060px;margin:0 auto;padding:2rem 1rem}
 .svc-name{font-size:.83rem;font-weight:700;margin-bottom:.22rem}
 .svc-desc{font-size:.7rem;color:var(--gris);line-height:1.4}
 .svc-local{font-size:.7rem;color:var(--vert-mid);font-style:italic;margin-top:.18rem}
-
-.docs-box{background:var(--or-clair);border:1px solid #f0c060;border-radius:10px;padding:.9rem 1.1rem;margin-bottom:1.3rem;font-size:.81rem}
-.docs-box strong{color:#7a4a00;font-weight:700;display:block;margin-bottom:.45rem}
-.docs-list{display:flex;flex-wrap:wrap;gap:.35rem}
-.doc-tag{background:#fff;border:1px solid #e0c070;border-radius:6px;padding:.18rem .55rem;font-size:.73rem;color:#7a4a00}
-
 .cal-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
 @media(max-width:580px){.cal-layout{grid-template-columns:1fr}}
 .card{background:#fff;border-radius:var(--radius);padding:1.3rem;box-shadow:var(--shadow)}
@@ -97,7 +83,6 @@ main{max-width:1060px;margin:0 auto;padding:2rem 1rem}
 .slot:hover:not(.taken){border-color:var(--vert);color:var(--vert);background:var(--vert-clair)}
 .slot.sel{background:var(--vert);border-color:var(--vert);color:#fff}
 .slot.taken{background:var(--gris-clair);color:#d1d5db;cursor:not-allowed;text-decoration:line-through}
-
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
 @media(max-width:500px){.form-grid{grid-template-columns:1fr}}
 .field{display:flex;flex-direction:column;gap:.32rem}
@@ -107,7 +92,6 @@ label{font-size:.76rem;font-weight:700;color:var(--texte)}
 input,select,textarea{padding:.6rem .8rem;border:1.5px solid #d1d5db;border-radius:9px;font-size:.86rem;font-family:inherit;color:var(--texte);transition:border-color .2s;background:#fff}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--vert);box-shadow:0 0 0 3px rgba(26,107,60,.1)}
 textarea{resize:vertical;min-height:75px}
-
 .btn{padding:.65rem 1.5rem;border-radius:9px;border:none;cursor:pointer;font-family:inherit;font-size:.86rem;font-weight:700;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
 .btn-primary{background:var(--vert);color:#fff}
 .btn-primary:hover{background:var(--vert-mid);transform:translateY(-1px);box-shadow:0 4px 16px rgba(26,107,60,.3)}
@@ -118,7 +102,6 @@ textarea{resize:vertical;min-height:75px}
 .btn-gold:hover{background:#c98010}
 .btn-sm{padding:.32rem .85rem;font-size:.76rem}
 .actions{display:flex;justify-content:space-between;align-items:center;margin-top:1.4rem;gap:1rem;flex-wrap:wrap}
-
 .confirm-wrap{text-align:center;padding:2.5rem 1rem}
 .confirm-icon{width:80px;height:80px;border-radius:50%;background:var(--vert-clair);border:3px solid var(--vert-ok);display:flex;align-items:center;justify-content:center;font-size:2.4rem;margin:0 auto 1.4rem}
 .confirm-ref{background:var(--vert);color:#fff;border-radius:10px;padding:.65rem 1.8rem;display:inline-block;margin:.9rem 0;font-weight:900;letter-spacing:.12em;font-size:1.1rem;font-family:'Fraunces',serif}
@@ -128,7 +111,6 @@ textarea{resize:vertical;min-height:75px}
 .c-row span:first-child{color:var(--gris);flex-shrink:0}
 .c-row span:last-child{font-weight:700;text-align:right}
 .sms-note{background:var(--vert-clair);border-radius:8px;padding:.7rem 1rem;font-size:.78rem;color:var(--vert);margin-top:.9rem;display:inline-flex;align-items:center;gap:.45rem}
-
 .admin-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.4rem;flex-wrap:wrap;gap:1rem}
 .admin-top h2{font-family:'Fraunces',serif;font-size:1.6rem}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin-bottom:1.4rem}
@@ -137,11 +119,9 @@ textarea{resize:vertical;min-height:75px}
 .stat-card.blue{border-color:#3b82f6}.stat-card.gold{border-color:var(--or)}.stat-card.green{border-color:var(--vert-ok)}.stat-card.red{border-color:var(--rouge)}
 .stat-v{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:900;line-height:1}
 .stat-l{font-size:.72rem;color:var(--gris);margin-top:.28rem}
-
 .filter-bar{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:.9rem}
 .f-btn{padding:.3rem .82rem;border-radius:999px;border:1.5px solid #d1d5db;background:#fff;font-size:.76rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
 .f-btn.active{background:var(--vert);border-color:var(--vert);color:#fff}
-
 table{width:100%;border-collapse:collapse}
 th{text-align:left;font-size:.7rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.05em;padding:.65rem 1rem;background:var(--gris-clair);border-bottom:2px solid #e5e7eb}
 th:first-child{border-radius:8px 0 0 0}th:last-child{border-radius:0 8px 0 0}
@@ -149,7 +129,6 @@ td{padding:.8rem 1rem;border-bottom:1px solid #f3f4f6;font-size:.83rem;vertical-
 tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
 .badge{display:inline-block;padding:.17rem .6rem;border-radius:999px;font-size:.7rem;font-weight:700}
 .b-green{background:#d1fae5;color:#065f46}.b-yellow{background:#fef3c7;color:#92400e}.b-red{background:#fee2e2;color:#991b1b}
-
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:1rem}
 .overlay.open{display:flex}
 .modal{background:#fff;border-radius:18px;padding:1.7rem;max-width:430px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.2);animation:fadeUp .2s ease}
@@ -157,14 +136,8 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
 .m-actions{display:flex;justify-content:flex-end;gap:.7rem;margin-top:1.3rem;flex-wrap:wrap}
 .empty{text-align:center;padding:2.5rem;color:var(--gris)}
 .empty .ei{font-size:2.8rem;margin-bottom:.65rem}
-/* ── MODE SOMBRE ── */
-body.dark {
-  --vert:#2d9e5f;--vert-mid:#38b872;--vert-clair:#1a4a2e;
-  --or:#e8a020;--or-clair:#3a2e00;
-  --sable:#1a1a2e;--blanc:#1e2a1e;--gris:#9ca3af;--gris-clair:#2d3748;
-  --rouge:#e74c3c;--vert-ok:#2ecc71;--texte:#e8f5e9;
-  background:#0f1a14;color:#e8f5e9;
-}
+/* MODE SOMBRE */
+body.dark{--vert:#2d9e5f;--vert-mid:#38b872;--vert-clair:#1a4a2e;--or:#e8a020;--or-clair:#3a2e00;--sable:#1a1a2e;--blanc:#1e2a1e;--gris:#9ca3af;--gris-clair:#2d3748;--rouge:#e74c3c;--vert-ok:#2ecc71;--texte:#e8f5e9;background:#0f1a14;color:#e8f5e9}
 body.dark header{background:linear-gradient(135deg,#0d2818 0%,#1a4a2e 100%)}
 body.dark .card{background:#1e2a1e;border:1px solid #2d3748}
 body.dark table{background:#1e2a1e}
@@ -182,16 +155,11 @@ body.dark .btn-secondary{background:#2d3748;border-color:#4a5568;color:#e8f5e9}
 body.dark .cfg-banner{background:#3a2e00;color:#fef3d0}
 body.dark .confirm-card{background:#1e2a1e}
 body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
-@media(max-width:460px){
-  header{padding:0 .9rem}
-  .logo p{display:none}
-  .nav-tab{padding:.38rem .7rem;font-size:.74rem}
-  main{padding:1rem .65rem}
-  .hero{padding:1.6rem 1.1rem}
-  .hero-deco{display:none}
-}
+@media(max-width:460px){header{padding:0 .9rem}.logo p{display:none}.nav-tab{padding:.38rem .7rem;font-size:.74rem}main{padding:1rem .65rem}.hero{padding:1.6rem 1.1rem}.hero-deco{display:none}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -205,14 +173,12 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
 <header>
   <div class="logo">
     <div class="logo-mark" id="app-logo">🏛️</div>
-    <div>
-      <h1 id="app-name">DigiMairie</h1>
-      <p id="app-sub">Services numériques aux citoyens</p>
-    </div>
+    <div><h1 id="app-name">DigiMairie</h1><p id="app-sub">Services numériques aux citoyens</p></div>
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchView('citoyen',this)">👤 Citoyen</button>
     <button class="nav-tab" onclick="switchView('admin',this)">🔐 Agent</button>
+    <button class="nav-tab" onclick="switchView('agents',this)" id="btn-agents" style="display:none">👥 Agents</button>
     <button class="nav-tab" onclick="deconnecter()" id="btn-logout" style="display:none;background:#fee2e2;color:#991b1b">⬅️ Déconnexion</button>
   </div>
 </header>
@@ -230,7 +196,6 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
 </div>
 
 <main>
-<!-- ══ CITOYEN ══ -->
 <div class="view active" id="view-citoyen">
   <div class="hero">
     <div class="hero-badge">🟢 <span id="h-badge">Service en ligne disponible</span></div>
@@ -239,18 +204,12 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
     <div class="hero-deco">🌍</div>
   </div>
 
-  <!-- ── RECHERCHE RDV ── -->
   <div class="card" style="margin-bottom:1.5rem">
     <div class="card-title">🔍 Retrouver mon rendez-vous</div>
-    <p style="font-size:.85rem;color:var(--gris);margin-bottom:1rem">
-      Vous avez déjà un rendez-vous ? Entrez votre référence pour consulter les détails.
-    </p>
+    <p style="font-size:.85rem;color:var(--gris);margin-bottom:1rem">Vous avez déjà un rendez-vous ? Entrez votre référence pour consulter les détails.</p>
     <div style="display:flex;gap:.75rem;flex-wrap:wrap">
-      <input type="text" id="search-ref" placeholder="Ex: RDV-F1T594C" 
-             style="flex:1;min-width:200px;text-transform:uppercase">
-      <button class="btn btn-primary" onclick="rechercherRdv()">
-        🔍 Rechercher
-      </button>
+      <input type="text" id="search-ref" placeholder="Ex: RDV-F1T594C" style="flex:1;min-width:200px;text-transform:uppercase">
+      <button class="btn btn-primary" onclick="rechercherRdv()">🔍 Rechercher</button>
     </div>
     <div id="search-result" style="margin-top:1rem"></div>
   </div>
@@ -265,17 +224,13 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
     <div class="step-col"><div class="step-circle" id="sc4">4</div><div class="step-lbl" id="sl4">Confirmation</div></div>
   </div>
 
-  <!-- STEP 1 -->
   <div id="step1">
     <div class="section-title" id="svc-title">Quel service souhaitez-vous ?</div>
     <div class="svc-grid" id="svc-grid"></div>
     <div id="docs-zone"></div>
-    <div style="text-align:right">
-      <button class="btn btn-primary" id="btn1" onclick="goStep(2)" disabled>Suivant →</button>
-    </div>
+    <div style="text-align:right"><button class="btn btn-primary" id="btn1" onclick="goStep(2)" disabled>Suivant →</button></div>
   </div>
 
-  <!-- STEP 2 -->
   <div id="step2" style="display:none">
     <div class="cal-layout">
       <div class="card">
@@ -298,39 +253,17 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
     </div>
   </div>
 
-  <!-- STEP 3 -->
   <div id="step3" style="display:none">
     <div class="card">
       <div class="card-title">👤 <span id="lbl-coords">Vos coordonnées</span></div>
       <div class="form-grid">
-        <div class="field">
-          <label><span id="lbl-prenom">Prénom</span> * <span class="lbl-local" id="ll-prenom"></span></label>
-          <input id="f-prenom" type="text" oninput="checkForm()">
-        </div>
-        <div class="field">
-          <label><span id="lbl-nom">Nom de famille</span> * <span class="lbl-local" id="ll-nom"></span></label>
-          <input id="f-nom" type="text" oninput="checkForm()">
-        </div>
-        <div class="field">
-          <label>📱 <span id="lbl-tel">Téléphone</span> *</label>
-          <input id="f-tel" type="tel" placeholder="+XXX XX XX XX XX" oninput="checkForm()">
-        </div>
-        <div class="field">
-          <label>📧 <span id="lbl-email">Email (optionnel)</span></label>
-          <input id="f-email" type="email">
-        </div>
-        <div class="field">
-          <label>🎂 <span id="lbl-naiss">Date de naissance</span></label>
-          <input id="f-naiss" type="date">
-        </div>
-        <div class="field">
-          <label>🪪 <span id="lbl-pid">N° pièce d'identité</span></label>
-          <input id="f-pid" type="text" placeholder="CNI / Passeport…">
-        </div>
-        <div class="field full">
-          <label>💬 <span id="lbl-note">Précisions sur votre demande</span></label>
-          <textarea id="f-note" placeholder="Informations complémentaires utiles pour l'agent…"></textarea>
-        </div>
+        <div class="field"><label><span id="lbl-prenom">Prénom</span> * <span class="lbl-local" id="ll-prenom"></span></label><input id="f-prenom" type="text" oninput="checkForm()"></div>
+        <div class="field"><label><span id="lbl-nom">Nom de famille</span> * <span class="lbl-local" id="ll-nom"></span></label><input id="f-nom" type="text" oninput="checkForm()"></div>
+        <div class="field"><label>📱 <span id="lbl-tel">Téléphone</span> *</label><input id="f-tel" type="tel" placeholder="+XXX XX XX XX XX" oninput="checkForm()"></div>
+        <div class="field"><label>📧 <span id="lbl-email">Email (optionnel)</span></label><input id="f-email" type="email"></div>
+        <div class="field"><label>🎂 <span id="lbl-naiss">Date de naissance</span></label><input id="f-naiss" type="date"></div>
+        <div class="field"><label>🪪 <span id="lbl-pid">N° pièce d'identité</span></label><input id="f-pid" type="text" placeholder="CNI / Passeport…"></div>
+        <div class="field full"><label>💬 <span id="lbl-note">Précisions sur votre demande</span></label><textarea id="f-note" placeholder="Informations complémentaires utiles pour l'agent…"></textarea></div>
       </div>
     </div>
     <div class="actions">
@@ -339,7 +272,6 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
     </div>
   </div>
 
-  <!-- STEP 4 -->
   <div id="step4" style="display:none">
     <div class="confirm-wrap">
       <div class="confirm-icon">✅</div>
@@ -355,7 +287,6 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
   </div>
 </div>
 
-<!-- ══ ADMIN ══ -->
 <div class="view" id="view-admin">
   <div class="admin-top">
     <div>
@@ -363,12 +294,17 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
       <p style="color:var(--gris);font-size:.8rem" id="admin-date"></p>
     </div>
     <button class="btn btn-primary" onclick="openNewModal()">+ Nouveau RDV</button>
+    <button class="btn btn-secondary" onclick="exporterExcel()">📥 Exporter Excel</button>
   </div>
   <div class="stats">
     <div class="stat-card blue"><div class="stat-v" id="s-total">0</div><div class="stat-l">Total cette semaine</div></div>
     <div class="stat-card gold"><div class="stat-v" id="s-today">0</div><div class="stat-l">Aujourd'hui</div></div>
     <div class="stat-card green"><div class="stat-v" id="s-conf">0</div><div class="stat-l">Confirmés</div></div>
     <div class="stat-card red"><div class="stat-v" id="s-ann">0</div><div class="stat-l">Annulés</div></div>
+  </div>
+  <div class="card" style="margin-bottom:1rem">
+    <div class="card-title">📊 RDV par service</div>
+    <canvas id="chart-services" height="100"></canvas>
   </div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.7rem;margin-bottom:.9rem">
@@ -382,15 +318,28 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
     </div>
     <div style="overflow-x:auto">
       <table>
-        <thead><tr>
-          <th>Référence</th><th>Citoyen</th><th>Service</th><th>Date & Heure</th><th>Statut</th><th>Actions</th>
-        </tr></thead>
+        <thead><tr><th>Référence</th><th>Citoyen</th><th>Service</th><th>Date & Heure</th><th>Statut</th><th>Actions</th></tr></thead>
         <tbody id="rdv-body"></tbody>
       </table>
     </div>
   </div>
 </div>
 
+<div class="view" id="view-agents">
+  <div class="admin-top">
+    <div>
+      <h2>Gestion des agents</h2>
+      <p style="color:var(--gris);font-size:.8rem">Créez et gérez les accès des agents de la mairie.</p>
+    </div>
+    <button class="btn btn-primary" onclick="openNouvelAgent()">+ Nouvel agent</button>
+  </div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Nom</th><th>Email</th><th>Rôle</th><th>Statut</th><th>Actions</th></tr></thead>
+      <tbody id="agents-body"></tbody>
+    </table>
+  </div>
+</div>
 </main>
 
 <div class="overlay" id="overlay" onclick="closeModal()">
@@ -400,713 +349,165 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
 </div>
 
 <script>
-// ── CONFIGURATION API ──
-const API_URL = 'https://mairie-rdv-backend.onrender.com/api';
-let authToken = localStorage.getItem('token') || null;
+const API_URL='https://mairie-rdv-backend.onrender.com/api';
+let authToken=localStorage.getItem('token')||null;
 
-// ── FONCTION UTILITAIRE ──
-const apiCall = async (endpoint, method = 'GET', body = null, token = null) => {
-  const headers = { 'Content-Type': 'application/json' };
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-  const options = { method, headers };
-  if (body) options.body = JSON.stringify(body);
-  const response = await fetch(`${API_URL}${endpoint}`, options);
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.message || 'Erreur serveur');
+const apiCall=async(endpoint,method='GET',body=null,token=null)=>{
+  const headers={'Content-Type':'application/json'};
+  if(token)headers['Authorization']=`Bearer ${token}`;
+  const options={method,headers};
+  if(body)options.body=JSON.stringify(body);
+  const response=await fetch(`${API_URL}${endpoint}`,options);
+  const data=await response.json();
+  if(!response.ok)throw new Error(data.message||'Erreur serveur');
   return data;
 };
 
-// ── I18N ──
-const T = {
-  fr:{
-    badge:'Service en ligne disponible',
-    heroTitle:'Prenez votre rendez-vous<br>à la mairie en ligne',
-    heroSub:'Évitez les longues files d\'attente. Choisissez votre service, votre créneau, et venez à l\'heure exacte.',
-    svcTitle:'Quel service souhaitez-vous ?',
-    stepLabels:['Service','Date & Heure','Vos infos','Confirmation'],
-    dateLabel:'Choisir une date',slotLabel:'Créneaux disponibles',seldateLabel:'Sélectionnez une date',
-    coordsLabel:'Vos coordonnées',prenomLabel:'Prénom',nomLabel:'Nom de famille',
-    telLabel:'Téléphone',emailLabel:'Email (optionnel)',naissLabel:'Date de naissance',pidLabel:'N° pièce d\'identité',noteLabel:'Précisions sur votre demande',
-    back:'Retour',next:'Suivant',confirmBtn:'Confirmer le rendez-vous',
-    confirmTitle:'Rendez-vous confirmé !',confirmSub:'Présentez cette référence à l\'accueil de la mairie.',
-    smsNote:'Un SMS de rappel vous sera envoyé 24h avant votre rendez-vous.',newBtn:'Nouveau rendez-vous',
-    docsTitle:'📎 Documents à apporter :',
-    svcNames:['État civil','Carte nationale d\'identité','Passeport','Foncier / Urbanisme','Aide sociale','Permis divers'],
-    svcDesc:['Naissance, mariage, décès','Première demande & renouvellement','Demande & renouvellement','Permis de construire, déclarations','CCAS & prestations municipales','Permis d\'exercer, licences'],
-    svcLocal:['','','','','',''],
-    docs:[
-      ['Acte de naissance','Livret de famille','Pièce d\'identité'],
-      ['Photo d\'identité','Justificatif domicile','Ancien titre si renouvellement'],
-      ['Photos d\'identité','Extrait de naissance','Justificatif domicile'],
-      ['Plan de situation','Titre de propriété','Formulaire de demande'],
-      ['Pièce d\'identité','Justificatif de revenus','Attestation de résidence'],
-      ['Pièce d\'identité','Justificatif d\'activité','Formulaire de demande'],
-    ],
-    statLabel:'Service',dateF:'Date',heureF:'Heure',nomF:'Nom',telF:'Téléphone',
-  },
-  local:{
-    badge:'Service an ligne disponible',
-    heroTitle:'Jëf sa rendez-vous<br>ci mairie bi',
-    heroSub:'Bul dem dem ak dëkk. Tann sa sërvice, sa waxtu, dem ci kanam.',
-    svcTitle:'Lu ngi ñëw jëfandikoo?',
-    stepLabels:['Sërvice','Bés & Waxtu','Sa yëgël','Xam-xam'],
-    dateLabel:'Tann bès',slotLabel:'Waxtu yi am',seldateLabel:'Tann bès bi nga bëgg',
-    coordsLabel:'Sa adirès yi',prenomLabel:'Tugël',nomLabel:'Jamono',
-    telLabel:'Téléphone',emailLabel:'Email (dañ ko waral)',naissLabel:'Fan nga jur',pidLabel:'N° yëgël',noteLabel:'Xam-xam ci ci la bëgg',
-    back:'Dellu',next:'Dem kanam',confirmBtn:'Seet sa rendez-vous',
-    confirmTitle:'Rendez-vous bi dafa dóór !',confirmSub:'Yëgle numéro bii ci mairie.',
-    smsNote:'Dinga jëriñ SMS bi ci kanam rendez-vous bi.',newBtn:'Rendez-vous bees',
-    docsTitle:'📎 Papiers yi nga amal :',
-    svcNames:['État civil','CNI','Passeport','Foncier','Aide sociale','Permis'],
-    svcDesc:['Jur, dëkkal, dee','Ci kanam & renouvellement','Jëf & renouvellement','Permis & déclarations','Jëfandikoo municipal yi','Lisans & autorisations'],
-    svcLocal:['[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]'],
-    docs:[
-      ['Extrait naissance','Livret famille','Pièce identité'],
-      ['Photo identité','Justificatif domicile','Ancien titre'],
-      ['Photos','Extrait naissance','Domicile'],
-      ['Plan','Titre propriété','Formulaire'],
-      ['Pièce identité','Justificatif revenus','Attestation'],
-      ['Pièce identité','Justificatif activité','Formulaire'],
-    ],
-    statLabel:'Sërvice',dateF:'Bès',heureF:'Waxtu',nomF:'Jamono',telF:'Tél.',
-  }
+const T={
+  fr:{badge:'Service en ligne disponible',heroTitle:'Prenez votre rendez-vous<br>à la mairie en ligne',heroSub:"Évitez les longues files d'attente. Choisissez votre service, votre créneau, et venez à l'heure exacte.",svcTitle:'Quel service souhaitez-vous ?',stepLabels:['Service','Date & Heure','Vos infos','Confirmation'],dateLabel:'Choisir une date',slotLabel:'Créneaux disponibles',seldateLabel:'Sélectionnez une date',coordsLabel:'Vos coordonnées',prenomLabel:'Prénom',nomLabel:'Nom de famille',telLabel:'Téléphone',emailLabel:'Email (optionnel)',naissLabel:'Date de naissance',pidLabel:"N° pièce d'identité",noteLabel:'Précisions sur votre demande',back:'Retour',next:'Suivant',confirmBtn:'Confirmer le rendez-vous',confirmTitle:'Rendez-vous confirmé !',confirmSub:"Présentez cette référence à l'accueil de la mairie.",smsNote:'Un SMS de rappel vous sera envoyé 24h avant votre rendez-vous.',newBtn:'Nouveau rendez-vous',docsTitle:'📎 Documents à apporter :',svcNames:["État civil","Carte nationale d'identité","Passeport","Foncier / Urbanisme","Aide sociale","Permis divers"],svcDesc:['Naissance, mariage, décès','Première demande & renouvellement','Demande & renouvellement','Permis de construire, déclarations','CCAS & prestations municipales',"Permis d'exercer, licences"],svcLocal:['','','','','',''],docs:[["Acte de naissance","Livret de famille","Pièce d'identité"],["Photo d'identité","Justificatif domicile","Ancien titre si renouvellement"],["Photos d'identité","Extrait de naissance","Justificatif domicile"],["Plan de situation","Titre de propriété","Formulaire de demande"],["Pièce d'identité","Justificatif de revenus","Attestation de résidence"],["Pièce d'identité","Justificatif d'activité","Formulaire de demande"]],statLabel:'Service',dateF:'Date',heureF:'Heure',nomF:'Nom',telF:'Téléphone'},
+  local:{badge:'Service an ligne disponible',heroTitle:'Jëf sa rendez-vous<br>ci mairie bi',heroSub:'Bul dem dem ak dëkk. Tann sa sërvice, sa waxtu, dem ci kanam.',svcTitle:'Lu ngi ñëw jëfandikoo?',stepLabels:['Sërvice','Bés & Waxtu','Sa yëgël','Xam-xam'],dateLabel:'Tann bès',slotLabel:'Waxtu yi am',seldateLabel:'Tann bès bi nga bëgg',coordsLabel:'Sa adirès yi',prenomLabel:'Tugël',nomLabel:'Jamono',telLabel:'Téléphone',emailLabel:'Email (dañ ko waral)',naissLabel:'Fan nga jur',pidLabel:'N° yëgël',noteLabel:'Xam-xam ci ci la bëgg',back:'Dellu',next:'Dem kanam',confirmBtn:'Seet sa rendez-vous',confirmTitle:'Rendez-vous bi dafa dóór !',confirmSub:'Yëgle numéro bii ci mairie.',smsNote:'Dinga jëriñ SMS bi ci kanam rendez-vous bi.',newBtn:'Rendez-vous bees',docsTitle:'📎 Papiers yi nga amal :',svcNames:['État civil','CNI','Passeport','Foncier','Aide sociale','Permis'],svcDesc:['Jur, dëkkal, dee','Ci kanam & renouvellement','Jëf & renouvellement','Permis & déclarations','Jëfandikoo municipal yi','Lisans & autorisations'],svcLocal:['[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]','[Traduction locale]'],docs:[['Extrait naissance','Livret famille','Pièce identité'],['Photo identité','Justificatif domicile','Ancien titre'],['Photos','Extrait naissance','Domicile'],['Plan','Titre propriété','Formulaire'],['Pièce identité','Justificatif revenus','Attestation'],['Pièce identité','Justificatif activité','Formulaire']],statLabel:'Sërvice',dateF:'Bès',heureF:'Waxtu',nomF:'Jamono',telF:'Tél.'}
 };
-let lang = 'fr', curT = T.fr;
+let lang='fr',curT=T.fr;
 
-function setLang(l, btn) {
-  lang = l; curT = T[l];
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  applyLang();
-  renderServices();
-  if (calYear !== undefined) renderCal();
-}
+function setLang(l,btn){lang=l;curT=T[l];document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyLang();renderServices();if(calYear!==undefined)renderCal();}
 
-function applyLang() {
-  const t = curT;
-  document.getElementById('h-badge').textContent = t.badge;
-  document.getElementById('h-title').innerHTML = t.heroTitle;
-  document.getElementById('h-sub').textContent = t.heroSub;
-  document.getElementById('svc-title').textContent = t.svcTitle;
-  ['sl1','sl2','sl3','sl4'].forEach((id,i) => document.getElementById(id).textContent = t.stepLabels[i]);
-  document.getElementById('lbl-date').textContent = t.dateLabel;
-  document.getElementById('lbl-slot').textContent = t.slotLabel;
-  document.getElementById('lbl-seldate').textContent = t.seldateLabel;
-  document.getElementById('lbl-coords').textContent = t.coordsLabel;
-  document.getElementById('lbl-prenom').textContent = t.prenomLabel;
-  document.getElementById('lbl-nom').textContent = t.nomLabel;
-  document.getElementById('lbl-tel').textContent = t.telLabel;
-  document.getElementById('lbl-email').textContent = t.emailLabel;
-  document.getElementById('lbl-naiss').textContent = t.naissLabel;
-  document.getElementById('lbl-pid').textContent = t.pidLabel;
-  document.getElementById('lbl-note').textContent = t.noteLabel;
-  document.getElementById('btn-back2').textContent = t.back;
-  document.getElementById('btn-next2').textContent = t.next;
-  document.getElementById('btn-back3').textContent = t.back;
-  document.getElementById('btn-confirm').textContent = t.confirmBtn;
-  document.getElementById('c-title').textContent = t.confirmTitle;
-  document.getElementById('c-sub').textContent = t.confirmSub;
-  document.getElementById('c-sms').textContent = t.smsNote;
-  document.getElementById('btn-nouveau').textContent = t.newBtn;
-}
+function applyLang(){const t=curT;document.getElementById('h-badge').textContent=t.badge;document.getElementById('h-title').innerHTML=t.heroTitle;document.getElementById('h-sub').textContent=t.heroSub;document.getElementById('svc-title').textContent=t.svcTitle;['sl1','sl2','sl3','sl4'].forEach((id,i)=>document.getElementById(id).textContent=t.stepLabels[i]);document.getElementById('lbl-date').textContent=t.dateLabel;document.getElementById('lbl-slot').textContent=t.slotLabel;document.getElementById('lbl-seldate').textContent=t.seldateLabel;document.getElementById('lbl-coords').textContent=t.coordsLabel;document.getElementById('lbl-prenom').textContent=t.prenomLabel;document.getElementById('lbl-nom').textContent=t.nomLabel;document.getElementById('lbl-tel').textContent=t.telLabel;document.getElementById('lbl-email').textContent=t.emailLabel;document.getElementById('lbl-naiss').textContent=t.naissLabel;document.getElementById('lbl-pid').textContent=t.pidLabel;document.getElementById('lbl-note').textContent=t.noteLabel;document.getElementById('btn-back2').textContent=t.back;document.getElementById('btn-next2').textContent=t.next;document.getElementById('btn-back3').textContent=t.back;document.getElementById('btn-confirm').textContent=t.confirmBtn;document.getElementById('c-title').textContent=t.confirmTitle;document.getElementById('c-sub').textContent=t.confirmSub;document.getElementById('c-sms').textContent=t.smsNote;document.getElementById('btn-nouveau').textContent=t.newBtn;}
 
-// ── CONFIG ──
-function applyConfig() {
-  const nom = document.getElementById('cfg-nom').value || 'DigiMairie';
-  const langName = document.getElementById('cfg-lang').value;
-  const color = document.getElementById('cfg-color').value;
-  const logo = document.getElementById('cfg-logo').value || '🏛️';
-  document.getElementById('app-name').textContent = nom;
-  document.getElementById('app-logo').textContent = logo;
-  document.documentElement.style.setProperty('--vert', color);
-  if (langName) document.getElementById('local-btn').textContent = langName;
-}
+function applyConfig(){const nom=document.getElementById('cfg-nom').value||'DigiMairie',langName=document.getElementById('cfg-lang').value,color=document.getElementById('cfg-color').value,logo=document.getElementById('cfg-logo').value||'🏛️';document.getElementById('app-name').textContent=nom;document.getElementById('app-logo').textContent=logo;document.documentElement.style.setProperty('--vert',color);if(langName)document.getElementById('local-btn').textContent=langName;}
 
-// ── SERVICES ──
-const ICONS = ['📋','🪪','📘','🏗️','🤝','📝'];
-let selSvc = '', selSvcIdx = -1, selectedService = null, payMode = 'guichet';
+let selSvc='',selectedService=null,payMode='guichet';
 
-const renderServices = async () => {
-  const g = document.getElementById('svc-grid');
-  g.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--gris)">⏳ Chargement des services...</div>';
-  try {
-    const services = await apiCall('/services');
-    const icons = {
-      'État civil': '📋','Urbanisme': '🏗️','Aide sociale': '🤝',
-      'Permis divers': '📄','Logement': '🏠','Légalisation': '📜'
-    };
-    g.innerHTML = '';
-    services.forEach(s => {
-      const icon = icons[s.nom] || '📋';
-      const d = document.createElement('div');
-      d.className = 'svc-card' + (selectedService?.id === s.id ? ' sel' : '');
-      d.innerHTML = `
-        <div class="svc-icon">${icon}</div>
-        <div class="svc-name">${s.nom}</div>
-        <div class="svc-desc">${s.description}</div>
-        <div class="svc-local">${s.duree_min} min</div>
-      `;
-      d.onclick = () => {
-        selectedService = s;
-        selSvc = s.nom;
-        renderServices();
-        document.getElementById('btn1').disabled = false;
-      };
-      g.appendChild(d);
-    });
-  } catch (err) {
-    g.innerHTML = `<div style="text-align:center;padding:2rem;color:red">❌ ${err.message}</div>`;
-  }
+const renderServices=async()=>{
+  const g=document.getElementById('svc-grid');
+  g.innerHTML='<div style="text-align:center;padding:2rem;color:var(--gris)">⏳ Chargement des services...</div>';
+  try{
+    const services=await apiCall('/services');
+    const icons={'État civil':'📋','Urbanisme':'🏗️','Aide sociale':'🤝','Permis divers':'📄','Logement':'🏠','Légalisation':'📜'};
+    g.innerHTML='';
+    services.forEach(s=>{const icon=icons[s.nom]||'📋';const d=document.createElement('div');d.className='svc-card'+(selectedService?.id===s.id?' sel':'');d.innerHTML=`<div class="svc-icon">${icon}</div><div class="svc-name">${s.nom}</div><div class="svc-desc">${s.description}</div><div class="svc-local">${s.duree_min} min</div>`;d.onclick=()=>{selectedService=s;selSvc=s.nom;renderServices();document.getElementById('btn1').disabled=false;};g.appendChild(d);});
+  }catch(err){g.innerHTML=`<div style="text-align:center;padding:2rem;color:red">❌ ${err.message}</div>`;}
 };
 
-// ── CALENDAR ──
-const MOIS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-const SLOTS = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30'];
-let calYear, calMonth, selDate = null, selSlot = '', curStep = 1, adminFilter = 'tous';
+const MOIS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const SLOTS=['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30'];
+let calYear,calMonth,selDate=null,selSlot='',curStep=1,adminFilter='tous';
 
-function goStep(n) {
-  document.getElementById('step'+curStep).style.display = 'none';
-  curStep = n;
-  document.getElementById('step'+n).style.display = 'block';
-  updateSteps();
-  if (n === 2) initCal();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+function goStep(n){document.getElementById('step'+curStep).style.display='none';curStep=n;document.getElementById('step'+n).style.display='block';updateSteps();if(n===2)initCal();window.scrollTo({top:0,behavior:'smooth'});}
 
-function updateSteps() {
-  for (let i = 1; i <= 4; i++) {
-    const c = document.getElementById('sc'+i);
-    const l = document.getElementById('sl'+i);
-    if (i < curStep) { c.className='step-circle done'; c.innerHTML='✓'; }
-    else if (i === curStep) { c.className='step-circle active'; c.textContent=i; }
-    else { c.className='step-circle'; c.textContent=i; }
-    l.className = 'step-lbl' + (i === curStep ? ' active' : '');
-    l.textContent = curT.stepLabels[i-1];
-  }
-  for (let i = 1; i <= 3; i++) {
-    const ln = document.getElementById('ln'+i);
-    if (ln) ln.className = 'step-line' + (i < curStep ? ' done' : '');
-  }
-}
+function updateSteps(){for(let i=1;i<=4;i++){const c=document.getElementById('sc'+i),l=document.getElementById('sl'+i);if(i<curStep){c.className='step-circle done';c.innerHTML='✓';}else if(i===curStep){c.className='step-circle active';c.textContent=i;}else{c.className='step-circle';c.textContent=i;}l.className='step-lbl'+(i===curStep?' active':'');l.textContent=curT.stepLabels[i-1];}for(let i=1;i<=3;i++){const ln=document.getElementById('ln'+i);if(ln)ln.className='step-line'+(i<curStep?' done':'');}}
 
-function initCal() {
-  const now = new Date();
-  calYear = now.getFullYear(); calMonth = now.getMonth();
-  renderCal();
-}
-function changeMonth(d) {
-  calMonth += d;
-  if (calMonth < 0) { calMonth = 11; calYear--; }
-  if (calMonth > 11) { calMonth = 0; calYear++; }
-  renderCal();
-}
-function renderCal() {
-  document.getElementById('cal-label').textContent = MOIS[calMonth] + ' ' + calYear;
-  const g = document.getElementById('cal-grid');
-  g.innerHTML = '';
-  ['Lu','Ma','Me','Je','Ve','Sa','Di'].forEach(j => {
-    const el = document.createElement('div'); el.className='cal-dn'; el.textContent=j; g.appendChild(el);
-  });
-  const first = new Date(calYear, calMonth, 1);
-  let sd = first.getDay(); sd = sd===0?6:sd-1;
-  for (let i=0;i<sd;i++){const el=document.createElement('div');el.className='cal-d emp';g.appendChild(el);}
-  const days = new Date(calYear,calMonth+1,0).getDate();
-  const today = new Date();
-  for (let d=1;d<=days;d++) {
-    const el = document.createElement('div');
-    const date = new Date(calYear,calMonth,d);
-    const dow = date.getDay();
-    const isPast = date < new Date(today.getFullYear(),today.getMonth(),today.getDate());
-    const ds = `${String(d).padStart(2,'0')}/${String(calMonth+1).padStart(2,'0')}/${calYear}`;
-    el.textContent = d;
-    if (isPast||dow===0||dow===6) { el.className='cal-d dis'; }
-    else {
-      el.className = 'cal-d' + (selDate===ds?' sel':'');
-      if (d===today.getDate()&&calMonth===today.getMonth()&&calYear===today.getFullYear()) el.classList.add('tod');
-      el.onclick = () => pickDate(ds,el);
-    }
-    g.appendChild(el);
-  }
-}
+function initCal(){const now=new Date();calYear=now.getFullYear();calMonth=now.getMonth();renderCal();}
+function changeMonth(d){calMonth+=d;if(calMonth<0){calMonth=11;calYear--;}if(calMonth>11){calMonth=0;calYear++;}renderCal();}
 
-const pickDate = async (ds, el) => {
-  document.querySelectorAll('.cal-d').forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
-  selDate = ds; selSlot = '';
-  document.getElementById('btn2').disabled = true;
-  const zone = document.getElementById('slots-zone');
-  zone.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--gris)">⏳ Chargement des créneaux...</div>';
-  try {
-    const dateFormatee = ds.split('/').reverse().join('-');
-    const creneaux = await apiCall(`/rdv/disponibles?service_id=${selectedService.id}&date=${dateFormatee}`);
-    zone.innerHTML = '<div class="slots-grid" id="sw"></div>';
-    const sw = document.getElementById('sw');
-    creneaux.forEach(c => {
-      const el = document.createElement('div');
-      el.textContent = c.heure;
-      el.className = 'slot' + (!c.disponible ? ' taken' : '');
-      if (c.disponible) { el.onclick = () => pickSlot(c.heure, el); }
-      sw.appendChild(el);
-    });
-  } catch (err) {
-    zone.innerHTML = `<div style="text-align:center;padding:1rem;color:red">❌ ${err.message}</div>`;
-  }
+function renderCal(){document.getElementById('cal-label').textContent=MOIS[calMonth]+' '+calYear;const g=document.getElementById('cal-grid');g.innerHTML='';['Lu','Ma','Me','Je','Ve','Sa','Di'].forEach(j=>{const el=document.createElement('div');el.className='cal-dn';el.textContent=j;g.appendChild(el);});const first=new Date(calYear,calMonth,1);let sd=first.getDay();sd=sd===0?6:sd-1;for(let i=0;i<sd;i++){const el=document.createElement('div');el.className='cal-d emp';g.appendChild(el);}const days=new Date(calYear,calMonth+1,0).getDate(),today=new Date();for(let d=1;d<=days;d++){const el=document.createElement('div'),date=new Date(calYear,calMonth,d),dow=date.getDay();const isPast=date<new Date(today.getFullYear(),today.getMonth(),today.getDate());const ds=`${String(d).padStart(2,'0')}/${String(calMonth+1).padStart(2,'0')}/${calYear}`;el.textContent=d;if(isPast||dow===0||dow===6){el.className='cal-d dis';}else{el.className='cal-d'+(selDate===ds?' sel':'');if(d===today.getDate()&&calMonth===today.getMonth()&&calYear===today.getFullYear())el.classList.add('tod');el.onclick=()=>pickDate(ds,el);}g.appendChild(el);}}
+
+const pickDate=async(ds,el)=>{document.querySelectorAll('.cal-d').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');selDate=ds;selSlot='';document.getElementById('btn2').disabled=true;const zone=document.getElementById('slots-zone');zone.innerHTML='<div style="text-align:center;padding:1rem;color:var(--gris)">⏳ Chargement des créneaux...</div>';try{const dateFormatee=ds.split('/').reverse().join('-');const creneaux=await apiCall(`/rdv/disponibles?service_id=${selectedService.id}&date=${dateFormatee}`);zone.innerHTML='<div class="slots-grid" id="sw"></div>';const sw=document.getElementById('sw');creneaux.forEach(c=>{const el=document.createElement('div');el.textContent=c.heure;el.className='slot'+(!c.disponible?' taken':'');if(c.disponible){el.onclick=()=>pickSlot(c.heure,el);}sw.appendChild(el);});}catch(err){zone.innerHTML=`<div style="text-align:center;padding:1rem;color:red">❌ ${err.message}</div>`;}};
+
+function pickSlot(s,el){document.querySelectorAll('.slot').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');selSlot=s;document.getElementById('btn2').disabled=false;}
+function checkForm(){document.getElementById('btn3').disabled=!['f-prenom','f-nom','f-tel'].every(id=>document.getElementById(id).value.trim());}
+
+const soumettreRdv=async()=>{
+  const prenom=document.getElementById('f-prenom').value.trim(),nom=document.getElementById('f-nom').value.trim(),tel=document.getElementById('f-tel').value.trim(),email=document.getElementById('f-email').value.trim(),notes=document.getElementById('f-note').value.trim();
+  try{const btn=document.getElementById('btn3');btn.disabled=true;btn.innerHTML='⏳ Envoi en cours...';const data=await apiCall('/rdv','POST',{service_id:selectedService.id,citoyen_nom:nom,citoyen_prenom:prenom,citoyen_tel:tel,citoyen_email:email,citoyen_nni:'',date_rdv:selDate.split('/').reverse().join('-'),heure_rdv:selSlot,paiement:payMode,notes});document.getElementById('c-ref').textContent=data.rdv.reference;document.getElementById('c-summary').innerHTML=`<div class="c-row"><span class="lbl">Service</span><span class="val">${selectedService.nom}</span></div><div class="c-row"><span class="lbl">Date</span><span class="val">${selDate}</span></div><div class="c-row"><span class="lbl">Heure</span><span class="val">${selSlot}</span></div><div class="c-row"><span class="lbl">Nom</span><span class="val">${prenom} ${nom}</span></div><div class="c-row"><span class="lbl">Téléphone</span><span class="val">${tel}</span></div>${email?`<div class="c-row"><span class="lbl">Email</span><span class="val">${email}</span></div>`:''}<div class="c-row"><span class="lbl">Paiement</span><span class="val">${payMode==='guichet'?'💵 Au guichet':'📱 Mobile Money'}</span></div>`;goStep(4);}
+  catch(err){alert('❌ Erreur : '+err.message);const btn=document.getElementById('btn3');btn.disabled=false;btn.innerHTML='✓ <span>Confirmer le RDV</span>';}
 };
 
-function pickSlot(s,el){
-  document.querySelectorAll('.slot').forEach(x=>x.classList.remove('sel'));
-  el.classList.add('sel'); selSlot=s;
-  document.getElementById('btn2').disabled=false;
-}
+const afficherModification=(reference,serviceId)=>{const result=document.getElementById('search-result'),today=new Date().toISOString().split('T')[0];result.innerHTML+=`<div style="background:white;border:2px solid var(--vert);border-radius:12px;padding:1.2rem;margin-top:1rem"><h4 style="margin-bottom:1rem">✏️ Modifier le rendez-vous</h4><div class="form-grid"><div class="field"><label>Nouvelle date *</label><input type="date" id="mod-date" min="${today}"></div><div class="field"><label>Nouvelle heure *</label><select id="mod-heure"><option value="">-- Choisir --</option>${['08:00','08:30','09:00','09:30','10:00','10:30','11:00','14:00','14:30','15:00','15:30','16:00'].map(h=>`<option value="${h}">${h}</option>`).join('')}</select></div></div><div id="mod-error" style="color:var(--rouge);font-size:.82rem;margin-top:.5rem"></div><div style="display:flex;gap:.75rem;margin-top:1rem;justify-content:flex-end"><button class="btn btn-secondary" onclick="rechercherRdv()">Annuler</button><button class="btn btn-primary" onclick="confirmerModification('${reference}',${serviceId})">✅ Confirmer</button></div></div>`;};
 
-function checkForm(){
-  document.getElementById('btn3').disabled = !['f-prenom','f-nom','f-tel'].every(id=>document.getElementById(id).value.trim());
-}
+const confirmerModification=async(reference,serviceId)=>{const date=document.getElementById('mod-date').value,heure=document.getElementById('mod-heure').value,errEl=document.getElementById('mod-error');if(!date||!heure){errEl.textContent='❌ Veuillez choisir une date et une heure !';return;}try{await apiCall(`/rdv/${reference}/modifier`,'PUT',{date_rdv:date,heure_rdv:heure});document.getElementById('search-ref').value=reference;await rechercherRdv();alert('✅ Rendez-vous modifié avec succès !');}catch(err){errEl.textContent='❌ '+err.message;}};
 
-// ── SOUMETTRE RDV CITOYEN (anciennement confirmer) ──
-const soumettreRdv = async () => {
-  const prenom = document.getElementById('f-prenom').value.trim();
-  const nom    = document.getElementById('f-nom').value.trim();
-  const tel    = document.getElementById('f-tel').value.trim();
-  const email  = document.getElementById('f-email').value.trim();
-  const nni    = '';
-  const notes  = document.getElementById('f-note').value.trim();
-  try {
-    const btn = document.getElementById('btn3');
-    btn.disabled = true;
-    btn.innerHTML = '⏳ Envoi en cours...';
-    const data = await apiCall('/rdv', 'POST', {
-      service_id:     selectedService.id,
-      citoyen_nom:    nom,
-      citoyen_prenom: prenom,
-      citoyen_tel:    tel,
-      citoyen_email:  email,
-      citoyen_nni:    nni,
-      date_rdv: selDate.split('/').reverse().join('-'),
-      heure_rdv: selSlot,
-      paiement:       payMode,
-      notes:          notes
-    });
-    document.getElementById('c-ref').textContent = data.rdv.reference;
-    document.getElementById('c-summary').innerHTML = `
-      <div class="c-row"><span class="lbl">Service</span><span class="val">${selectedService.nom}</span></div>
-      <div class="c-row"><span class="lbl">Date</span><span class="val">${selDate}</span></div>
-      <div class="c-row"><span class="lbl">Heure</span><span class="val">${selSlot}</span></div>
-      <div class="c-row"><span class="lbl">Nom</span><span class="val">${prenom} ${nom}</span></div>
-      <div class="c-row"><span class="lbl">Téléphone</span><span class="val">${tel}</span></div>
-      ${email ? `<div class="c-row"><span class="lbl">Email</span><span class="val">${email}</span></div>` : ''}
-      <div class="c-row"><span class="lbl">Paiement</span><span class="val">${payMode === 'guichet' ? '💵 Au guichet' : '📱 Mobile Money'}</span></div>
-    `;
-    goStep(4);
-  } catch (err) {
-    alert('❌ Erreur : ' + err.message);
-    const btn = document.getElementById('btn3');
-    btn.disabled = false;
-    btn.innerHTML = '✓ <span data-t="confirmBtn">Confirmer le RDV</span>';
-  }
+const rechercherRdv=async()=>{const ref=document.getElementById('search-ref').value.trim().toUpperCase(),result=document.getElementById('search-result');if(!ref){result.innerHTML='<p style="color:var(--rouge)">❌ Veuillez entrer une référence !</p>';return;}result.innerHTML='<p style="color:var(--gris)">⏳ Recherche en cours...</p>';try{const rdv=await apiCall(`/rdv/${ref}`);const date=new Date(rdv.date_rdv).toLocaleDateString('fr-FR'),heure=rdv.heure_rdv.substr(0,5);const statutColors={'confirme':'#d1fae5','en-attente':'#fef3c7','annule':'#fee2e2','termine':'#dbeafe'};const statutLabels={'confirme':'✓ Confirmé','en-attente':'⏳ En attente','annule':'✗ Annulé','termine':'✅ Terminé'};result.innerHTML=`<div style="background:var(--vert-pale);border:2px solid var(--vert);border-radius:12px;padding:1.2rem;margin-top:.5rem"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem"><span style="font-weight:900;color:var(--vert)">${rdv.reference}</span><span style="background:${statutColors[rdv.statut]};padding:.2rem .7rem;border-radius:999px;font-size:.75rem;font-weight:800">${statutLabels[rdv.statut]}</span></div><div class="c-row"><span class="lbl">Service</span><span style="font-weight:700">${rdv.service_nom}</span></div><div class="c-row"><span class="lbl">Date & Heure</span><span style="font-weight:700">${date} à ${heure}</span></div><div class="c-row"><span class="lbl">Citoyen</span><span style="font-weight:700">${rdv.citoyen_prenom} ${rdv.citoyen_nom}</span></div><div class="c-row"><span class="lbl">Téléphone</span><span style="font-weight:700">${rdv.citoyen_tel}</span></div><div class="c-row"><span class="lbl">Paiement</span><span style="font-weight:700">${rdv.paiement==='guichet'?'💵 Au guichet':'📱 Mobile Money'}</span></div>${rdv.statut!=='annule'&&rdv.statut!=='termine'?`<div style="margin-top:1rem;text-align:center"><button class="btn btn-primary" onclick="afficherModification('${rdv.reference}',${rdv.service_id})">✏️ Modifier</button></div>`:''}</div>`;}catch(err){result.innerHTML=`<p style="color:var(--rouge)">❌ Aucun rendez-vous trouvé avec <strong>${ref}</strong></p>`;}};
+
+const imprimerReçu=()=>{const{jsPDF}=window.jspdf,doc=new jsPDF();const vert=[26,107,60],or=[224,160,32],gris=[107,114,128];doc.setFillColor(...vert);doc.rect(0,0,210,35,'F');doc.setTextColor(255,255,255);doc.setFontSize(22);doc.setFont('helvetica','bold');doc.text('MairieConnect',105,15,{align:'center'});doc.setFontSize(11);doc.setFont('helvetica','normal');doc.text('Services numériques aux citoyens',105,23,{align:'center'});doc.setFontSize(10);doc.text('RÉCÉPISSÉ DE RENDEZ-VOUS',105,31,{align:'center'});doc.setFillColor(...or);doc.rect(55,42,100,14,'F');doc.setTextColor(26,46,26);doc.setFontSize(14);doc.setFont('helvetica','bold');const ref=document.getElementById('c-ref').textContent;doc.text(ref,105,52,{align:'center'});const rows=document.querySelectorAll('#c-summary .c-row');let y=75;doc.setFontSize(11);rows.forEach((row,i)=>{const lbl=row.querySelector('.lbl')?.textContent||'';let val=row.querySelector('.val')?.textContent||'';val=val.replace(/[\u{1F300}-\u{1FFFF}]/gu,'').replace(/[^\x00-\x7F\xC0-\xFF]/g,'').trim();if(i%2===0){doc.setFillColor(240,247,240);doc.rect(20,y-6,170,10,'F');}doc.setTextColor(...gris);doc.setFont('helvetica','normal');doc.text(lbl,25,y);doc.setTextColor(26,46,26);doc.setFont('helvetica','bold');doc.text(val,120,y);y+=12;});y+=5;doc.setFillColor(254,243,208);doc.rect(20,y,170,20,'F');doc.setDrawColor(...or);doc.rect(20,y,170,20,'S');doc.setTextColor(122,85,0);doc.setFontSize(10);doc.setFont('helvetica','bold');doc.text('! Important',25,y+7);doc.setFont('helvetica','normal');doc.text("Présentez ce document à l'accueil de la mairie.",25,y+14);doc.setFillColor(...vert);doc.rect(0,275,210,22,'F');doc.setTextColor(255,255,255);doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text('Document généré automatiquement — MairieConnect',105,283,{align:'center'});doc.text(new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),105,290,{align:'center'});doc.save(`Reçu-${ref}.pdf`);};
+
+function nouveauRdv(){selSvc='';selDate=null;selSlot='';['f-prenom','f-nom','f-tel','f-email','f-naiss','f-pid','f-note'].forEach(id=>document.getElementById(id).value='');document.getElementById('docs-zone').innerHTML='';document.getElementById('btn3').disabled=true;goStep(1);}
+
+function badge(s){if(s==='confirme')return'<span class="badge b-green">✓ Confirmé</span>';if(s==='en-attente')return'<span class="badge b-yellow">⏳ En attente</span>';return'<span class="badge b-red">✗ Annulé</span>';}
+
+let currentPage=1;
+const RDV_PAR_PAGE=10;
+
+const renderAdmin=async(filter,search)=>{
+  filter=filter||adminFilter;const tbody=document.getElementById('rdv-body');if(!tbody)return;
+  tbody.innerHTML='<tr><td colspan="6"><div style="text-align:center;padding:2rem;color:var(--gris)">⏳ Chargement...</div></td></tr>';
+  try{
+    const list=await apiCall('/rdv','GET',null,authToken);let filtered=[...list];
+    if(filter!=='tous')filtered=filtered.filter(r=>r.statut===filter);
+    if(search){const q=search.toLowerCase();filtered=filtered.filter(r=>(r.citoyen_nom+' '+r.citoyen_prenom).toLowerCase().includes(q)||r.service_nom.toLowerCase().includes(q)||r.reference.toLowerCase().includes(q));}
+    tbody.innerHTML='';const totalPages=Math.ceil(filtered.length/RDV_PAR_PAGE);const paginated=filtered.slice((currentPage-1)*RDV_PAR_PAGE,currentPage*RDV_PAR_PAGE);
+    if(!paginated.length){tbody.innerHTML=`<tr><td colspan="6"><div class="empty"><div class="ei">📭</div>Aucun rendez-vous trouvé</div></td></tr>`;}
+    else{paginated.forEach(r=>{const date=new Date(r.date_rdv).toLocaleDateString('fr-FR'),heure=r.heure_rdv.substr(0,5);const tr=document.createElement('tr');tr.innerHTML=`<td><code style="background:var(--gris-clair);padding:.13rem .4rem;border-radius:5px;font-size:.76rem">${r.reference}</code></td><td><div style="font-weight:700">${r.citoyen_prenom} ${r.citoyen_nom}</div><div style="font-size:.72rem;color:var(--gris)">${r.citoyen_tel}</div></td><td>${r.service_nom}</td><td><strong>${date}</strong><br><span style="font-size:.78rem;color:var(--gris)">${heure}</span></td><td>${badge(r.statut)}</td><td style="display:flex;gap:.35rem;flex-wrap:wrap;padding:.55rem 1rem"><button class="btn btn-sm btn-secondary" onclick="openDetail(${r.id})">Voir</button>${r.statut==='en-attente'?`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;border:none" onclick="confirmerRdv(${r.id})">✓ Confirmer</button>`:''}${r.statut!=='annule'?`<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler</button>`:''}</td>`;tbody.appendChild(tr);});}
+    if(totalPages>1){const pDiv=document.createElement('div');pDiv.style.cssText='display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:1rem;flex-wrap:wrap';const bP=document.createElement('button');bP.className='btn btn-secondary btn-sm';bP.textContent='← Précédent';bP.disabled=currentPage===1;bP.onclick=()=>{currentPage--;renderAdmin();};pDiv.appendChild(bP);for(let i=1;i<=totalPages;i++){const b=document.createElement('button');b.className='btn btn-sm '+(i===currentPage?'btn-primary':'btn-secondary');b.textContent=i;b.onclick=()=>{currentPage=i;renderAdmin();};pDiv.appendChild(b);}const bN=document.createElement('button');bN.className='btn btn-secondary btn-sm';bN.textContent='Suivant →';bN.disabled=currentPage===totalPages;bN.onclick=()=>{currentPage++;renderAdmin();};pDiv.appendChild(bN);const info=document.createElement('span');info.style.cssText='font-size:.8rem;color:var(--gris);width:100%;text-align:center;margin-top:.3rem';info.textContent=`Page ${currentPage} sur ${totalPages}`;pDiv.appendChild(info);tbody.appendChild(pDiv);}
+    const today=new Date().toISOString().split('T')[0];
+    document.getElementById('s-total').textContent=list.length;
+    document.getElementById('s-today').textContent=list.filter(r=>r.date_rdv.split('T')[0]===today).length;
+    document.getElementById('s-conf').textContent=list.filter(r=>r.statut==='confirme').length;
+    document.getElementById('s-ann').textContent=list.filter(r=>r.statut==='annule').length;
+    renderChart(list);
+  }catch(err){if(err.message.includes('Token')||err.message.includes('token')){authToken=null;localStorage.removeItem('token');tbody.innerHTML='<tr><td colspan="6"><div class="empty">🔐 Session expirée — reconnectez-vous</div></td></tr>';}else{tbody.innerHTML=`<tr><td colspan="6"><div class="empty">❌ ${err.message}</div></td></tr>`;}}
 };
 
-const afficherModification = (reference, serviceId) => {
-  const result = document.getElementById('search-result');
-  const today = new Date().toISOString().split('T')[0];
-  result.innerHTML += `
-    <div style="background:white;border:2px solid var(--vert);border-radius:12px;padding:1.2rem;margin-top:1rem">
-      <h4 style="margin-bottom:1rem">✏️ Modifier le rendez-vous</h4>
-      <div class="form-grid">
-        <div class="field"><label>Nouvelle date *</label><input type="date" id="mod-date" min="${today}"></div>
-        <div class="field"><label>Nouvelle heure *</label>
-          <select id="mod-heure">
-            <option value="">-- Choisir --</option>
-            ${['08:00','08:30','09:00','09:30','10:00','10:30','11:00','14:00','14:30','15:00','15:30','16:00']
-              .map(h => `<option value="${h}">${h}</option>`).join('')}
-          </select>
-        </div>
-      </div>
-      <div id="mod-error" style="color:var(--rouge);font-size:.82rem;margin-top:.5rem"></div>
-      <div style="display:flex;gap:.75rem;margin-top:1rem;justify-content:flex-end">
-        <button class="btn btn-secondary" onclick="rechercherRdv()">Annuler</button>
-        <button class="btn btn-primary" onclick="confirmerModification('${reference}', ${serviceId})">✅ Confirmer la modification</button>
-      </div>
-    </div>
-  `;
-};
+function filterRdv(f,btn){adminFilter=f;currentPage=1;document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderAdmin(f);}
+function searchRdv(v){renderAdmin(adminFilter,v);}
 
-const confirmerModification = async (reference, serviceId) => {
-  const date  = document.getElementById('mod-date').value;
-  const heure = document.getElementById('mod-heure').value;
-  const errEl = document.getElementById('mod-error');
-  if (!date || !heure) { errEl.textContent = '❌ Veuillez choisir une date et une heure !'; return; }
-  try {
-    await apiCall(`/rdv/${reference}/modifier`, 'PUT', { date_rdv: date, heure_rdv: heure });
-    document.getElementById('search-ref').value = reference;
-    await rechercherRdv();
-    alert('✅ Rendez-vous modifié avec succès !');
-  } catch (err) {
-    errEl.textContent = '❌ ' + err.message;
-  }
-};
+const deconnecter=()=>{authToken=null;localStorage.removeItem('token');document.getElementById('btn-logout').style.display='none';document.getElementById('btn-agents').style.display='none';document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));document.getElementById('view-citoyen').classList.add('active');document.querySelectorAll('.nav-tab')[0].classList.add('active');};
 
-const rechercherRdv = async () => {
-  const ref = document.getElementById('search-ref').value.trim().toUpperCase();
-  const result = document.getElementById('search-result');
-  if (!ref) { result.innerHTML = '<p style="color:var(--rouge)">❌ Veuillez entrer une référence !</p>'; return; }
-  result.innerHTML = '<p style="color:var(--gris)">⏳ Recherche en cours...</p>';
-  try {
-    const rdv = await apiCall(`/rdv/${ref}`);
-    const date = new Date(rdv.date_rdv).toLocaleDateString('fr-FR');
-    const heure = rdv.heure_rdv.substr(0, 5);
-    const statutColors = { 'confirme':'#d1fae5','en-attente':'#fef3c7','annule':'#fee2e2','termine':'#dbeafe' };
-    const statutLabels = { 'confirme':'✓ Confirmé','en-attente':'⏳ En attente','annule':'✗ Annulé','termine':'✅ Terminé' };
-    result.innerHTML = `
-      <div style="background:var(--vert-pale);border:2px solid var(--vert);border-radius:12px;padding:1.2rem;margin-top:.5rem">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
-          <span style="font-weight:900;color:var(--vert);font-size:1rem">${rdv.reference}</span>
-          <span style="background:${statutColors[rdv.statut]};padding:.2rem .7rem;border-radius:999px;font-size:.75rem;font-weight:800">${statutLabels[rdv.statut]}</span>
-        </div>
-        <div class="c-row"><span class="lbl">Service</span><span style="font-weight:700">${rdv.service_nom}</span></div>
-        <div class="c-row"><span class="lbl">Date & Heure</span><span style="font-weight:700">${date} à ${heure}</span></div>
-        <div class="c-row"><span class="lbl">Citoyen</span><span style="font-weight:700">${rdv.citoyen_prenom} ${rdv.citoyen_nom}</span></div>
-        <div class="c-row"><span class="lbl">Téléphone</span><span style="font-weight:700">${rdv.citoyen_tel}</span></div>
-        <div class="c-row"><span class="lbl">Paiement</span><span style="font-weight:700">${rdv.paiement === 'guichet' ? '💵 Au guichet' : '📱 Mobile Money'}</span></div>
-        ${rdv.statut !== 'annule' && rdv.statut !== 'termine' ? `
-          <div style="margin-top:1rem;text-align:center">
-            <button class="btn btn-primary" onclick="afficherModification('${rdv.reference}', ${rdv.service_id})">✏️ Modifier la date/heure</button>
-          </div>` : ''}
-      </div>
-    `;
-  } catch (err) {
-    result.innerHTML = `<p style="color:var(--rouge)">❌ Aucun rendez-vous trouvé avec la référence <strong>${ref}</strong></p>`;
-  }
-};
+const confirmerRdv=async(id)=>{if(!confirm('Voulez-vous confirmer ce rendez-vous ?'))return;try{await apiCall(`/rdv/${id}/statut`,'PUT',{statut:'confirme'},authToken);closeModal();renderAdmin();}catch(err){alert('❌ Erreur : '+err.message);}};
+const annuler=async(id)=>{if(!confirm('Voulez-vous vraiment annuler ce rendez-vous ?'))return;try{await apiCall(`/rdv/${id}/statut`,'PUT',{statut:'annule'},authToken);closeModal();renderAdmin();}catch(err){alert('❌ Erreur : '+err.message);}};
 
-const imprimerReçu = () => {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  const vert = [26, 107, 60], or = [224, 160, 32], gris = [107, 114, 128];
-  doc.setFillColor(...vert);
-  doc.rect(0, 0, 210, 35, 'F');
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(22); doc.setFont('helvetica', 'bold');
-  doc.text('MairieConnect', 105, 15, { align: 'center' });
-  doc.setFontSize(11); doc.setFont('helvetica', 'normal');
-  doc.text('Services numériques aux citoyens', 105, 23, { align: 'center' });
-  doc.setFontSize(10);
-  doc.text('RÉCÉPISSÉ DE RENDEZ-VOUS', 105, 31, { align: 'center' });
-  doc.setFillColor(...or);
-  doc.rect(55, 42, 100, 14, 'F');
-  doc.setTextColor(26, 46, 26);
-  doc.setFontSize(14); doc.setFont('helvetica', 'bold');
-  const ref = document.getElementById('c-ref').textContent;
-  doc.text(ref, 105, 52, { align: 'center' });
-  const rows = document.querySelectorAll('#c-summary .c-row');
-  let y = 75;
-  doc.setFontSize(11);
-  rows.forEach((row, i) => {
-    const lbl = row.querySelector('.lbl')?.textContent || '';
-    let val = row.querySelector('.val')?.textContent || '';
-    val = val.replace(/[\u{1F300}-\u{1FFFF}]/gu, '').trim();
-    val = val.replace(/[^\x00-\x7F\xC0-\xFF]/g, '').trim();
-    if (i % 2 === 0) { doc.setFillColor(240, 247, 240); doc.rect(20, y - 6, 170, 10, 'F'); }
-    doc.setTextColor(...gris); doc.setFont('helvetica', 'normal'); doc.text(lbl, 25, y);
-    doc.setTextColor(26, 46, 26); doc.setFont('helvetica', 'bold'); doc.text(val, 120, y);
-    y += 12;
-  });
-  y += 5;
-  doc.setFillColor(254, 243, 208); doc.rect(20, y, 170, 20, 'F');
-  doc.setDrawColor(...or); doc.rect(20, y, 170, 20, 'S');
-  doc.setTextColor(122, 85, 0); doc.setFontSize(10); doc.setFont('helvetica', 'bold');
-  doc.text('! Important', 25, y + 7); doc.setFont('helvetica', 'normal');
-  doc.text('Présentez ce document à l\'accueil de la mairie le jour de votre rendez-vous.', 25, y + 14);
-  doc.setFillColor(...vert); doc.rect(0, 275, 210, 22, 'F');
-  doc.setTextColor(255, 255, 255); doc.setFontSize(9); doc.setFont('helvetica', 'normal');
-  doc.text('Document généré automatiquement — MairieConnect', 105, 283, { align: 'center' });
-  doc.text(new Date().toLocaleDateString('fr-FR', { weekday:'long', year:'numeric', month:'long', day:'numeric' }), 105, 290, { align: 'center' });
-  doc.save(`Reçu-${ref}.pdf`);
-};
+const openDetail=async(id)=>{try{const list=await apiCall('/rdv','GET',null,authToken),r=list.find(x=>x.id===id);if(!r)return;const date=new Date(r.date_rdv).toLocaleDateString('fr-FR'),heure=r.heure_rdv.substr(0,5);document.getElementById('modal-inner').innerHTML=`<h3>📋 Détail du rendez-vous</h3><div style="display:flex;flex-direction:column;gap:.45rem;margin:.7rem 0"><div class="c-row" style="border:none"><span style="color:var(--gris)">Référence</span><span style="font-weight:900;color:var(--vert)">${r.reference}</span></div><div class="c-row"><span style="color:var(--gris)">Citoyen</span><span>${r.citoyen_prenom} ${r.citoyen_nom}</span></div><div class="c-row"><span style="color:var(--gris)">Téléphone</span><span>${r.citoyen_tel}</span></div>${r.citoyen_email?`<div class="c-row"><span style="color:var(--gris)">Email</span><span>${r.citoyen_email}</span></div>`:''}<div class="c-row"><span style="color:var(--gris)">Service</span><span>${r.service_nom}</span></div><div class="c-row"><span style="color:var(--gris)">Date & Heure</span><span>${date} à ${heure}</span></div><div class="c-row"><span style="color:var(--gris)">Paiement</span><span>${r.paiement==='guichet'?'💵 Au guichet':'📱 Mobile Money'}</span></div><div class="c-row"><span style="color:var(--gris)">Statut</span><span>${badge(r.statut)}</span></div>${r.notes?`<div class="c-row"><span style="color:var(--gris)">Notes</span><span>${r.notes}</span></div>`:''}</div><div class="m-actions">${r.statut==='en-attente'?`<button class="btn btn-sm" style="background:#dcfce7;color:#166534;border:none" onclick="confirmerRdv(${r.id})">✓ Confirmer</button>`:''}${r.statut!=='annule'?`<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler ce RDV</button>`:''}<button class="btn btn-primary btn-sm" onclick="closeModal()">Fermer</button></div>`;document.getElementById('overlay').classList.add('open');}catch(err){alert('❌ Erreur : '+err.message);}};
 
-function nouveauRdv(){
-  selSvc=''; selDate=null; selSlot='';
-  ['f-prenom','f-nom','f-tel','f-email','f-naiss','f-pid','f-note'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('docs-zone').innerHTML='';
-  document.getElementById('btn3').disabled=true;
-  goStep(1);
-}
+function openNewModal(){const svcs=T.fr.svcNames;document.getElementById('modal-inner').innerHTML=`<h3>+ Créer un rendez-vous</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:.7rem 0"><div class="field"><label>Nom complet *</label><input id="m-nom" type="text"></div><div class="field"><label>Téléphone *</label><input id="m-tel" type="tel" placeholder="+XXX XX XX XX"></div><div class="field"><label>Service *</label><select id="m-svc">${svcs.map(s=>`<option>${s}</option>`).join('')}</select></div><div class="field"><label>Heure *</label><select id="m-h">${SLOTS.map(s=>`<option>${s}</option>`).join('')}</select></div><div class="field" style="grid-column:1/-1"><label>Date *</label><input id="m-date" type="date" min="${new Date().toISOString().split('T')[0]}"></div></div><div class="m-actions"><button class="btn btn-secondary btn-sm" onclick="closeModal()">Annuler</button><button class="btn btn-primary btn-sm" onclick="saveNew()">✓ Créer</button></div>`;document.getElementById('overlay').classList.add('open');}
+function saveNew(){const nom=document.getElementById('m-nom').value,tel=document.getElementById('m-tel').value,dr=document.getElementById('m-date').value;if(!nom||!tel||!dr)return alert('Veuillez remplir tous les champs.');closeModal();renderAdmin();}
+function closeModal(){document.getElementById('overlay').classList.remove('open');}
 
-// ── BADGE STATUT ──
-// CORRECTION : utilise 'en-attente' (avec tiret) comme dans la base de données
-function badge(s){
-  if(s==='confirme') return '<span class="badge b-green">✓ Confirmé</span>';
-  if(s==='en-attente') return '<span class="badge b-yellow">⏳ En attente</span>';
-  return '<span class="badge b-red">✗ Annulé</span>';
-}
+const switchView=async(v,btn)=>{if(v==='admin'&&!authToken){afficherLoginModal();return;}document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));document.getElementById('view-'+v).classList.add('active');if(btn)btn.classList.add('active');if(v==='admin')renderAdmin();if(v==='agents')renderAgents();};
 
-// ── PAGINATION ──
-let currentPage = 1;
-const RDV_PAR_PAGE = 10;
+const afficherLoginModal=()=>{document.getElementById('modal-inner').innerHTML=`<h3>🔐 Connexion Agent</h3><p style="font-size:.82rem;color:var(--gris);margin-bottom:1rem">Réservé aux agents et administrateurs de la mairie.</p><div style="display:flex;flex-direction:column;gap:.75rem"><div class="field"><label>Email *</label><input type="email" id="login-email" placeholder="votre@mairie.sn"></div><div class="field"><label>Mot de passe *</label><input type="password" id="login-pwd" placeholder="••••••••"></div><div id="login-error" style="display:none;color:var(--rouge);font-size:.82rem"></div></div><div class="m-actions"><button class="btn btn-secondary" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="connecterAgent()">Se connecter</button></div>`;document.getElementById('overlay').classList.add('open');};
 
-const renderAdmin = async (filter, search) => {
-  filter = filter || adminFilter;
-  const tbody = document.getElementById('rdv-body');
-  if (!tbody) return;
-  tbody.innerHTML = '<tr><td colspan="6"><div style="text-align:center;padding:2rem;color:var(--gris)">⏳ Chargement...</div></td></tr>';
-  try {
-    const list = await apiCall('/rdv', 'GET', null, authToken);
-    let filtered = [...list];
-    if (filter !== 'tous') filtered = filtered.filter(r => r.statut === filter);
-    if (search) {
-      const q = search.toLowerCase();
-      filtered = filtered.filter(r =>
-        (r.citoyen_nom + ' ' + r.citoyen_prenom).toLowerCase().includes(q) ||
-        r.service_nom.toLowerCase().includes(q) ||
-        r.reference.toLowerCase().includes(q)
-      );
-    }
-    tbody.innerHTML = '';
-    const totalPages = Math.ceil(filtered.length / RDV_PAR_PAGE);
-    const debut = (currentPage - 1) * RDV_PAR_PAGE;
-    const fin = debut + RDV_PAR_PAGE;
-    const paginated = filtered.slice(debut, fin);
+const connecterAgent=async()=>{const email=document.getElementById('login-email').value.trim(),pwd=document.getElementById('login-pwd').value.trim(),errEl=document.getElementById('login-error');if(!email||!pwd){errEl.style.display='block';errEl.textContent='❌ Veuillez remplir tous les champs !';return;}try{const btn=document.querySelector('.modal .btn-primary');btn.disabled=true;btn.textContent='⏳ Connexion...';const data=await apiCall('/auth/connecter','POST',{email,mot_de_passe:pwd});authToken=data.token;localStorage.setItem('token',data.token);closeModal();document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));document.getElementById('view-admin').classList.add('active');document.querySelectorAll('.nav-tab')[1].classList.add('active');renderAdmin();document.getElementById('btn-logout').style.display='block';document.getElementById('btn-agents').style.display='block';}catch(err){errEl.style.display='block';errEl.textContent='❌ '+err.message;const btn=document.querySelector('.modal .btn-primary');btn.disabled=false;btn.textContent='Se connecter';}};
 
-    if (!paginated.length) {
-      tbody.innerHTML = `<tr><td colspan="6"><div class="empty"><div class="ei">📭</div>Aucun rendez-vous trouvé</div></td></tr>`;
-    } else {
-      paginated.forEach(r => {
-        const date = new Date(r.date_rdv).toLocaleDateString('fr-FR');
-        const heure = r.heure_rdv.substr(0, 5);
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><code style="background:var(--gris-clair);padding:.13rem .4rem;border-radius:5px;font-size:.76rem">${r.reference}</code></td>
-          <td><div style="font-weight:700">${r.citoyen_prenom} ${r.citoyen_nom}</div><div style="font-size:.72rem;color:var(--gris)">${r.citoyen_tel}</div></td>
-          <td>${r.service_nom}</td>
-          <td><strong>${date}</strong><br><span style="font-size:.78rem;color:var(--gris)">${heure}</span></td>
-          <td>${badge(r.statut)}</td>
-          <td style="display:flex;gap:.35rem;flex-wrap:wrap;padding:.55rem 1rem">
-            <button class="btn btn-sm btn-secondary" onclick="openDetail(${r.id})">Voir</button>
-            ${r.statut === 'en-attente' ? `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;border:none" onclick="confirmerRdv(${r.id})">✓ Confirmer</button>` : ''}
-            ${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler</button>` : ''}
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+let chartInstance=null;
+const renderChart=(list)=>{const canvas=document.getElementById('chart-services');if(!canvas)return;const compteur={};list.forEach(r=>{compteur[r.service_nom]=(compteur[r.service_nom]||0)+1;});const labels=Object.keys(compteur),data=Object.values(compteur);const colors=['#1a6b3c','#e8a020','#3b82f6','#c0392b','#16a34a','#8b5cf6'];if(chartInstance)chartInstance.destroy();chartInstance=new Chart(canvas,{type:'bar',data:{labels,datasets:[{label:'Nombre de RDV',data,backgroundColor:colors.slice(0,labels.length),borderRadius:8,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1}}}}});};
 
-    // Pagination
-    if (totalPages > 1) {
-      const paginationDiv = document.createElement('div');
-      paginationDiv.style.cssText = 'display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:1rem;flex-wrap:wrap';
-      const btnPrev = document.createElement('button');
-      btnPrev.className = 'btn btn-secondary btn-sm';
-      btnPrev.textContent = '← Précédent';
-      btnPrev.disabled = currentPage === 1;
-      btnPrev.onclick = () => { currentPage--; renderAdmin(); };
-      paginationDiv.appendChild(btnPrev);
-      for (let i = 1; i <= totalPages; i++) {
-        const btnPage = document.createElement('button');
-        btnPage.className = 'btn btn-sm ' + (i === currentPage ? 'btn-primary' : 'btn-secondary');
-        btnPage.textContent = i;
-        btnPage.onclick = () => { currentPage = i; renderAdmin(); };
-        paginationDiv.appendChild(btnPage);
-      }
-      const btnNext = document.createElement('button');
-      btnNext.className = 'btn btn-secondary btn-sm';
-      btnNext.textContent = 'Suivant →';
-      btnNext.disabled = currentPage === totalPages;
-      btnNext.onclick = () => { currentPage++; renderAdmin(); };
-      paginationDiv.appendChild(btnNext);
-      const info = document.createElement('span');
-      info.style.cssText = 'font-size:.8rem;color:var(--gris);width:100%;text-align:center;margin-top:.3rem';
-      info.textContent = `Page ${currentPage} sur ${totalPages}`;
-      paginationDiv.appendChild(info);
-      tbody.appendChild(paginationDiv);
-    }
+const renderAgents=async()=>{const tbody=document.getElementById('agents-body');if(!tbody)return;tbody.innerHTML='<tr><td colspan="5"><div style="text-align:center;padding:2rem;color:var(--gris)">⏳ Chargement...</div></td></tr>';try{const agents=await apiCall('/auth/agents','GET',null,authToken);tbody.innerHTML='';agents.forEach(a=>{const tr=document.createElement('tr');tr.innerHTML=`<td><div style="font-weight:700">${a.prenom} ${a.nom}</div><div style="font-size:.72rem;color:var(--gris)">${a.email}</div></td><td>${a.email}</td><td><span class="badge ${a.role==='admin'?'b-green':'b-yellow'}">${a.role}</span></td><td><span class="badge ${a.actif?'b-green':'b-red'}">${a.actif?'✓ Actif':'✗ Inactif'}</span></td><td>${a.role!=='admin'?`<button class="btn btn-sm" style="background:${a.actif?'#fee2e2':'#dcfce7'};color:${a.actif?'#991b1b':'#166534'};border:none" onclick="toggleAgent(${a.id})">${a.actif?'🔒 Désactiver':'✅ Activer'}</button>`:'<span style="color:var(--gris);font-size:.75rem">Admin principal</span>'}</td>`;tbody.appendChild(tr);});}catch(err){tbody.innerHTML=`<tr><td colspan="5"><div class="empty">❌ ${err.message}</div></td></tr>`;}};
 
-    // Stats
-    const today = new Date().toLocaleDateString('fr-FR');
-    document.getElementById('s-total').textContent = list.length;
-    document.getElementById('s-today').textContent = list.filter(r => new Date(r.date_rdv).toLocaleDateString('fr-FR') === today).length;
-    document.getElementById('s-conf').textContent = list.filter(r => r.statut === 'confirme').length;
-    document.getElementById('s-ann').textContent  = list.filter(r => r.statut === 'annule').length;
+const toggleAgent=async(id)=>{if(!confirm('Voulez-vous modifier le statut de cet agent ?'))return;try{await apiCall(`/auth/agents/${id}/toggle`,'PUT',null,authToken);renderAgents();}catch(err){alert('❌ Erreur : '+err.message);}};
 
-  } catch (err) {
-    if (err.message.includes('Token') || err.message.includes('token')) {
-      authToken = null;
-      localStorage.removeItem('token');
-      tbody.innerHTML = '<tr><td colspan="6"><div class="empty">🔐 Session expirée — reconnectez-vous</div></td></tr>';
-    } else {
-      tbody.innerHTML = `<tr><td colspan="6"><div class="empty">❌ ${err.message}</div></td></tr>`;
-    }
-  }
-};
+const openNouvelAgent=()=>{document.getElementById('modal-inner').innerHTML=`<h3>👥 Nouvel agent</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:.7rem 0"><div class="field"><label>Prénom *</label><input id="a-prenom" type="text"></div><div class="field"><label>Nom *</label><input id="a-nom" type="text"></div><div class="field" style="grid-column:1/-1"><label>Email *</label><input id="a-email" type="email" placeholder="agent@mairie.sn"></div><div class="field" style="grid-column:1/-1"><label>Mot de passe *</label><input id="a-pwd" type="password" placeholder="••••••••"></div><div class="field" style="grid-column:1/-1"><label>Rôle</label><select id="a-role"><option value="agent">Agent</option><option value="admin">Admin</option></select></div></div><div id="a-error" style="display:none;color:var(--rouge);font-size:.82rem"></div><div class="m-actions"><button class="btn btn-secondary btn-sm" onclick="closeModal()">Annuler</button><button class="btn btn-primary btn-sm" onclick="sauvegarderAgent()">✓ Créer</button></div>`;document.getElementById('overlay').classList.add('open');};
 
-function filterRdv(f,btn){
-  adminFilter=f; currentPage=1;
-  document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderAdmin(f);
-}
-function searchRdv(v){ renderAdmin(adminFilter,v); }
+const sauvegarderAgent=async()=>{const prenom=document.getElementById('a-prenom').value.trim(),nom=document.getElementById('a-nom').value.trim(),email=document.getElementById('a-email').value.trim(),pwd=document.getElementById('a-pwd').value.trim(),role=document.getElementById('a-role').value,errEl=document.getElementById('a-error');if(!prenom||!nom||!email||!pwd){errEl.style.display='block';errEl.textContent='❌ Veuillez remplir tous les champs !';return;}try{await apiCall('/auth/agents','POST',{prenom,nom,email,mot_de_passe:pwd,role},authToken);closeModal();renderAgents();alert('✅ Agent créé avec succès !');}catch(err){errEl.style.display='block';errEl.textContent='❌ '+err.message;}};
 
-const deconnecter = () => {
-  authToken = null;
-  localStorage.removeItem('token');
-  document.getElementById('btn-logout').style.display = 'none';
-  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-  document.getElementById('view-citoyen').classList.add('active');
-  document.querySelectorAll('.nav-tab')[0].classList.add('active');
-};
+const exporterExcel=async()=>{try{const list=await apiCall('/rdv','GET',null,authToken);const data=list.map(r=>({'Référence':r.reference,'Prénom':r.citoyen_prenom,'Nom':r.citoyen_nom,'Téléphone':r.citoyen_tel,'Email':r.citoyen_email||'','Service':r.service_nom,'Date':new Date(r.date_rdv).toLocaleDateString('fr-FR'),'Heure':r.heure_rdv.substr(0,5),'Statut':r.statut,'Paiement':r.paiement==='guichet'?'Au guichet':'Mobile Money','Notes':r.notes||''}));const ws=XLSX.utils.json_to_sheet(data),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Rendez-vous');ws['!cols']=[{wch:14},{wch:15},{wch:15},{wch:18},{wch:25},{wch:20},{wch:12},{wch:8},{wch:12},{wch:15},{wch:25}];XLSX.writeFile(wb,`DigiMairie-RDV-${new Date().toLocaleDateString('fr-FR').replace(/\//g,'-')}.xlsx`);}catch(err){alert('❌ Erreur export : '+err.message);}};
 
-// ── CONFIRMER RDV (agent) ──
-const confirmerRdv = async (id) => {
-  if (!confirm('Voulez-vous confirmer ce rendez-vous ?')) return;
-  try {
-    await apiCall(`/rdv/${id}/statut`, 'PUT', { statut: 'confirme' }, authToken);
-    closeModal();
-    renderAdmin();
-  } catch (err) {
-    alert('❌ Erreur : ' + err.message);
-  }
-};
+const toggleDark=()=>{document.body.classList.toggle('dark');const isDark=document.body.classList.contains('dark');document.getElementById('btn-dark').textContent=isDark?'☀️':'🌙';localStorage.setItem('darkMode',isDark);};
+if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark');document.getElementById('btn-dark').textContent='☀️';}
 
-// ── ANNULER RDV (agent) ──
-const annuler = async (id) => {
-  if (!confirm('Voulez-vous vraiment annuler ce rendez-vous ?')) return;
-  try {
-    await apiCall(`/rdv/${id}/statut`, 'PUT', { statut: 'annule' }, authToken);
-    closeModal();
-    renderAdmin();
-  } catch (err) {
-    alert('❌ Erreur : ' + err.message);
-  }
-};
-
-const openDetail = async (id) => {
-  try {
-    const list = await apiCall('/rdv', 'GET', null, authToken);
-    const r = list.find(x => x.id === id);
-    if (!r) return;
-    const date = new Date(r.date_rdv).toLocaleDateString('fr-FR');
-    const heure = r.heure_rdv.substr(0, 5);
-    document.getElementById('modal-inner').innerHTML = `
-      <h3>📋 Détail du rendez-vous</h3>
-      <div style="display:flex;flex-direction:column;gap:.45rem;margin:.7rem 0">
-        <div class="c-row" style="border:none"><span style="color:var(--gris)">Référence</span><span style="font-weight:900;color:var(--vert)">${r.reference}</span></div>
-        <div class="c-row"><span style="color:var(--gris)">Citoyen</span><span>${r.citoyen_prenom} ${r.citoyen_nom}</span></div>
-        <div class="c-row"><span style="color:var(--gris)">Téléphone</span><span>${r.citoyen_tel}</span></div>
-        ${r.citoyen_email ? `<div class="c-row"><span style="color:var(--gris)">Email</span><span>${r.citoyen_email}</span></div>` : ''}
-        <div class="c-row"><span style="color:var(--gris)">Service</span><span>${r.service_nom}</span></div>
-        <div class="c-row"><span style="color:var(--gris)">Date & Heure</span><span>${date} à ${heure}</span></div>
-        <div class="c-row"><span style="color:var(--gris)">Paiement</span><span>${r.paiement === 'guichet' ? '💵 Au guichet' : '📱 Mobile Money'}</span></div>
-        <div class="c-row"><span style="color:var(--gris)">Statut</span><span>${badge(r.statut)}</span></div>
-        ${r.notes ? `<div class="c-row"><span style="color:var(--gris)">Notes</span><span>${r.notes}</span></div>` : ''}
-      </div>
-      <div class="m-actions">
-        ${r.statut === 'en-attente' ? `<button class="btn btn-sm" style="background:#dcfce7;color:#166534;border:none" onclick="confirmerRdv(${r.id})">✓ Confirmer</button>` : ''}
-        ${r.statut !== 'annule' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none" onclick="annuler(${r.id})">Annuler ce RDV</button>` : ''}
-        <button class="btn btn-primary btn-sm" onclick="closeModal()">Fermer</button>
-      </div>
-    `;
-    document.getElementById('overlay').classList.add('open');
-  } catch (err) {
-    alert('❌ Erreur : ' + err.message);
-  }
-};
-
-function openNewModal(){
-  const svcs=T.fr.svcNames;
-  document.getElementById('modal-inner').innerHTML=`
-    <h3>+ Créer un rendez-vous</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:.7rem 0">
-      <div class="field"><label>Nom complet *</label><input id="m-nom" type="text"></div>
-      <div class="field"><label>Téléphone *</label><input id="m-tel" type="tel" placeholder="+XXX XX XX XX"></div>
-      <div class="field"><label>Service *</label><select id="m-svc">${svcs.map(s=>`<option>${s}</option>`).join('')}</select></div>
-      <div class="field"><label>Heure *</label><select id="m-h">${SLOTS.map(s=>`<option>${s}</option>`).join('')}</select></div>
-      <div class="field" style="grid-column:1/-1"><label>Date *</label><input id="m-date" type="date" min="${new Date().toISOString().split('T')[0]}"></div>
-    </div>
-    <div class="m-actions">
-      <button class="btn btn-secondary btn-sm" onclick="closeModal()">Annuler</button>
-      <button class="btn btn-primary btn-sm" onclick="saveNew()">✓ Créer</button>
-    </div>
-  `;
-  document.getElementById('overlay').classList.add('open');
-}
-
-function saveNew(){
-  const nom=document.getElementById('m-nom').value;
-  const tel=document.getElementById('m-tel').value;
-  const dr=document.getElementById('m-date').value;
-  if(!nom||!tel||!dr) return alert('Veuillez remplir tous les champs obligatoires.');
-  closeModal(); renderAdmin();
-}
-
-function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
-
-const switchView = async (v, btn) => {
-  if (v === 'admin' && !authToken) { afficherLoginModal(); return; }
-  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-  document.getElementById('view-' + v).classList.add('active');
-  if (btn) btn.classList.add('active');
-  if (v === 'admin') renderAdmin();
-};
-
-const afficherLoginModal = () => {
-  document.getElementById('modal-inner').innerHTML = `
-    <h3>🔐 Connexion Agent</h3>
-    <p style="font-size:.82rem;color:var(--gris);margin-bottom:1rem">Réservé aux agents et administrateurs de la mairie.</p>
-    <div style="display:flex;flex-direction:column;gap:.75rem">
-      <div class="field"><label>Email *</label><input type="email" id="login-email" placeholder="votre@mairie.sn"></div>
-      <div class="field"><label>Mot de passe *</label><input type="password" id="login-pwd" placeholder="••••••••"></div>
-      <div id="login-error" style="display:none;color:var(--rouge);font-size:.82rem"></div>
-    </div>
-    <div class="m-actions">
-      <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
-      <button class="btn btn-primary" onclick="connecterAgent()">Se connecter</button>
-    </div>
-  `;
-  document.getElementById('overlay').classList.add('open');
-};
-
-const connecterAgent = async () => {
-  const email = document.getElementById('login-email').value.trim();
-  const pwd   = document.getElementById('login-pwd').value.trim();
-  const errEl = document.getElementById('login-error');
-  if (!email || !pwd) { errEl.style.display='block'; errEl.textContent='❌ Veuillez remplir tous les champs !'; return; }
-  try {
-    const btn = document.querySelector('.modal .btn-primary');
-    btn.disabled = true; btn.textContent = '⏳ Connexion...';
-    const data = await apiCall('/auth/connecter', 'POST', { email, mot_de_passe: pwd });
-    authToken = data.token;
-    localStorage.setItem('token', data.token);
-    closeModal();
-    document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-    document.getElementById('view-admin').classList.add('active');
-    document.querySelectorAll('.nav-tab')[1].classList.add('active');
-    renderAdmin();
-    document.getElementById('btn-logout').style.display = 'block';
-  } catch (err) {
-    errEl.style.display = 'block';
-    errEl.textContent = '❌ ' + err.message;
-    const btn = document.querySelector('.modal .btn-primary');
-    btn.disabled = false; btn.textContent = 'Se connecter';
-  }
-};
-// ── MODE SOMBRE ──
-const toggleDark = () => {
-  document.body.classList.toggle('dark');
-  const isDark = document.body.classList.contains('dark');
-  document.getElementById('btn-dark').textContent = isDark ? '☀️' : '🌙';
-  localStorage.setItem('darkMode', isDark);
-};
-
-if (localStorage.getItem('darkMode') === 'true') {
-  document.body.classList.add('dark');
-  document.getElementById('btn-dark').textContent = '☀️';
-}
 // ── INIT ──
-const now = new Date();
-document.getElementById('admin-date').textContent = 'Semaine du ' + now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+const now=new Date();
+document.getElementById('admin-date').textContent='Semaine du '+now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+// ── CHARGEMENT MAIRIE PAR SLUG (avec retry) ──
+const chargerMairie=async(tentative=1)=>{
+  const params=new URLSearchParams(window.location.search),slug=params.get('mairie');
+  if(!slug)return;
+  try{
+    const mairie=await apiCall(`/mairies/${slug}`);
+    document.getElementById('app-name').textContent=mairie.nom;
+    document.getElementById('app-logo').textContent=mairie.logo||'🏛️';
+    document.documentElement.style.setProperty('--vert',mairie.couleur||'#1a6b3c');
+    document.getElementById('cfg-nom').value=mairie.nom;
+    document.getElementById('cfg-color').value=mairie.couleur||'#1a6b3c';
+    document.getElementById('cfg-logo').value=mairie.logo||'🏛️';
+    if(mairie.langue_locale){document.getElementById('local-btn').textContent=mairie.langue_locale;document.getElementById('cfg-lang').value=mairie.langue_locale;}
+    console.log(`✅ Mairie chargée : ${mairie.nom}`);
+  }catch(err){
+    if(tentative<4){console.log(`⏳ Serveur en cours de démarrage... tentative ${tentative}/3`);setTimeout(()=>chargerMairie(tentative+1),3000);}
+    else{console.log('ℹ️ Serveur non disponible');}
+  }
+};
+
+chargerMairie();
 renderServices();
 renderAdmin();
 </script>
