@@ -58,6 +58,46 @@ router.post('/', async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: '❌ Erreur serveur', erreur: err.message });
   }
+});// POST /api/mairies/inscrire — inscrire une nouvelle mairie avec son admin
+router.post('/inscrire', async (req, res) => {
+  const { nom, slug, pays, telephone, logo, couleur, email, admin } = req.body;
+
+  try {
+    // Vérifier si le slug existe déjà
+    const existe = await pool.query(
+      'SELECT id FROM mairies WHERE slug = $1', [slug]
+    );
+    if (existe.rows.length > 0) {
+      return res.status(400).json({ message: '❌ Cet identifiant est déjà utilisé !' });
+    }
+
+    // Créer la mairie
+    const mairie = await pool.query(
+      `INSERT INTO mairies (nom, slug, pays, email, telephone, logo, couleur)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [nom, slug, pays, email, telephone, logo || '🏛️', couleur || '#1a6b3c']
+    );
+
+    const mairieId = mairie.rows[0].id;
+
+    // Créer l'admin de la mairie
+    const bcrypt = require('bcryptjs');
+    const hash = await bcrypt.hash(admin.mot_de_passe, 10);
+
+    await pool.query(
+      `INSERT INTO agents (nom, prenom, email, mot_de_passe, role, mairie_id)
+       VALUES ($1, $2, $3, $4, 'admin', $5)`,
+      [admin.nom, admin.prenom, admin.email, hash, mairieId]
+    );
+
+    res.status(201).json({
+      message: '✅ Mairie inscrite avec succès !',
+      mairie: mairie.rows[0]
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: '❌ Erreur serveur', erreur: err.message });
+  }
 });
 
 module.exports = router;
