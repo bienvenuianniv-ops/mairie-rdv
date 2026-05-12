@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscription — DigiMairie</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --vert:#1a6b3c;--vert-mid:#238a4e;--vert-clair:#d6f0e0;--vert-pale:#edf7f1;
+  --or:#e8a020;--or-clair:#fef3d0;
+  --noir:#0d1f14;--blanc:#fff;--gris:#6b7280;--gris-clair:#f3f4f6;
+  --rouge:#c0392b;--texte:#1a2e1e;--sable:#f7f2ea;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--sable);color:var(--texte);min-height:100vh}
+
+nav{background:var(--vert);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+.nav-logo-mark{width:38px;height:38px;background:var(--or);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.nav-logo-text{font-family:'Fraunces',serif;font-size:1.2rem;color:var(--blanc);font-weight:700}
+.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;font-size:.9rem;font-weight:500}
+.nav-links a:hover{color:var(--or)}
+
+.hero{background:linear-gradient(135deg,var(--noir) 0%,#1a3d24 100%);padding:3rem 2rem;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(232,160,32,.15);border:1px solid rgba(232,160,32,.3);color:var(--or);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem 1rem;border-radius:999px;margin-bottom:1rem}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4vw,2.5rem);color:var(--blanc);margin-bottom:.75rem}
+.hero p{color:rgba(255,255,255,.65);font-size:.95rem;max-width:480px;margin:0 auto;line-height:1.7}
+
+.main{max-width:680px;margin:0 auto;padding:3rem 1.5rem}
+
+.steps-indicator{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:2rem}
+.step-ind{display:flex;flex-direction:column;align-items:center;gap:.3rem}
+.step-ind-circle{width:36px;height:36px;border-radius:50%;background:var(--gris-clair);border:2px solid #d1d5db;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:var(--gris);transition:all .3s}
+.step-ind-circle.active{background:var(--vert);border-color:var(--vert);color:#fff}
+.step-ind-circle.done{background:#16a34a;border-color:#16a34a;color:#fff}
+.step-ind-label{font-size:.65rem;color:var(--gris);white-space:nowrap}
+.step-ind-label.active{color:var(--vert);font-weight:700}
+.step-line-ind{width:60px;height:2px;background:#e5e7eb;margin:0 4px 18px}
+.step-line-ind.done{background:#16a34a}
+
+.form-card{background:var(--blanc);border-radius:20px;padding:2rem;box-shadow:0 8px 32px rgba(0,0,0,.08);margin-bottom:1.5rem}
+.form-card-title{font-family:'Fraunces',serif;font-size:1.2rem;margin-bottom:.4rem}
+.form-card-sub{font-size:.83rem;color:var(--gris);margin-bottom:1.5rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:500px){.form-grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:.35rem}
+.field.full{grid-column:1/-1}
+label{font-size:.76rem;font-weight:700;color:var(--texte);text-transform:uppercase;letter-spacing:.04em}
+.label-hint{font-size:.68rem;color:var(--gris);font-weight:400;text-transform:none;letter-spacing:0;margin-left:.4rem}
+input,select{padding:.65rem .9rem;border:1.5px solid #d1d5db;border-radius:9px;font-size:.86rem;font-family:'DM Sans',sans-serif;color:var(--texte);transition:border-color .2s;background:#fff}
+input:focus,select:focus{outline:none;border-color:var(--vert);box-shadow:0 0 0 3px rgba(26,107,60,.1)}
+input.error{border-color:var(--rouge)}
+.field-error{font-size:.72rem;color:var(--rouge);margin-top:.2rem;display:none}
+
+.slug-preview{background:var(--vert-pale);border:1px solid var(--vert-clair);border-radius:8px;padding:.5rem .9rem;font-size:.82rem;color:var(--vert);margin-top:.4rem;display:none}
+
+.btn{padding:.75rem 1.8rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;border:none;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-primary{background:var(--vert);color:#fff;width:100%;justify-content:center}
+.btn-primary:hover{background:var(--vert-mid);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,60,.3)}
+.btn-primary:disabled{background:#9ca3af;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-secondary{background:#fff;color:var(--texte);border:1.5px solid #d1d5db}
+.btn-secondary:hover{border-color:var(--vert);color:var(--vert)}
+
+.nav-btns{display:flex;gap:1rem;margin-top:1rem}
+
+.success-card{background:var(--blanc);border-radius:20px;padding:3rem 2rem;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.08);display:none}
+.success-icon{font-size:4rem;margin-bottom:1rem}
+.success-card h2{font-family:'Fraunces',serif;font-size:1.8rem;color:var(--vert);margin-bottom:.75rem}
+.success-card p{color:var(--gris);font-size:.9rem;line-height:1.7;margin-bottom:1.5rem}
+.url-box{background:var(--vert-pale);border:2px solid var(--vert-clair);border-radius:12px;padding:1rem 1.5rem;margin:1rem 0;font-family:monospace;font-size:.9rem;color:var(--vert);word-break:break-all}
+.credentials-box{background:var(--or-clair);border:1px solid #e0c060;border-radius:12px;padding:1.2rem;text-align:left;margin:1rem 0}
+.credentials-box h4{font-weight:700;color:#7a4a00;margin-bottom:.75rem;font-size:.9rem}
+.cred-row{display:flex;justify-content:space-between;padding:.35rem 0;font-size:.85rem;border-bottom:1px solid #f0d88a}
+.cred-row:last-child{border-bottom:none}
+.cred-label{color:#7a4a00}
+.cred-value{font-weight:700;color:#5a3000}
+
+.error-banner{background:#fee2e2;border:1px solid #fca5a5;border-radius:10px;padding:.9rem 1.2rem;color:var(--rouge);font-size:.85rem;margin-bottom:1rem;display:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="accueil.html" class="nav-logo">
+    <div class="nav-logo-mark">🏛️</div>
+    <span class="nav-logo-text">DigiMairie</span>
+  </a>
+  <div class="nav-links">
+    <a href="accueil.html">Accueil</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">🚀 Rejoindre DigiMairie</div>
+  <h1>Inscrivez votre mairie</h1>
+  <p>Créez votre espace DigiMairie en quelques minutes et commencez à gérer vos rendez-vous en ligne.</p>
+</div>
+
+<div class="main">
+
+  <!-- Indicateur d'étapes -->
+  <div class="steps-indicator">
+    <div class="step-ind">
+      <div class="step-ind-circle active" id="ind1">1</div>
+      <div class="step-ind-label active" id="ind-lbl1">Mairie</div>
+    </div>
+    <div class="step-line-ind" id="ind-line1"></div>
+    <div class="step-ind">
+      <div class="step-ind-circle" id="ind2">2</div>
+      <div class="step-ind-label" id="ind-lbl2">Admin</div>
+    </div>
+    <div class="step-line-ind" id="ind-line2"></div>
+    <div class="step-ind">
+      <div class="step-ind-circle" id="ind3">3</div>
+      <div class="step-ind-label" id="ind-lbl3">Confirmation</div>
+    </div>
+  </div>
+
+  <div id="error-banner" class="error-banner"></div>
+
+  <!-- ÉTAPE 1 — Infos mairie -->
+  <div id="step1">
+    <div class="form-card">
+      <div class="form-card-title">🏛️ Informations de la mairie</div>
+      <div class="form-card-sub">Renseignez les informations de base de votre mairie.</div>
+      <div class="form-grid">
+        <div class="field full">
+          <label>Nom de la mairie *</label>
+          <input type="text" id="nom" placeholder="Ex: Mairie de Dakar" oninput="genererSlug()">
+          <div class="field-error" id="err-nom">Ce champ est obligatoire</div>
+        </div>
+        <div class="field full">
+          <label>Identifiant URL * <span class="label-hint">(lettres minuscules et tirets uniquement)</span></label>
+          <input type="text" id="slug" placeholder="Ex: dakar" oninput="validerSlug()">
+          <div class="slug-preview" id="slug-preview">🔗 Votre URL : <strong id="slug-url"></strong></div>
+          <div class="field-error" id="err-slug">Identifiant invalide</div>
+        </div>
+        <div class="field">
+          <label>Pays *</label>
+          <select id="pays">
+            <option value="">-- Choisir --</option>
+            <option>Sénégal</option>
+            <option>Côte d'Ivoire</option>
+            <option>Mali</option>
+            <option>Burkina Faso</option>
+            <option>Guinée</option>
+            <option>Cameroun</option>
+            <option>Congo</option>
+            <option>RD Congo</option>
+            <option>Gabon</option>
+            <option>Togo</option>
+            <option>Bénin</option>
+            <option>Niger</option>
+            <option>Madagascar</option>
+            <option>Autre</option>
+          </select>
+          <div class="field-error" id="err-pays">Ce champ est obligatoire</div>
+        </div>
+        <div class="field">
+          <label>Téléphone</label>
+          <input type="tel" id="tel" placeholder="+XXX XX XX XX XX">
+        </div>
+        <div class="field">
+          <label>Logo (emoji) <span class="label-hint">optionnel</span></label>
+          <input type="text" id="logo" placeholder="🏛️" maxlength="4" value="🏛️">
+        </div>
+        <div class="field">
+          <label>Couleur principale</label>
+          <input type="color" id="couleur" value="#1a6b3c">
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="etape1Suivant()">Suivant →</button>
+  </div>
+
+  <!-- ÉTAPE 2 — Compte admin -->
+  <div id="step2" style="display:none">
+    <div class="form-card">
+      <div class="form-card-title">👤 Compte administrateur</div>
+      <div class="form-card-sub">Créez le compte de l'administrateur principal de votre mairie.</div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Prénom *</label>
+          <input type="text" id="admin-prenom" placeholder="Votre prénom">
+          <div class="field-error" id="err-prenom">Ce champ est obligatoire</div>
+        </div>
+        <div class="field">
+          <label>Nom *</label>
+          <input type="text" id="admin-nom" placeholder="Votre nom">
+          <div class="field-error" id="err-admin-nom">Ce champ est obligatoire</div>
+        </div>
+        <div class="field full">
+          <label>Email *</label>
+          <input type="email" id="admin-email" placeholder="admin@votrevillage.sn">
+          <div class="field-error" id="err-email">Email invalide</div>
+        </div>
+        <div class="field full">
+          <label>Mot de passe * <span class="label-hint">minimum 6 caractères</span></label>
+          <input type="password" id="admin-pwd" placeholder="••••••••">
+          <div class="field-error" id="err-pwd">Minimum 6 caractères</div>
+        </div>
+        <div class="field full">
+          <label>Confirmer le mot de passe *</label>
+          <input type="password" id="admin-pwd2" placeholder="••••••••">
+          <div class="field-error" id="err-pwd2">Les mots de passe ne correspondent pas</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-btns">
+      <button class="btn btn-secondary" onclick="allerEtape(1)">← Retour</button>
+      <button class="btn btn-primary" onclick="etape2Suivant()" style="flex:1">Créer mon compte →</button>
+    </div>
+  </div>
+
+  <!-- SUCCÈS -->
+  <div class="success-card" id="success-card">
+    <div class="success-icon">🎉</div>
+    <h2>Votre mairie est inscrite !</h2>
+    <p>Votre espace DigiMairie est prêt. Voici vos informations de connexion — gardez-les précieusement !</p>
+    <div class="url-box" id="success-url"></div>
+    <div class="credentials-box">
+      <h4>🔐 Vos identifiants de connexion</h4>
+      <div class="cred-row"><span class="cred-label">Email</span><span class="cred-value" id="cred-email"></span></div>
+      <div class="cred-row"><span class="cred-label">Mot de passe</span><span class="cred-value" id="cred-pwd"></span></div>
+    </div>
+    <p style="font-size:.8rem;color:var(--rouge);margin-bottom:1.5rem">⚠️ Notez ces informations — le mot de passe ne sera plus affiché.</p>
+    <a id="btn-go" href="#" class="btn btn-primary" style="text-decoration:none">🏛️ Accéder à mon espace</a>
+  </div>
+
+</div>
+
+<script>
+const API_URL = 'https://mairie-rdv-backend.onrender.com/api';
+
+const apiCall = async (endpoint, method = 'GET', body = null) => {
+  const headers = { 'Content-Type': 'application/json' };
+  const options = { method, headers };
+  if (body) options.body = JSON.stringify(body);
+  const response = await fetch(`${API_URL}${endpoint}`, options);
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || 'Erreur serveur');
+  return data;
+};
+
+// Génère automatiquement le slug depuis le nom
+const genererSlug = () => {
+  const nom = document.getElementById('nom').value;
+  const slug = nom.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim().replace(/\s+/g, '-');
+  document.getElementById('slug').value = slug;
+  validerSlug();
+};
+
+const validerSlug = () => {
+  const slug = document.getElementById('slug').value;
+  const preview = document.getElementById('slug-preview');
+  const urlEl = document.getElementById('slug-url');
+  if (slug) {
+    preview.style.display = 'block';
+    urlEl.textContent = `digimairie.netlify.app/index.html?mairie=${slug}`;
+  } else {
+    preview.style.display = 'none';
+  }
+};
+
+const allerEtape = (n) => {
+  document.getElementById('step1').style.display = n === 1 ? 'block' : 'none';
+  document.getElementById('step2').style.display = n === 2 ? 'block' : 'none';
+
+  // Mettre à jour indicateurs
+  for (let i = 1; i <= 3; i++) {
+    const circle = document.getElementById(`ind${i}`);
+    const label = document.getElementById(`ind-lbl${i}`);
+    if (i < n) { circle.className = 'step-ind-circle done'; circle.innerHTML = '✓'; label.className = 'step-ind-label'; }
+    else if (i === n) { circle.className = 'step-ind-circle active'; circle.textContent = i; label.className = 'step-ind-label active'; }
+    else { circle.className = 'step-ind-circle'; circle.textContent = i; label.className = 'step-ind-label'; }
+  }
+  for (let i = 1; i <= 2; i++) {
+    const line = document.getElementById(`ind-line${i}`);
+    line.className = 'step-line-ind' + (i < n ? ' done' : '');
+  }
+};
+
+const showError = (msg) => {
+  const banner = document.getElementById('error-banner');
+  banner.textContent = '❌ ' + msg;
+  banner.style.display = 'block';
+  setTimeout(() => banner.style.display = 'none', 5000);
+};
+
+const etape1Suivant = () => {
+  const nom = document.getElementById('nom').value.trim();
+  const slug = document.getElementById('slug').value.trim();
+  const pays = document.getElementById('pays').value;
+  let valid = true;
+
+  if (!nom) { document.getElementById('err-nom').style.display = 'block'; valid = false; } 
+  else { document.getElementById('err-nom').style.display = 'none'; }
+
+  if (!slug || !/^[a-z0-9-]+$/.test(slug)) { document.getElementById('err-slug').style.display = 'block'; valid = false; }
+  else { document.getElementById('err-slug').style.display = 'none'; }
+
+  if (!pays) { document.getElementById('err-pays').style.display = 'block'; valid = false; }
+  else { document.getElementById('err-pays').style.display = 'none'; }
+
+  if (valid) allerEtape(2);
+};
+
+const etape2Suivant = async () => {
+  const prenom = document.getElementById('admin-prenom').value.trim();
+  const nom    = document.getElementById('admin-nom').value.trim();
+  const email  = document.getElementById('admin-email').value.trim();
+  const pwd    = document.getElementById('admin-pwd').value;
+  const pwd2   = document.getElementById('admin-pwd2').value;
+  let valid = true;
+
+  if (!prenom) { document.getElementById('err-prenom').style.display = 'block'; valid = false; }
+  else { document.getElementById('err-prenom').style.display = 'none'; }
+
+  if (!nom) { document.getElementById('err-admin-nom').style.display = 'block'; valid = false; }
+  else { document.getElementById('err-admin-nom').style.display = 'none'; }
+
+  if (!email || !email.includes('@')) { document.getElementById('err-email').style.display = 'block'; valid = false; }
+  else { document.getElementById('err-email').style.display = 'none'; }
+
+  if (!pwd || pwd.length < 6) { document.getElementById('err-pwd').style.display = 'block'; valid = false; }
+  else { document.getElementById('err-pwd').style.display = 'none'; }
+
+  if (pwd !== pwd2) { document.getElementById('err-pwd2').style.display = 'block'; valid = false; }
+  else { document.getElementById('err-pwd2').style.display = 'none'; }
+
+  if (!valid) return;
+
+  // Bouton en chargement
+  const btn = document.querySelector('#step2 .btn-primary');
+  btn.disabled = true; btn.textContent = '⏳ Création en cours...';
+
+  try {
+    const mairieData = {
+      nom:            document.getElementById('nom').value.trim(),
+      slug:           document.getElementById('slug').value.trim(),
+      pays:           document.getElementById('pays').value,
+      telephone:      document.getElementById('tel').value.trim(),
+      logo:           document.getElementById('logo').value || '🏛️',
+      couleur:        document.getElementById('couleur').value,
+      email:          email,
+      admin: { prenom, nom, email, mot_de_passe: pwd }
+    };
+
+    await apiCall('/mairies/inscrire', 'POST', mairieData);
+
+    // Afficher succès
+    document.getElementById('step2').style.display = 'none';
+    const successCard = document.getElementById('success-card');
+    successCard.style.display = 'block';
+
+    const url = `https://digimairie.netlify.app/index.html?mairie=${mairieData.slug}`;
+    document.getElementById('success-url').textContent = url;
+    document.getElementById('cred-email').textContent = email;
+    document.getElementById('cred-pwd').textContent = pwd;
+    document.getElementById('btn-go').href = url;
+
+    // Mettre à jour indicateurs
+    for (let i = 1; i <= 3; i++) {
+      const circle = document.getElementById(`ind${i}`);
+      circle.className = 'step-ind-circle done'; circle.innerHTML = '✓';
+    }
+
+  } catch (err) {
+    showError(err.message);
+    btn.disabled = false; btn.textContent = 'Créer mon compte →';
+  }
+};
+</script>
+</body>
+</html>
