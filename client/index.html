@@ -1068,7 +1068,18 @@ const connecterAgent = async () => {
     btn.disabled = false; btn.textContent = 'Se connecter';
   }
 };
+// ── MODE SOMBRE ──
+const toggleDark = () => {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  document.getElementById('btn-dark').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('darkMode', isDark);
+};
 
+if (localStorage.getItem('darkMode') === 'true') {
+  document.body.classList.add('dark');
+  document.getElementById('btn-dark').textContent = '☀️';
+}
 // ── INIT ──
 const now = new Date();
 document.getElementById('admin-date').textContent = 'Semaine du ' + now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
