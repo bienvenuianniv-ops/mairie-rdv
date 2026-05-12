@@ -157,31 +157,6 @@ tr:hover td{background:#fafdf9}tr:last-child td{border-bottom:none}
 .m-actions{display:flex;justify-content:flex-end;gap:.7rem;margin-top:1.3rem;flex-wrap:wrap}
 .empty{text-align:center;padding:2.5rem;color:var(--gris)}
 .empty .ei{font-size:2.8rem;margin-bottom:.65rem}
-/* ── MODE SOMBRE ── */
-body.dark {
-  --vert:#2d9e5f;--vert-mid:#38b872;--vert-clair:#1a4a2e;
-  --or:#e8a020;--or-clair:#3a2e00;
-  --sable:#1a1a2e;--blanc:#1e2a1e;--gris:#9ca3af;--gris-clair:#2d3748;
-  --rouge:#e74c3c;--vert-ok:#2ecc71;--texte:#e8f5e9;
-  background:#0f1a14;color:#e8f5e9;
-}
-body.dark header{background:linear-gradient(135deg,#0d2818 0%,#1a4a2e 100%)}
-body.dark .card{background:#1e2a1e;border:1px solid #2d3748}
-body.dark table{background:#1e2a1e}
-body.dark th{background:#2d3748;color:#9ca3af}
-body.dark td{border-color:#2d3748}
-body.dark tr:hover td{background:#243024}
-body.dark input,body.dark select,body.dark textarea{background:#2d3748;border-color:#4a5568;color:#e8f5e9}
-body.dark .modal{background:#1e2a1e}
-body.dark .stat-card{background:#1e2a1e}
-body.dark .svc-card{background:#1e2a1e;border-color:#2d3748}
-body.dark .svc-card:hover{border-color:var(--vert-mid)}
-body.dark .slot{border-color:#4a5568;color:#e8f5e9}
-body.dark .f-btn{background:#2d3748;border-color:#4a5568;color:#e8f5e9}
-body.dark .btn-secondary{background:#2d3748;border-color:#4a5568;color:#e8f5e9}
-body.dark .cfg-banner{background:#3a2e00;color:#fef3d0}
-body.dark .confirm-card{background:#1e2a1e}
-body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
 
 @media(max-width:460px){
   header{padding:0 .9rem}
@@ -193,8 +168,6 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -202,7 +175,6 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
   <span>🌐</span>
   <button class="lang-btn active" onclick="setLang('fr',this)">Français</button>
   <button class="lang-btn" id="local-btn" onclick="setLang('local',this)">Langue locale</button>
-  <button class="lang-btn" id="btn-dark" onclick="toggleDark()">🌙</button>
 </div>
 
 <header>
@@ -216,9 +188,6 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchView('citoyen',this)">👤 Citoyen</button>
     <button class="nav-tab" onclick="switchView('admin',this)">🔐 Agent</button>
-    <button class="nav-tab" onclick="switchView('agents',this)" id="btn-agents" style="display:none">👥 Agents</button>
-<button class="nav-tab" onclick="deconnecter()" id="btn-logout" style="display:none;background:#fee2e2;color:#991b1b">⬅️ Déconnexion</button>
-  </div>
     <button class="nav-tab" onclick="deconnecter()" id="btn-logout" style="display:none;background:#fee2e2;color:#991b1b">⬅️ Déconnexion</button>
   </div>
 </header>
@@ -369,7 +338,6 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
       <p style="color:var(--gris);font-size:.8rem" id="admin-date"></p>
     </div>
     <button class="btn btn-primary" onclick="openNewModal()">+ Nouveau RDV</button>
-    <button class="btn btn-secondary" onclick="exporterExcel()">📥 Exporter Excel</button>
   </div>
   <div class="stats">
     <div class="stat-card blue"><div class="stat-v" id="s-total">0</div><div class="stat-l">Total cette semaine</div></div>
@@ -377,13 +345,7 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
     <div class="stat-card green"><div class="stat-v" id="s-conf">0</div><div class="stat-l">Confirmés</div></div>
     <div class="stat-card red"><div class="stat-v" id="s-ann">0</div><div class="stat-l">Annulés</div></div>
   </div>
- <!-- ── GRAPHIQUE ── -->
-<div class="card" style="margin-bottom:1rem">
-  <div class="card-title">📊 RDV par service</div>
-  <canvas id="chart-services" height="100"></canvas>
-</div>
-
-<div class="card">
+  <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.7rem;margin-bottom:.9rem">
       <div class="filter-bar">
         <button class="f-btn active" onclick="filterRdv('tous',this)">Tous</button>
@@ -403,24 +365,7 @@ body.dark .hero{background:linear-gradient(135deg,#0a1a0f 0%,#1a3d24 100%)}
     </div>
   </div>
 </div>
-<!-- ══ AGENTS ══ -->
-<div class="view" id="view-agents">
-  <div class="admin-top">
-    <div>
-      <h2>Gestion des agents</h2>
-      <p style="color:var(--gris);font-size:.8rem">Créez et gérez les accès des agents de la mairie.</p>
-    </div>
-    <button class="btn btn-primary" onclick="openNouvelAgent()">+ Nouvel agent</button>
-  </div>
-  <div class="card">
-    <table>
-      <thead><tr>
-        <th>Nom</th><th>Email</th><th>Rôle</th><th>Statut</th><th>Actions</th>
-      </tr></thead>
-      <tbody id="agents-body"></tbody>
-    </table>
-  </div>
-</div>
+
 </main>
 
 <div class="overlay" id="overlay" onclick="closeModal()">
@@ -951,12 +896,12 @@ const renderAdmin = async (filter, search) => {
     }
 
     // Stats
-const today = new Date().toISOString().split('T')[0];
-document.getElementById('s-total').textContent = list.length;
-document.getElementById('s-today').textContent = list.filter(r => r.date_rdv.split('T')[0] === today).length;
-document.getElementById('s-conf').textContent = list.filter(r => r.statut === 'confirme').length;
-document.getElementById('s-ann').textContent  = list.filter(r => r.statut === 'annule').length;
-        renderChart(list);
+    const today = new Date().toLocaleDateString('fr-FR');
+    document.getElementById('s-total').textContent = list.length;
+    document.getElementById('s-today').textContent = list.filter(r => new Date(r.date_rdv).toLocaleDateString('fr-FR') === today).length;
+    document.getElementById('s-conf').textContent = list.filter(r => r.statut === 'confirme').length;
+    document.getElementById('s-ann').textContent  = list.filter(r => r.statut === 'annule').length;
+
   } catch (err) {
     if (err.message.includes('Token') || err.message.includes('token')) {
       authToken = null;
@@ -980,7 +925,6 @@ const deconnecter = () => {
   authToken = null;
   localStorage.removeItem('token');
   document.getElementById('btn-logout').style.display = 'none';
-  document.getElementById('btn-agents').style.display = 'none';
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
   document.getElementById('view-citoyen').classList.add('active');
@@ -1079,7 +1023,6 @@ const switchView = async (v, btn) => {
   document.getElementById('view-' + v).classList.add('active');
   if (btn) btn.classList.add('active');
   if (v === 'admin') renderAdmin();
-  if (v === 'agents') renderAgents();
 };
 
 const afficherLoginModal = () => {
@@ -1117,7 +1060,6 @@ const connecterAgent = async () => {
     document.querySelectorAll('.nav-tab')[1].classList.add('active');
     renderAdmin();
     document.getElementById('btn-logout').style.display = 'block';
-    document.getElementById('btn-agents').style.display = 'block';
   } catch (err) {
     errEl.style.display = 'block';
     errEl.textContent = '❌ ' + err.message;
@@ -1125,230 +1067,10 @@ const connecterAgent = async () => {
     btn.disabled = false; btn.textContent = 'Se connecter';
   }
 };
-// ── GRAPHIQUE RDV PAR SERVICE ──
-let chartInstance = null;
 
-const renderChart = (list) => {
-  const canvas = document.getElementById('chart-services');
-  if (!canvas) return;
-
-  // Compter les RDV par service
-  const compteur = {};
-  list.forEach(r => {
-    compteur[r.service_nom] = (compteur[r.service_nom] || 0) + 1;
-  });
-
-  const labels = Object.keys(compteur);
-  const data   = Object.values(compteur);
-  const colors = ['#1a6b3c','#e8a020','#3b82f6','#c0392b','#16a34a','#8b5cf6'];
-
-  // Détruire l'ancien graphique si existant
-  if (chartInstance) chartInstance.destroy();
-
-  chartInstance = new Chart(canvas, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        label: 'Nombre de RDV',
-        data,
-        backgroundColor: colors.slice(0, labels.length),
-        borderRadius: 8,
-        borderSkipped: false,
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { stepSize: 1 }
-        }
-      }
-    }
-  });
-};
-// ── GESTION DES AGENTS ──
-const renderAgents = async () => {
-  const tbody = document.getElementById('agents-body');
-  if (!tbody) return;
-  tbody.innerHTML = '<tr><td colspan="5"><div style="text-align:center;padding:2rem;color:var(--gris)">⏳ Chargement...</div></td></tr>';
-  try {
-    const agents = await apiCall('/auth/agents', 'GET', null, authToken);
-    tbody.innerHTML = '';
-    agents.forEach(a => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><div style="font-weight:700">${a.prenom} ${a.nom}</div><div style="font-size:.72rem;color:var(--gris)">${a.email}</div></td>
-        <td>${a.email}</td>
-        <td><span class="badge ${a.role === 'admin' ? 'b-green' : 'b-yellow'}">${a.role}</span></td>
-        <td><span class="badge ${a.actif ? 'b-green' : 'b-red'}">${a.actif ? '✓ Actif' : '✗ Inactif'}</span></td>
-        <td>
-          ${a.role !== 'admin' ? `
-            <button class="btn btn-sm" 
-              style="background:${a.actif ? '#fee2e2' : '#dcfce7'};color:${a.actif ? '#991b1b' : '#166534'};border:none" 
-              onclick="toggleAgent(${a.id})">
-              ${a.actif ? '🔒 Désactiver' : '✅ Activer'}
-            </button>` : '<span style="color:var(--gris);font-size:.75rem">Admin principal</span>'}
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-  } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="5"><div class="empty">❌ ${err.message}</div></td></tr>`;
-  }
-};
-
-const toggleAgent = async (id) => {
-  if (!confirm('Voulez-vous modifier le statut de cet agent ?')) return;
-  try {
-    await apiCall(`/auth/agents/${id}/toggle`, 'PUT', null, authToken);
-    renderAgents();
-  } catch (err) {
-    alert('❌ Erreur : ' + err.message);
-  }
-};
-
-const openNouvelAgent = () => {
-  document.getElementById('modal-inner').innerHTML = `
-    <h3>👥 Nouvel agent</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:.7rem 0">
-      <div class="field"><label>Prénom *</label><input id="a-prenom" type="text"></div>
-      <div class="field"><label>Nom *</label><input id="a-nom" type="text"></div>
-      <div class="field" style="grid-column:1/-1"><label>Email *</label><input id="a-email" type="email" placeholder="agent@mairie.sn"></div>
-      <div class="field" style="grid-column:1/-1"><label>Mot de passe *</label><input id="a-pwd" type="password" placeholder="••••••••"></div>
-      <div class="field" style="grid-column:1/-1"><label>Rôle</label>
-        <select id="a-role">
-          <option value="agent">Agent</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
-    </div>
-    <div id="a-error" style="display:none;color:var(--rouge);font-size:.82rem"></div>
-    <div class="m-actions">
-      <button class="btn btn-secondary btn-sm" onclick="closeModal()">Annuler</button>
-      <button class="btn btn-primary btn-sm" onclick="sauvegarderAgent()">✓ Créer</button>
-    </div>
-  `;
-  document.getElementById('overlay').classList.add('open');
-};
-
-const sauvegarderAgent = async () => {
-  const prenom = document.getElementById('a-prenom').value.trim();
-  const nom    = document.getElementById('a-nom').value.trim();
-  const email  = document.getElementById('a-email').value.trim();
-  const pwd    = document.getElementById('a-pwd').value.trim();
-  const role   = document.getElementById('a-role').value;
-  const errEl  = document.getElementById('a-error');
-
-  if (!prenom || !nom || !email || !pwd) {
-    errEl.style.display = 'block';
-    errEl.textContent = '❌ Veuillez remplir tous les champs !';
-    return;
-  }
-
-  try {
-    await apiCall('/auth/agents', 'POST', {
-      prenom, nom, email, mot_de_passe: pwd, role
-    }, authToken);
-    closeModal();
-    renderAgents();
-    alert('✅ Agent créé avec succès !');
-  } catch (err) {
-    errEl.style.display = 'block';
-    errEl.textContent = '❌ ' + err.message;
-  }
-};
-// ── EXPORT EXCEL ──
-const exporterExcel = async () => {
-  try {
-    const list = await apiCall('/rdv', 'GET', null, authToken);
-
-    // Préparer les données
-    const data = list.map(r => ({
-      'Référence':     r.reference,
-      'Prénom':        r.citoyen_prenom,
-      'Nom':           r.citoyen_nom,
-      'Téléphone':     r.citoyen_tel,
-      'Email':         r.citoyen_email || '',
-      'Service':       r.service_nom,
-      'Date':          new Date(r.date_rdv).toLocaleDateString('fr-FR'),
-      'Heure':         r.heure_rdv.substr(0, 5),
-      'Statut':        r.statut,
-      'Paiement':      r.paiement === 'guichet' ? 'Au guichet' : 'Mobile Money',
-      'Notes':         r.notes || ''
-    }));
-
-    // Créer le fichier Excel
-    const ws = XLSX.utils.json_to_sheet(data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Rendez-vous');
-
-    // Largeur des colonnes
-    ws['!cols'] = [
-      {wch:14},{wch:15},{wch:15},{wch:18},{wch:25},
-      {wch:20},{wch:12},{wch:8},{wch:12},{wch:15},{wch:25}
-    ];
-
-    // Télécharger
-    const date = new Date().toLocaleDateString('fr-FR').replace(/\//g, '-');
-    XLSX.writeFile(wb, `DigiMairie-RDV-${date}.xlsx`);
-
-    console.log('✅ Export Excel réussi !');
-  } catch (err) {
-    alert('❌ Erreur export : ' + err.message);
-  }
-};
-// ── MODE SOMBRE ──
-const toggleDark = () => {
-  document.body.classList.toggle('dark');
-  const isDark = document.body.classList.contains('dark');
-  document.getElementById('btn-dark').textContent = isDark ? '☀️' : '🌙';
-  localStorage.setItem('darkMode', isDark);
-};
-
-// Appliquer le mode sombre au chargement si sauvegardé
-if (localStorage.getItem('darkMode') === 'true') {
-  document.body.classList.add('dark');
-  document.getElementById('btn-dark').textContent = '☀️';
-}
-// ── INIT ──
 // ── INIT ──
 const now = new Date();
 document.getElementById('admin-date').textContent = 'Semaine du ' + now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-
-// ── CHARGEMENT MAIRIE PAR SLUG ──
-const chargerMairie = async () => {
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get('mairie');
-  if (!slug) return;
-
-  try {
-    const mairie = await apiCall(`/mairies/${slug}`);
-
-    // Appliquer la configuration de la mairie
-    document.getElementById('app-name').textContent = mairie.nom;
-    document.getElementById('app-logo').textContent = mairie.logo || '🏛️';
-    document.documentElement.style.setProperty('--vert', mairie.couleur || '#1a6b3c');
-    document.getElementById('cfg-nom').value = mairie.nom;
-    document.getElementById('cfg-color').value = mairie.couleur || '#1a6b3c';
-    document.getElementById('cfg-logo').value = mairie.logo || '🏛️';
-
-    if (mairie.langue_locale) {
-      document.getElementById('local-btn').textContent = mairie.langue_locale;
-      document.getElementById('cfg-lang').value = mairie.langue_locale;
-    }
-
-    console.log(`✅ Mairie chargée : ${mairie.nom}`);
-  } catch (err) {
-    console.log('ℹ️ Aucune mairie spécifiée ou introuvable');
-  }
-};
-
-chargerMairie();
 renderServices();
 renderAdmin();
 </script>
